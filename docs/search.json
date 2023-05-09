@@ -14,18 +14,11 @@
     "text": "I am an economist/data scientist with 8+ years of experience in causal inference, experiment design, and statistical modeling. Expert in building Bayesian machine learning models using R, Stan, and Julia, and using Bayesian networks for causal identification in experimental and non-experimental contexts. Proficient in (deep) reinforcement learning for partially observable environments. Focused on rigorous quantification of uncertainty for decision-making."
   },
   {
-    "objectID": "about.html#programming",
-    "href": "about.html#programming",
+    "objectID": "about.html#skills",
+    "href": "about.html#skills",
     "title": "About",
-    "section": "Programming",
-    "text": "Programming\nR, Tidyverse, Stan, Julia, Flux.jl, Turing.jl, C/C++, Ruby, Python, SQL"
-  },
-  {
-    "objectID": "about.html#tools",
-    "href": "about.html#tools",
-    "title": "About",
-    "section": "Tools",
-    "text": "Tools\nRStudio, VS Code, AWS EC2/S3/ECR, Azure, Docker, Cluster Computing (SLURM), Databricks, Git and Github, Snowflake, PostgreSQL"
+    "section": "Skills",
+    "text": "Skills\n\nProgramming\nR, Tidyverse, Stan, Julia, Flux.jl, Turing.jl, C/C++, Ruby, Python, SQL\n\n\nTools\nRStudio, VS Code, AWS EC2/S3/ECR, Azure, Docker, Cluster Computing (SLURM), Databricks, Git and Github, Snowflake, PostgreSQL"
   },
   {
     "objectID": "about.html#education",
@@ -33,13 +26,6 @@
     "title": "About",
     "section": "Education",
     "text": "Education\n\n\nBoston University\nPh.D. in Economics\n\n\nBoston, MA\nGranted 2014\n\n\nWith a focus on development economics, health economics, and experimental economics.\n\n\nThe American University in Cairo\nB.S. in Computer Science\nMinor: Mathematics\n\n\nCairo, Egypt\nGranted 1999"
-  },
-  {
-    "objectID": "about.html#skills",
-    "href": "about.html#skills",
-    "title": "About",
-    "section": "Skills",
-    "text": "Skills\n\nProgramming\nR, Tidyverse, Stan, Julia, Flux.jl, Turing.jl, C/C++, Ruby, Python, SQL\n\n\nTools\nRStudio, VS Code, AWS EC2/S3/ECR, Azure, Docker, Cluster Computing (SLURM), Databricks, Git and Github, Snowflake, PostgreSQL"
   },
   {
     "objectID": "about.html#experience",

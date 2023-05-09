@@ -4,7 +4,7 @@ project:
 
 website:
   title: "Karim Naguib"
-  google-analytics: "G-EHSCXXKXD8"
+  google-analytics: "G-SQNTJM494V"
   navbar:
     left:
       - href: index.qmd
