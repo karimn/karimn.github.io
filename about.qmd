@@ -2,8 +2,124 @@
 title: "About"
 ---
 
-About this site
+I am an economist/data scientist with 8+ years of experience in **causal inference**, **experiment design**, and **statistical modeling**. Expert in building **Bayesian machine learning** models using R, Stan, and Julia, and using **Bayesian networks** for causal identification in experimental and non-experimental contexts. Proficient in **(deep) reinforcement learning** for partially observable environments. Focused on rigorous quantification of uncertainty for decision-making.
 
-```{r}
-1 + 1
-```
+## Skills
+
+### Programming
+
+R, Tidyverse, Stan, Julia, Flux.jl, Turing.jl, C/C++, Ruby, Python, SQL
+
+### Tools
+
+RStudio, VS Code, AWS EC2/S3/ECR, Azure, Docker, Cluster Computing (SLURM), Databricks, Git and Github, Snowflake, PostgreSQL
+
+
+## Education
+
+::: {.d-flex .justify-content-between}
+::: {}
+**Boston University**  
+Ph.D. in Economics 
+:::
+::: {.text-end}
+Boston, MA  
+Granted 2014
+:::
+:::
+With a focus on development economics, health economics, and experimental economics.
+
+::: {.d-flex .justify-content-between}
+::: {}
+**The American University in Cairo**  
+B.S. in Computer Science  
+Minor: Mathematics
+:::
+::: {.text-end}
+Cairo, Egypt  
+Granted 1999 
+:::
+:::
+
+<!-- **Boston University** | Boston, MA -->
+
+<!-- PhD in Economics | 2008-2014 2008 - 2014  -->
+
+<!-- With a focus on development economics, health economics, and experimental economics. -->
+
+## Experience
+
+::: {.d-flex .justify-content-between}
+::: {}
+**Independent Researcher**  
+:::
+::: {.text-end}
+Nov 2022 - present
+:::
+:::
+
+* Designed and built a Julia [package](https://www.github.com/karimn/FundingPOMDPs.jl) for a reinforcement learning solution (partially observable Markov decision process), using Monte Carlo tree search, to optimize intervention implementation and evaluation decisions.
+* Used Bayesian hierarchical models to predict future states in POMDP.
+* Used particle filters for faster online planning.
+* Project writeup: [The Funder's Meta-Problem](https://karimn.github.io/effective-funding/funder-meta-problem-1.html) 
+
+::: {.d-flex .justify-content-between}
+::: {}
+**Senior Data Scientist - Opendoor**  
+:::
+::: {.text-end}
+May 2021 - May 2022 
+:::
+:::
+
+* Designed and built continuous randomized experiments to estimate and predict demand and supply elasticity in real estate markets. These were the principal models used in determining offers for home buying/selling.
+* Used Gaussian processes to construct nonlinear time-series prediction models. 
+* Used hierarchical models to capture heterogeneity in different markets, offer types, etc.
+* Designed a survival and time-series model to capture the duration homes are on the market and how this affects elasticity.
+* Solicited stakeholders to capture prior beliefs about both the structure of models and distributional uncertainty, which is critical in facilitating decision-making in small data environments.
+* Designed non-experimental causal identification strategies for contexts where experiment manipulation is not possible.
+
+::: {.d-flex .justify-content-between}
+::: {}
+**Independent Researcher/Consultant**  
+:::
+::: {.text-end}
+May 2019 - May 2021 
+:::
+:::
+
+* [Built](https://www.github.com/karimn/takeup) a structural Bayesian model representing a behavior model, using data from a large-scale social experiment conducted in Kenya.
+* Worked on authoring an economics research paper on findings from the experiment.
+* [Built](https://github.com/karimn/covid-19-transmission) a hierarchical model to evaluate the effectiveness of a scaled economic intervention program in Bangladesh.
+* Used Gaussian processes to model correlation in intervention effects based on spatial proximity.
+* Designed and built a hierarchical model investigating the heterogeneity of COVID-19 transmission in different countries under different stay-at-home restrictions.
+* [Used](https://github.com/karimn/vaccine-model-fit) a simulated method of moments approach to fit the AcceleratingHT model’s parameters to the CGD model’s predictions of vaccine success.
+* Implemented R [package](https://www.github.com/karimn/boundr) for bounded identification of counterfactuals, in directed acyclic graphs, in the presence of imperfect compliance with experimental treatment assignment.
+
+::: {.d-flex .justify-content-between}
+::: {}
+**Economist - _Evidence Action_**
+:::
+::: {.text-end}
+May 2014 - May 2019 
+:::
+:::
+
+* Designed and oversaw the implementation of two large-scale experiments in Kenya and Bangladesh, evaluating interventions aimed at altering health behavior and incentivizing seasonal migration to fight malnutrition, respectively.
+* Responsible for evaluating any evidence-based decisions by the organization. 
+
+::: {.d-flex .justify-content-between}
+::: {}
+**Software Design Engineer in Test - _Microsoft_**
+:::
+::: {.text-end}
+Apr 1999 - Mar 2007 
+:::
+:::
+
+* Constructed testing framework for the Windows Debugging Tools and command line utilities. 
+
+## Working Papers
+
+* Harrison Mitchell, A. Mushfiq Mobarak, Karim Naguib, Maira Reimão, and Ashish Shenoy, “External Validity and Implementation at Scale: Evidence from a Migration Loan Program in Bangladesh.”
+* Edward Jee, Anne Karing, and Karim Naguib, “Optimal Incentives in the Presence of Social Norms: Experimental Evidence from Kenya.”

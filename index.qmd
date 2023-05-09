@@ -1,11 +1,5 @@
 ---
-title: "karimn.github.io"
+title: "Karim Naguib"
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
-
-```{r}
-1 + 1
-```
+Hi! This is a (hopefully) temporary placeholder for my website.

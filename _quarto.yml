@@ -3,18 +3,23 @@ project:
   output-dir: docs
 
 website:
-  title: "karimn.github.io"
+  title: "Karim Naguib"
+  google-analytics: "G-EHSCXXKXD8"
   navbar:
     left:
       - href: index.qmd
         text: Home
       - about.qmd
+    tools:
+      - icon: github
+        href: https://www.github.com/karimn
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
+    page-layout: full
 
 
 
