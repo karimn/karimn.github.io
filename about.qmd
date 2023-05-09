@@ -65,7 +65,7 @@ Nov 2022 - present
 
 ::: {.d-flex .justify-content-between}
 ::: {}
-**Senior Data Scientist - Opendoor**  
+**Senior Data Scientist - _Opendoor_**  
 :::
 ::: {.text-end}
 May 2021 - May 2022 
