@@ -10,6 +10,8 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
+      - href: research.qmd
+        icon: lightbulb
     tools:
       - icon: github
         href: https://www.github.com/karimn
