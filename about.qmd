@@ -62,6 +62,7 @@ Nov 2022 - present
 * Used Bayesian hierarchical models to predict future states in POMDP.
 * Used particle filters for faster online planning.
 * Project writeup: [The Funder's Meta-Problem](https://karimn.github.io/effective-funding/funder-meta-problem-1.html) 
+* [Implementing](https://github.com/karimn/grokking-drl) various deep reinforcement learning agents and models using Julia and Flux.jl.
 
 ::: {.d-flex .justify-content-between}
 ::: {}
