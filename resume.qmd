@@ -1,0 +1,119 @@
+---
+title: "Karim Naguib"
+format:
+  pdf:
+    documentclass: article
+    geometry:
+      - top=0.7in
+      - bottom=0.7in
+      - left=0.7in
+      - right=0.7in
+    fontsize: 11pt
+    linestretch: 1.1
+    mainfont: "Times New Roman"
+    include-in-header:
+      text: |
+        \usepackage{enumitem}
+        \setlist{nosep, leftmargin=1.2em}
+        \usepackage{titlesec}
+        \titlespacing{\section}{0pt}{12pt}{6pt}
+        \titlespacing{\subsection}{0pt}{8pt}{4pt}
+        \usepackage{hyperref}
+        \hypersetup{
+          colorlinks=true,
+          linkcolor=black,
+          urlcolor=blue
+        }
+---
+
+\begin{center}
+\vspace{2mm}
+Economist/Data Scientist | Bayesian Methods \& Causal Inference\\
+\href{mailto:karim.a.naguib@gmail.com}{karim.a.naguib@gmail.com} | \href{https://karimn.github.io}{karimn.github.io} | \href{https://github.com/karimn}{github.com/karimn}
+\end{center}
+
+\vspace{4mm}
+
+## Summary
+
+Economist/data scientist with 9+ years of experience in **causal inference**, **experiment design**, and **statistical modeling**. Currently applying advanced Bayesian methods in oncology drug development at AstraZeneca. Expert in building **hierarchical state-space models**, **survival analysis**, and **clinical trial analytics** using R, Stan, and Julia. Experienced in using **Bayesian networks** for causal identification in experimental and non-experimental contexts. Proficient in **reinforcement learning** for partially observable environments. Focused on rigorous quantification of uncertainty for decision-making.
+
+## Skills
+
+**Programming:** R, Tidyverse, Stan, Julia, Flux.jl, Turing.jl, C/C++, Ruby, Python, SQL
+
+**Statistical Methods:** Hierarchical modeling, Gaussian processes, state-space models, survival analysis, experimental design, instrumental variables, difference-in-differences, regression discontinuity, deep reinforcement learning, particle filters, Monte Carlo methods, Bayesian neural networks
+
+**Tools:** RStudio, VS Code, AWS EC2/S3/ECR, Azure, Docker, Cluster Computing (SLURM), Databricks, Git and Github, Snowflake, PostgreSQL, cmdstanr, targets workflow management, Domino, agentic AI (Claude, ChatGPT)
+
+## Education
+
+**Boston University** | Boston, MA | **Ph.D. in Economics** | 2014  
+*Focus: Development economics, health economics, and experimental economics*
+
+**The American University in Cairo** | Cairo, Egypt | **B.S. in Computer Science, Minor: Mathematics** | 1999
+
+## Experience
+
+**Senior Data Scientist** | **AstraZeneca** | Aug 2023 - present
+
+*Advanced Bayesian State-Space Modeling for Oncology Clinical Trials*
+
+- Developed sophisticated hierarchical Bayesian state-space models for tumor growth dynamics using the Stein-Fojo framework with simultaneous regression and growth components
+- Implemented log-transformed state-space formulation with Gaussian process temporal correlations for irregular time intervals
+- Built comprehensive Stan models with efficient MCMC sampling across population, trial, and patient levels
+- Created scalable computational framework for patient-level state calculations
+- Developed RECIST response prediction models for clinical decision support
+- Integrated survival analysis with competing risks for progression-free survival and overall survival endpoints
+- Implemented real-time forecasting capabilities for censored patients
+- Created comprehensive validation framework with leave-future-out cross-validation for temporal model validation
+
+**Independent Researcher** | Nov 2022 - Aug 2023
+
+*Reinforcement Learning for Intervention Optimization*
+
+- Designed and built a [Julia package](https://www.github.com/karimn/FundingPOMDPs.jl) for a reinforcement learning solution (partially observable Markov decision process), using Monte Carlo tree search, to optimize intervention implementation and evaluation decisions
+- Used Bayesian hierarchical models to predict future states in POMDP
+- Used particle filters for faster online planning
+- Project writeup: [The Funder's Meta-Problem](https://karimn.github.io/effective-funding/funder-meta-problem-1.html)
+- [Implemented](https://github.com/karimn/grokking-drl) various deep reinforcement learning agents and models using Julia and Flux.jl
+
+**Senior Data Scientist** | **Opendoor** | May 2021 - May 2022
+
+- Designed and built continuous randomized experiments to estimate and predict demand and supply elasticity in real estate markets. These were the principal models used in determining offers for home buying/selling
+- Used Gaussian processes to construct nonlinear time-series prediction models
+- Used hierarchical models to capture heterogeneity in different markets, offer types, etc.
+- Designed a survival and time-series model to capture the duration homes are on the market and how this affects elasticity
+- Solicited stakeholders to capture prior beliefs about both the structure of models and distributional uncertainty, which is critical in facilitating decision-making in small data environments
+- Designed non-experimental causal identification strategies for contexts where experiment manipulation is not possible
+
+**Independent Researcher/Consultant** | May 2019 - May 2021
+
+- [Built](https://www.github.com/karimn/takeup) a structural Bayesian model representing a behavior model, using data from a large-scale social experiment conducted in Kenya
+- Worked on authoring an economics research paper on findings from the experiment
+- [Built](https://github.com/karimn/covid-19-transmission) a hierarchical model to evaluate the effectiveness of a scaled economic intervention program in Bangladesh
+- Used Gaussian processes to model correlation in intervention effects based on spatial proximity
+- Designed and built a hierarchical model investigating the heterogeneity of COVID-19 transmission in different countries under different stay-at-home restrictions
+- [Used](https://github.com/karimn/vaccine-model-fit) a simulated method of moments approach to fit the AcceleratingHT model's parameters to the CGD model's predictions of vaccine success
+- Implemented R [package](https://www.github.com/karimn/boundr) for bounded identification of counterfactuals, in directed acyclic graphs, in the presence of imperfect compliance with experimental treatment assignment
+
+**Economist** | **Evidence Action** | May 2014 - May 2019
+
+- Designed and oversaw the implementation of two large-scale experiments in Kenya and Bangladesh, evaluating interventions aimed at altering health behavior and incentivizing seasonal migration to fight malnutrition, respectively
+- Responsible for evaluating any evidence-based decisions by the organization
+
+**Software Design Engineer in Test** | **Microsoft** | Apr 1999 - Mar 2007
+
+- Constructed testing framework for the Windows Debugging Tools and command line utilities
+
+## Publications
+
+**Published**
+
+Nathan Barker, C. Austin Davis, Paula López-Peña, Harrison Mitchell, Ahmed Mushfiq Mobarak, Karim Naguib, Maira Reimão, Ashish Shenoy, and Corey Vernot, "Migration and Resilience during a Global Crisis." *European Economic Review* (Accepted)
+
+**Working Papers**
+
+Harrison Mitchell, A. Mushfiq Mobarak, Karim Naguib, Maira Reimão, and Ashish Shenoy, "External Validity and Implementation at Scale: Evidence from a Migration Loan Program in Bangladesh."
+
+Edward Jee, Anne Karing, and Karim Naguib, "Optimal Incentives in the Presence of Social Norms: Experimental Evidence from Kenya."

@@ -1,5 +1,3 @@
 ---
 title: "Karim Naguib"
 ---
-
-Hi! This is a (hopefully) temporary placeholder for my website.

@@ -2,17 +2,28 @@
 title: "About"
 ---
 
-I am an economist/data scientist with 8+ years of experience in **causal inference**, **experiment design**, and **statistical modeling**. Expert in building **Bayesian machine learning** models using R, Stan, and Julia, and using **Bayesian networks** for causal identification in experimental and non-experimental contexts. Proficient in **(deep) reinforcement learning** for partially observable environments. Focused on rigorous quantification of uncertainty for decision-making.
+I am an economist/data scientist with 9+ years of experience in **causal inference**, **experiment design**, and **statistical modeling**. Currently applying advanced Bayesian methods in oncology drug development at AstraZeneca. Expert in building **hierarchical state-space models**, **survival analysis**, and **clinical trial analytics** using R, Stan, and Julia. Experienced in using **Bayesian networks** for causal identification in experimental and non-experimental contexts. Proficient in **reinforcement learning** for partially observable environments. Focused on rigorous quantification of uncertainty for decision-making.
+
+::: {.text-center}
+[📄 Download Resume (PDF)](resume.pdf){.btn .btn-primary}
+:::
 
 ## Skills
 
 ### Programming
 
-R, Tidyverse, Stan, Julia, Flux.jl, Turing.jl, C/C++, Ruby, Python, SQL
+**Expert:** R, Tidyverse, Stan, Julia, Flux.jl, Turing.jl  
+**Proficient:** C/C++, Ruby, Python, SQL
+
+### Statistical Methods
+
+**Advanced Bayesian Methods:** Hierarchical modeling, Gaussian processes, state-space models, survival analysis  
+**Causal Inference:** Experimental design, instrumental variables, difference-in-differences, regression discontinuity  
+**Machine Learning:** Deep reinforcement learning, particle filters, Monte Carlo methods, Bayesian neural networks
 
 ### Tools
 
-RStudio, VS Code, AWS EC2/S3/ECR, Azure, Docker, Cluster Computing (SLURM), Databricks, Git and Github, Snowflake, PostgreSQL
+RStudio, VS Code, AWS EC2/S3/ECR, Azure, Docker, Cluster Computing (SLURM), Databricks, Git and Github, Snowflake, PostgreSQL, cmdstanr, targets workflow management, Domino, agentic AI (Claude, ChatGPT)
 
 
 ## Education
@@ -27,7 +38,7 @@ Boston, MA
 Granted 2014
 :::
 :::
-With a focus on development economics, health economics, and experimental economics.
+*Focus: Development economics, health economics, and experimental economics*
 
 ::: {.d-flex .justify-content-between}
 ::: {}
@@ -51,18 +62,40 @@ Granted 1999
 
 ::: {.d-flex .justify-content-between}
 ::: {}
-**Independent Researcher**  
+**Senior Data Scientist - _AstraZeneca_**  
 :::
 ::: {.text-end}
-Nov 2022 - present
+Aug 2023 - present
 :::
 :::
 
-* Designed and built a Julia [package](https://www.github.com/karimn/FundingPOMDPs.jl) for a reinforcement learning solution (partially observable Markov decision process), using Monte Carlo tree search, to optimize intervention implementation and evaluation decisions.
-* Used Bayesian hierarchical models to predict future states in POMDP.
-* Used particle filters for faster online planning.
-* Project writeup: [The Funder's Meta-Problem](https://karimn.github.io/effective-funding/funder-meta-problem-1.html) 
-* [Implementing](https://github.com/karimn/grokking-drl) various deep reinforcement learning agents and models using Julia and Flux.jl.
+**Advanced Bayesian State-Space Modeling for Oncology Clinical Trials**
+
+* Developed sophisticated hierarchical Bayesian state-space models for tumor growth dynamics using the Stein-Fojo framework with simultaneous regression and growth components
+* Implemented log-transformed state-space formulation with Gaussian process temporal correlations for irregular time intervals
+* Built comprehensive Stan models with efficient MCMC sampling across population, trial, and patient levels
+* Created scalable computational framework for patient-level state calculations
+* Developed RECIST response prediction models for clinical decision support
+* Integrated survival analysis with competing risks for progression-free survival and overall survival endpoints
+* Implemented real-time forecasting capabilities for censored patients
+* Created comprehensive validation framework with leave-future-out cross-validation for temporal model validation
+
+::: {.d-flex .justify-content-between}
+::: {}
+**Independent Researcher**  
+:::
+::: {.text-end}
+Nov 2022 - Aug 2023
+:::
+:::
+
+**Reinforcement Learning for Intervention Optimization (2022-2023)**
+
+* Designed and built a [Julia package](https://www.github.com/karimn/FundingPOMDPs.jl) for a reinforcement learning solution (partially observable Markov decision process), using Monte Carlo tree search, to optimize intervention implementation and evaluation decisions
+* Used Bayesian hierarchical models to predict future states in POMDP
+* Used particle filters for faster online planning
+* Project writeup: [The Funder's Meta-Problem](https://karimn.github.io/effective-funding/funder-meta-problem-1.html)
+* [Implemented](https://github.com/karimn/grokking-drl) various deep reinforcement learning agents and models using Julia and Flux.jl
 
 ::: {.d-flex .justify-content-between}
 ::: {}
