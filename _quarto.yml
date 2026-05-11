@@ -33,7 +33,7 @@ website:
       - icon: envelope
         href: mailto:karim.a.naguib@gmail.com
   page-footer:
-    left: "© Karim Naguib — Built with Quarto"
+    left: "© Karim Naguib — Built with Quarto & Claude Code"
     right: "[karim.a.naguib@gmail.com](mailto:karim.a.naguib@gmail.com)"
 
 format:
