@@ -1,0 +1,695 @@
+/*-- scss:defaults --*/
+
+// ------------------------------------------------------------
+// Editorial-Scientific — a reading-first palette & type system
+// Inspired by Butterick, Tufte, Stan Documentation, Gwern.
+// ------------------------------------------------------------
+
+// Type
+$font-family-serif:     "Newsreader", "Source Serif 4", Iowan Old Style, Georgia, serif;
+$font-family-display:   "Fraunces", "Newsreader", Georgia, serif;
+$font-family-mono:      "IBM Plex Mono", "SF Mono", Menlo, monospace;
+
+$font-family-base:      $font-family-serif;
+$headings-font-family:  $font-family-display;
+$font-family-monospace: $font-family-mono;
+
+$font-size-base:        1.125rem;   // 18px body; generous reading size
+$line-height-base:      1.65;
+
+// Color
+$paper:         #FAF8F3;            // warm off-white ground
+$paper-tint:    #F3EDDF;            // alt sections, blockquotes
+$ink:           #1a1612;            // warm near-black
+$ink-soft:      #3d3530;            // secondary text
+$ink-muted:     #8a7f70;            // dates, metadata, small caps
+$accent:        #7c2b1f;            // oxblood — links, markers
+$accent-soft:   #a85545;            // hover
+$rule:          #d9d1c0;            // hairline dividers
+$highlight:     #f0d99c;            // pull highlight (sparingly)
+
+$body-bg:       $paper;
+$body-color:    $ink;
+$link-color:    $accent;
+$link-hover-color: $accent-soft;
+
+// Bootstrap knobs
+$navbar-bg:          $paper;
+$navbar-light-color: $ink-soft;
+$navbar-light-hover-color: $accent;
+$navbar-light-active-color: $ink;
+$navbar-padding-y:   1.25rem;
+$border-radius:      0;            // no rounded corners — feel typographic, not app-like
+$border-radius-sm:   0;
+$border-radius-lg:   0;
+
+// Headings
+$h1-font-size:  3.25rem;
+$h2-font-size:  2rem;
+$h3-font-size:  1.35rem;
+$h4-font-size:  1.15rem;
+$headings-font-weight: 500;
+$headings-line-height: 1.2;
+
+/*-- scss:rules --*/
+
+// ------------------------------------------------------------
+// Typography
+// ------------------------------------------------------------
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..700,0..100,0..1&family=Newsreader:ital,opsz,wght@0,6..72,200..700;1,6..72,200..700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+html {
+  background: $paper;
+}
+
+body {
+  font-family: $font-family-serif;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  color: $ink;
+  background: $paper;
+  font-feature-settings: "onum" 1, "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+// Display headings: Fraunces with optical sizing and slight "wonk"
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: $font-family-display;
+  color: $ink;
+  font-feature-settings: "ss01" 1, "kern" 1;
+  letter-spacing: -0.01em;
+}
+
+h1, .h1 {
+  font-variation-settings: "opsz" 120, "SOFT" 30, "WONK" 1;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+h2, .h2 {
+  font-variation-settings: "opsz" 48, "SOFT" 40;
+  font-weight: 500;
+  margin-top: 3.5rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid $rule;
+  letter-spacing: -0.015em;
+}
+
+h3, .h3 {
+  font-variation-settings: "opsz" 18, "SOFT" 50;
+  font-weight: 600;
+  margin-top: 2.25rem;
+  margin-bottom: 0.5rem;
+  color: $ink;
+}
+
+h4, .h4 {
+  font-family: $font-family-mono;
+  font-size: 0.78rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: $ink-muted;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+a {
+  color: $accent;
+  text-decoration: none;
+  background-image: linear-gradient(to bottom, transparent 92%, rgba($accent, 0.35) 92%, rgba($accent, 0.35) 97%, transparent 97%);
+  background-repeat: no-repeat;
+  transition: background-image 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    color: $accent-soft;
+    background-image: linear-gradient(to bottom, transparent 90%, rgba($accent-soft, 0.6) 90%, rgba($accent-soft, 0.6) 98%, transparent 98%);
+  }
+}
+
+p {
+  margin-bottom: 1.15rem;
+  hanging-punctuation: first last;
+}
+
+strong, b {
+  font-weight: 600;
+  color: $ink;
+}
+
+em, i {
+  font-style: italic;
+}
+
+blockquote {
+  border-left: 2px solid $accent;
+  padding: 0.25rem 1.25rem;
+  margin: 1.5rem 0;
+  color: $ink-soft;
+  font-style: italic;
+  background: transparent;
+}
+
+code, kbd, samp, pre {
+  font-family: $font-family-mono;
+  font-size: 0.88em;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid $rule;
+  margin: 3rem 0;
+}
+
+// ------------------------------------------------------------
+// Layout
+// ------------------------------------------------------------
+
+.page-columns,
+.page-layout-full {
+  background: $paper;
+}
+
+main.content,
+#quarto-document-content,
+.quarto-title-block + *,
+.page-columns > .content {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1.5rem;
+}
+
+// Reset Quarto's default title block to an editorial masthead
+.quarto-title-block {
+  max-width: 720px;
+  margin: 4rem auto 2.5rem;
+  padding: 0 1.5rem;
+
+  .quarto-title {
+    margin-bottom: 0.75rem;
+  }
+
+  h1.title {
+    font-size: 3.75rem;
+    line-height: 1.02;
+    font-variation-settings: "opsz" 144, "SOFT" 20, "WONK" 1;
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    margin: 0 0 0.5rem;
+  }
+
+  .description, .subtitle {
+    font-family: $font-family-mono;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.72rem;
+    color: $ink-muted;
+    margin-top: 0.75rem;
+  }
+}
+
+// Hairline below the masthead
+.quarto-title-block::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 2px;
+  background: $accent;
+  margin-top: 1.75rem;
+}
+
+// ------------------------------------------------------------
+// Navbar — editorial header
+// ------------------------------------------------------------
+
+.navbar {
+  background: $paper !important;
+  border-bottom: 1px solid $rule;
+  padding: 1.25rem 2rem;
+
+  .navbar-brand {
+    font-family: $font-family-display;
+    font-variation-settings: "opsz" 24, "SOFT" 30;
+    font-weight: 500;
+    font-size: 1.15rem;
+    color: $ink !important;
+    letter-spacing: -0.01em;
+  }
+
+  .navbar-nav .nav-link {
+    font-family: $font-family-mono;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: $ink-soft !important;
+    padding: 0.5rem 1rem;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: $accent !important;
+    }
+
+    &.active {
+      color: $ink !important;
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        left: 1rem;
+        right: 1rem;
+        bottom: 0.25rem;
+        height: 1px;
+        background: $accent;
+      }
+    }
+  }
+
+  .navbar-toggler {
+    border: 1px solid $rule;
+  }
+}
+
+// Hide the right-side tools in navbar (github icon) — give a cleaner header
+// Actually keep it but restyle.
+.navbar .quarto-navbar-tools a {
+  color: $ink-soft !important;
+  &:hover { color: $accent !important; }
+}
+
+// ------------------------------------------------------------
+// TOC
+// ------------------------------------------------------------
+
+#TOC, .sidebar-navigation, nav[role="doc-toc"] {
+  font-family: $font-family-mono;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+
+  a {
+    color: $ink-muted;
+    background-image: none;
+    &:hover, &.active {
+      color: $accent;
+    }
+  }
+}
+
+// ------------------------------------------------------------
+// Custom components: the "experience entry" pattern
+// Uses a CSS grid to place dates in the margin on wide screens.
+// ------------------------------------------------------------
+
+.d-flex.justify-content-between {
+  display: grid !important;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid $rule;
+
+  > div:first-child {
+    font-family: $font-family-display;
+    font-size: 1.15rem;
+    font-weight: 600;
+    font-variation-settings: "opsz" 18;
+    color: $ink;
+
+    em {
+      color: $accent;
+      font-style: italic;
+      font-weight: 500;
+    }
+  }
+
+  > .text-end {
+    font-family: $font-family-mono;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: $ink-muted;
+    text-align: right;
+    white-space: nowrap;
+    padding-top: 0.2rem;
+  }
+}
+
+// Education block — no border, softer
+.education .d-flex.justify-content-between {
+  border-top: none;
+  margin-top: 1rem;
+  padding-top: 0;
+}
+
+// ------------------------------------------------------------
+// Buttons — flat, editorial
+// ------------------------------------------------------------
+
+.btn,
+.btn-primary {
+  font-family: $font-family-mono;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  padding: 0.75rem 1.5rem;
+  background: $ink;
+  color: $paper !important;
+  border: 1px solid $ink;
+  border-radius: 0;
+  transition: all 0.15s ease;
+  background-image: none;
+
+  &:hover {
+    background: $accent;
+    border-color: $accent;
+    color: $paper !important;
+  }
+
+  + .btn, + .btn-primary {
+    margin-left: 0.5rem;
+  }
+}
+
+// Secondary / ghost variant
+.btn-ghost {
+  background: transparent;
+  color: $ink !important;
+  border: 1px solid $ink-muted;
+
+  &:hover {
+    background: $ink;
+    color: $paper !important;
+    border-color: $ink;
+  }
+}
+
+// ------------------------------------------------------------
+// Lists — tighter, editorial
+// ------------------------------------------------------------
+
+ul, ol {
+  padding-left: 1.25rem;
+  margin-bottom: 1.25rem;
+
+  li {
+    margin-bottom: 0.45rem;
+  }
+
+  li::marker {
+    color: $accent;
+  }
+}
+
+// ------------------------------------------------------------
+// Footer
+// ------------------------------------------------------------
+
+.nav-footer, footer.footer {
+  background: $paper;
+  border-top: 1px solid $rule;
+  color: $ink-muted;
+  font-family: $font-family-mono;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  padding: 2rem;
+  margin-top: 5rem;
+
+  a {
+    color: $ink-soft;
+    background-image: none;
+    &:hover { color: $accent; }
+  }
+}
+
+// ------------------------------------------------------------
+// Custom: home-page masthead, project cards, project meta
+// ------------------------------------------------------------
+
+.masthead {
+  max-width: 720px;
+  margin: 5rem auto 3rem;
+  padding: 0 1.5rem;
+
+  .masthead-eyebrow {
+    font-family: $font-family-mono;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.72rem;
+    color: $ink-muted;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-family: $font-family-display;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1;
+    font-variation-settings: "opsz" 144, "SOFT" 10, "WONK" 1;
+    font-weight: 350;
+    letter-spacing: -0.04em;
+    margin: 0 0 2rem;
+    color: $ink;
+  }
+
+  .masthead-lede {
+    font-family: $font-family-serif;
+    font-size: 1.35rem;
+    line-height: 1.5;
+    color: $ink-soft;
+    font-weight: 300;
+    max-width: 38ch;
+    margin-bottom: 2.5rem;
+
+    em { color: $accent; font-style: italic; }
+    strong { color: $ink; font-weight: 500; }
+  }
+}
+
+// Availability / "open for work" block under the masthead
+.availability {
+  max-width: 720px;
+  margin: 2.5rem auto 1rem;
+  padding: 2rem 2rem 2rem 2.25rem;
+  background: $paper-tint;
+  border-left: 3px solid $accent;
+  position: relative;
+
+  .availability-label {
+    font-family: $font-family-mono;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.7rem;
+    color: $accent;
+    margin-bottom: 0.75rem;
+  }
+
+  .availability-text {
+    font-family: $font-family-serif;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: $ink;
+    margin-bottom: 1.5rem;
+
+    strong {
+      color: $ink;
+      font-weight: 600;
+    }
+  }
+
+  .availability-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+
+    .btn + .btn {
+      margin-left: 0;
+    }
+  }
+}
+
+.signposts {
+  max-width: 720px;
+  margin: 4rem auto;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  border-top: 1px solid $rule;
+  padding-top: 3rem;
+
+  .signpost {
+    .signpost-label {
+      font-family: $font-family-mono;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.7rem;
+      color: $ink-muted;
+      margin-bottom: 0.5rem;
+    }
+    h3 {
+      font-family: $font-family-display;
+      font-variation-settings: "opsz" 24, "SOFT" 30;
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin: 0 0 0.5rem;
+      a {
+        color: $ink;
+        background-image: none;
+        &:hover { color: $accent; }
+      }
+    }
+    p {
+      font-size: 0.95rem;
+      color: $ink-soft;
+      margin: 0;
+    }
+  }
+}
+
+// Home featured quote / pullout
+.feature-quote {
+  max-width: 720px;
+  margin: 4rem auto;
+  padding: 2.5rem 1.5rem;
+  border-top: 1px solid $rule;
+  border-bottom: 1px solid $rule;
+
+  .quote-text {
+    font-family: $font-family-display;
+    font-size: 1.65rem;
+    line-height: 1.35;
+    font-variation-settings: "opsz" 72, "SOFT" 30, "WONK" 1;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    color: $ink;
+    em { color: $accent; }
+  }
+
+  .quote-meta {
+    font-family: $font-family-mono;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: $ink-muted;
+    margin-top: 1.25rem;
+  }
+}
+
+// Project page: each project is an editorial entry
+.project {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid $rule;
+
+  .project-number {
+    font-family: $font-family-mono;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    color: $accent;
+    margin-bottom: 0.75rem;
+  }
+
+  h3 {
+    font-family: $font-family-display;
+    font-size: 1.85rem;
+    line-height: 1.2;
+    font-variation-settings: "opsz" 60, "SOFT" 30, "WONK" 1;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: $ink;
+    margin: 0 0 2rem;
+    max-width: 30ch;
+  }
+
+  .project-section {
+    margin-bottom: 1.5rem;
+
+    .project-section-label {
+      font-family: $font-family-mono;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: $accent;
+      margin-bottom: 0.35rem;
+    }
+  }
+}
+
+// Research blockquotes: paper abstracts
+.quarto-content > blockquote,
+main > blockquote,
+#quarto-document-content > blockquote {
+  font-family: $font-family-serif;
+  font-size: 1rem;
+  font-style: normal;
+  line-height: 1.6;
+  color: $ink-soft;
+  background: $paper-tint;
+  border-left: 2px solid $accent;
+  padding: 1.25rem 1.5rem;
+  margin: 1rem 0 2rem;
+}
+
+// Research entry: paper title
+main > p > strong:first-child,
+.research-entry strong {
+  font-family: $font-family-display;
+  font-size: 1.1rem;
+  font-variation-settings: "opsz" 24;
+}
+
+// ------------------------------------------------------------
+// Small details — selection color, focus, scroll
+// ------------------------------------------------------------
+
+::selection {
+  background: $highlight;
+  color: $ink;
+}
+
+:focus-visible {
+  outline: 2px solid $accent;
+  outline-offset: 2px;
+}
+
+// Remove Quarto's default action-bar / toolbar clutter
+.quarto-title-meta, .quarto-title-meta-heading {
+  font-family: $font-family-mono;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: $ink-muted;
+}
+
+// ------------------------------------------------------------
+// Responsive refinements
+// ------------------------------------------------------------
+
+@media (max-width: 768px) {
+  h1, .h1 { font-size: 2.5rem; }
+  h2, .h2 { font-size: 1.65rem; }
+
+  .masthead h1 { font-size: 3rem; }
+  .masthead .masthead-lede { font-size: 1.15rem; }
+
+  .d-flex.justify-content-between {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+    > .text-end {
+      text-align: left;
+    }
+  }
+
+  .quarto-title-block h1.title { font-size: 2.5rem; }
+
+  .navbar {
+    padding: 1rem 1.25rem;
+  }
+}

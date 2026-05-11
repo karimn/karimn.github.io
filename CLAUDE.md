@@ -1,0 +1,49 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Overview
+
+This is a personal academic/professional website for Karim Naguib, built with [Quarto](https://quarto.org/). It renders to static HTML in the `docs/` directory, which is served via GitHub Pages.
+
+## Build Commands
+
+```bash
+# Render the full website
+quarto render
+
+# Preview with live reload (serves at localhost:4985)
+quarto preview
+
+# Render a single file
+quarto render about.qmd
+
+# Render only the PDF resume
+quarto render resume.qmd --to pdf
+```
+
+The rendered output goes to `docs/` (configured in `_quarto.yml`). The `resume.pdf` in `docs/` is the compiled output of `resume.qmd`.
+
+## Architecture
+
+- **`_quarto.yml`** — site-wide config: navbar, theme (cosmo), output dir (`docs/`), Google Analytics
+- **`*.qmd`** — Quarto Markdown source files, one per page
+- **`styles.css`** — custom CSS overrides (currently minimal)
+- **`docs/`** — rendered HTML output committed to the repo for GitHub Pages
+- **`renv/`** — R package environment (only `renv` itself is tracked; the site uses no R packages beyond Quarto's built-in rendering)
+
+## Pages
+
+| File | Purpose |
+|------|---------|
+| `index.qmd` | Home/landing page |
+| `about.qmd` | Full bio, skills, experience, and publications listing |
+| `research.qmd` | Research papers with abstracts |
+| `resume.qmd` | PDF-only resume (rendered to `docs/resume.pdf`) |
+
+## Content Conventions
+
+- `about.qmd` and `resume.qmd` contain parallel content (bio, skills, experience, publications) — keep them in sync when updating either.
+- Research paper PDFs (`Kenya_Social_Multiplier-6.pdf`, `Paper_Migration_Disruption.pdf`) are stored at the repo root and copied to `docs/` on render.
+- Bootstrap utility classes (`.d-flex`, `.justify-content-between`, `.text-end`, `.text-center`) are used directly in `.qmd` files for layout since the theme is Cosmo (Bootstrap-based).
+- The `resume.qmd` uses raw LaTeX (`\begin{center}`, `\usepackage{...}`) in the header for PDF formatting — this file renders only to PDF, not HTML.

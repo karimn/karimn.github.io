@@ -1,3 +1,133 @@
 ---
-title: "Karim Naguib"
+pagetitle: "Karim Naguib"
+description: "Economist and applied Bayesian statistician. Digital-twin oncology tumor dynamics at AstraZeneca; prior work in development economics, real-estate market design, and reinforcement learning."
+author: "Karim Naguib"
 ---
+
+```{=html}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Karim Naguib",
+  "url": "https://karimn.github.io",
+  "email": "mailto:karim.a.naguib@gmail.com",
+  "jobTitle": "Senior Data Scientist",
+  "description": "Economist and applied Bayesian statistician specializing in hierarchical models for longitudinal and survival data. Current focus: patient-level digital-twin models of oncology tumor dynamics at AstraZeneca. Open to senior/staff roles applying Bayesian methods and causal inference in health, pharma, or high-stakes decision contexts.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Silver Spring",
+    "addressRegion": "MD",
+    "addressCountry": "US"
+  },
+  "workLocation": {
+    "@type": "Place",
+    "name": "Remote-first; open to hybrid"
+  },
+  "seeks": {
+    "@type": "JobPosting",
+    "title": "Senior / Staff Data Scientist or Biostatistician",
+    "description": "Applying Bayesian methods and causal inference in health, pharma, biotech, or high-stakes decision contexts."
+  },
+  "worksFor": {
+    "@type": "Organization",
+    "name": "AstraZeneca"
+  },
+  "alumniOf": [
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "Boston University",
+      "description": "Ph.D. in Economics, 2014"
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "The American University in Cairo",
+      "description": "B.S. in Computer Science (Minor: Mathematics), 1999"
+    }
+  ],
+  "knowsAbout": [
+    "Bayesian hierarchical modeling",
+    "State-space and longitudinal models",
+    "Multistate survival analysis and competing risks",
+    "Joint longitudinal-survival (digital twin) models",
+    "Cross-validation and predictive assessment (LFO-CV, PSIS-LOO)",
+    "MCMC diagnostics and prior sensitivity",
+    "Causal inference and randomized experiment design",
+    "Gaussian processes",
+    "Deep reinforcement learning",
+    "Reinforcement learning for intervention policy",
+    "Oncology clinical trial analytics",
+    "Drug development",
+    "Real-world evidence integration",
+    "Pharmaceutical statistics",
+    "Development economics",
+    "Health economics",
+    "Experimental economics",
+    "Field experiments",
+    "Stan",
+    "R",
+    "Julia",
+    "Agentic workflows for statistical modeling"
+  ],
+  "sameAs": [
+    "https://github.com/karimn",
+    "https://www.linkedin.com/in/karnag"
+  ]
+}
+</script>
+```
+
+::: {.masthead}
+
+::: {.masthead-eyebrow}
+Economist · Applied Bayesian Statistician
+:::
+
+# Karim Naguib
+
+::: {.masthead-lede}
+I build **hierarchical models** for longitudinal and survival data — currently patient-level *digital twins* of oncology tumor dynamics at AstraZeneca. Prior work spans field experiments in East Africa and South Asia, real-estate market design, and reinforcement learning for intervention policy.
+:::
+
+::: {.availability}
+::: {.availability-label}
+Currently
+:::
+::: {.availability-text}
+Open to **senior/staff roles** applying Bayesian methods and causal inference in health, pharma, or high-stakes decision contexts. Based in Silver Spring, MD — remote-first, flexible on hybrid.
+:::
+::: {.availability-cta}
+[Get in touch](mailto:karim.a.naguib@gmail.com){.btn}
+[Download CV](cv.pdf){.btn .btn-ghost}
+:::
+:::
+
+:::
+
+::: {.signposts}
+
+::: {.signpost}
+::: {.signpost-label}
+01 — Bio
+:::
+### [About](about.qmd)
+Background, experience, and the methods I work in.
+:::
+
+::: {.signpost}
+::: {.signpost-label}
+02 — Projects
+:::
+### [Projects](projects.qmd)
+Digital-twin tumor dynamics, multistate survival, LFO-CV, agentic Bayesian workflows.
+:::
+
+::: {.signpost}
+::: {.signpost-label}
+03 — Papers
+:::
+### [Research](research.qmd)
+Peer-reviewed and working papers on migration, incentives, and social norms.
+:::
+
+:::

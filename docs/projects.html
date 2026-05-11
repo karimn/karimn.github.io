@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Karim Naguib">
-<meta name="description" content="Bio, skills, and professional experience. Economist and applied Bayesian statistician building hierarchical models for longitudinal and survival data at AstraZeneca.">
+<meta name="description" content="Five Bayesian modeling projects: hierarchical state-space digital-twin tumor dynamics, multistate illness-death survival models, modular Stan inference infrastructure, leave-future-out cross-validation, and an agentic-workflow layer for statistical modeling.">
 
-<title>About – Karim Naguib</title>
+<title>Selected Technical Work – Karim Naguib</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -82,8 +82,8 @@ gtag('config', 'G-SQNTJM494V', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="About – Karim Naguib">
-<meta property="og:description" content="Bio, skills, and professional experience. Economist and applied Bayesian statistician building hierarchical models for longitudinal and survival data at AstraZeneca.">
+<meta property="og:title" content="Selected Technical Work – Karim Naguib">
+<meta property="og:description" content="Five Bayesian modeling projects: hierarchical state-space digital-twin tumor dynamics, multistate illness-death survival models, modular Stan inference infrastructure, leave-future-out cross-validation, and an agentic-workflow layer for statistical modeling.">
 <meta property="og:image" content="https://karimn.github.io/og-image.png">
 <meta property="og:site_name" content="Karim Naguib">
 <meta property="og:image:height" content="630">
@@ -112,11 +112,11 @@ gtag('config', 'G-SQNTJM494V', { 'anonymize_ip': true});
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./about.html" aria-current="page"> 
+    <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./projects.html"> 
+    <a class="nav-link active" href="./projects.html" aria-current="page"> 
 <span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
@@ -145,7 +145,7 @@ gtag('config', 'G-SQNTJM494V', { 'anonymize_ip': true});
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7">About</h1></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7">Selected Technical Work</h1></header>
 
 <header id="title-block-header">
 
@@ -154,143 +154,139 @@ gtag('config', 'G-SQNTJM494V', { 'anonymize_ip': true});
 </header>
 
 
-<p>Economist and applied Bayesian statistician with 10+ years building <strong>hierarchical models</strong> for <strong>longitudinal and survival data</strong>. Current focus: <strong>patient-level digital-twin models</strong> of oncology tumor dynamics and real-world evidence integration at AstraZeneca. Prior work spans field experiments in East Africa and South Asia, real-estate market design, and health-behavior interventions.</p>
-<div class="text-center" style="margin: 2.5rem 0;">
-<p><a href="mailto:karim.a.naguib@gmail.com" class="btn">Get in touch</a> <a href="resume.pdf" class="btn btn-ghost">Download Resume</a> <a href="cv.pdf" class="btn btn-ghost">Download CV</a></p>
+<p>Five projects that describe the shape of the modeling work I’ve been doing — problem, method, and what it moves.</p>
+<div class="project">
+<div class="project-number">
+<p>01</p>
 </div>
-<section id="skills" class="level2">
-<h2 data-anchor-id="skills">Skills</h2>
-<section id="methods" class="level4">
-<h4 data-anchor-id="methods">Methods</h4>
-<p><strong>Bayesian Modeling.</strong> Hierarchical modeling, state-space and longitudinal models, Gaussian processes, MCMC diagnostics and prior sensitivity</p>
-<p><strong>Survival Analysis.</strong> Multistate and illness-death models, competing risks, joint longitudinal–survival (“digital twin”) models</p>
-<p><strong>Validation.</strong> Cross-validation and predictive assessment (LFO-CV, PSIS-LOO)</p>
-<p><strong>Causal Inference.</strong> Experimental design, instrumental variables, difference-in-differences, regression discontinuity</p>
-<p><strong>Machine Learning.</strong> Deep reinforcement learning, particle filters, Monte Carlo methods, Bayesian neural networks</p>
-</section>
-<section id="programming" class="level4">
-<h4 data-anchor-id="programming">Programming</h4>
-<p><strong>Expert.</strong> R, Tidyverse, Stan, Julia, Flux.jl, Turing.jl</p>
-<p><strong>Proficient.</strong> C/C++, Ruby, Python, SQL</p>
-</section>
-<section id="agentic-workflows-for-statistical-modeling" class="level4">
-<h4 data-anchor-id="agentic-workflows-for-statistical-modeling">Agentic Workflows for Statistical Modeling</h4>
-<p>Built and maintain an agentic-workflow layer on Claude Code, shared across the AstraZeneca modeling team via an internal plugin marketplace. Components include: <strong>collaborative mathematical derivation</strong> — working through statistical mathematics with Claude as a derivation partner before code is written; persistent memory for model-specific context; domain-specific sub-agents for Stan diagnostic triage, prior sensitivity review, and <code>targets</code> pipeline exploration; MCP-integrated skills for pipeline operations and Domino job management; reusable skill and plugin templates codifying team conventions for Bayesian workflow.</p>
-</section>
-<section id="tools" class="level4">
-<h4 data-anchor-id="tools">Tools</h4>
-<p>RStudio · VS Code · cmdstanr · <code>targets</code> workflow management · AWS EC2/S3/ECR · Azure · Docker · SLURM · Databricks · Domino · Git &amp; GitHub · Snowflake · PostgreSQL</p>
-</section>
-</section>
-<section id="education" class="level2">
-<h2 data-anchor-id="education">Education</h2>
-<div class="education">
-<div class="d-flex justify-content-between">
-<div>
-<p><strong>Boston University</strong> — Ph.D.&nbsp;in Economics</p>
+<section id="hierarchical-state-space-digital-twin-model-for-longitudinal-tumor-dynamics" class="level3">
+<h3 data-anchor-id="hierarchical-state-space-digital-twin-model-for-longitudinal-tumor-dynamics">Hierarchical state-space “digital twin” model for longitudinal tumor dynamics</h3>
+<div class="project-section">
+<div class="project-section-label">
+<p>Problem</p>
 </div>
-<div class="text-end">
-<p>Boston, MA · 2014</p>
+<p>Oncology trials generate repeated tumor-size measurements that carry early predictive signal for survival, but standard analyses either reduce them to crude categorical response (RECIST) or fit patient-by-patient curves that ignore between-study structure. A Phase 3 initiation decision needs patient-level forecasts that borrow appropriately from hierarchically related trials.</p>
 </div>
+<div class="project-section">
+<div class="project-section-label">
+<p>Method</p>
 </div>
-<p><em>Fields: development, health, and experimental economics</em></p>
-<div class="d-flex justify-content-between">
-<div>
-<p><strong>The American University in Cairo</strong> — B.S. in Computer Science (Minor: Mathematics)</p>
+<p>A Bayesian state-space “digital twin” model of log tumor size under a Stein-Fojo decay-plus-growth framework with a three-level hierarchy (population → trial → patient), non-centered parameterization, and Student-t priors on raw effects to absorb prior-data conflict in sparse strata. Each patient has a personalized posterior trajectory that borrows strength from their trial and the population. Implemented in Stan with modular include architecture; diagnostics include R-hat, ESS, E-BFMI, and prior–posterior conflict checks.</p>
 </div>
-<div class="text-end">
-<p>Cairo, Egypt · 1999</p>
+<div class="project-section">
+<div class="project-section-label">
+<p>Impact</p>
 </div>
-</div>
+<p>Extracts tumor-dynamics signal from Phase 2 and historical trial data to forecast Phase 3 outcomes at both population and patient levels, supporting Phase 3 initiation decisions on programs combining emerging trial evidence with real-world data.</p>
 </div>
 </section>
-<section id="experience" class="level2">
-<h2 data-anchor-id="experience">Experience</h2>
-<div class="d-flex justify-content-between">
-<div>
-<p>Senior Data Scientist — <em>AstraZeneca</em></p>
 </div>
-<div class="text-end">
-<p>Aug 2023 — present</p>
+<div class="project">
+<div class="project-number">
+<p>02</p>
 </div>
+<section id="multistate-illness-death-survival-model-for-competing-risk-decomposition" class="level3">
+<h3 data-anchor-id="multistate-illness-death-survival-model-for-competing-risk-decomposition">Multistate illness-death survival model for competing-risk decomposition</h3>
+<div class="project-section">
+<div class="project-section-label">
+<p>Problem</p>
 </div>
-<p>Bayesian digital-twin modeling for oncology clinical trials.</p>
-<ul>
-<li>Patient-level forecasting of Phase 3 outcomes from emerging Phase 2 evidence, historical trial data, and real-world data, supporting Phase 3 initiation decisions (Ph3ID).</li>
-<li>Hierarchical state-space tumor-dynamics models (Stein-Fojo framework) with population/trial/patient hierarchy, non-centered parameterization, and Student-t priors for prior-data conflict in sparse cohorts; validated with leave-future-out cross-validation.</li>
-<li>Multistate (illness-death) survival models decomposing progression-free survival, jointly fit with the tumor-dynamics model so patient-level latent burden drives progression hazard mechanistically.</li>
-<li>Modular Stan architecture and <code>targets</code>-based pipeline for reproducible trial analyses; routine work on R-hat, ESS, E-BFMI, divergences, and prior sensitivity.</li>
-<li>Agentic-workflow layer — collaborative mathematical derivation, diagnostic sub-agents, MCP-integrated pipelines — adopted by the modeling team for deriving and debugging hierarchical Bayesian models.</li>
-</ul>
-<div class="d-flex justify-content-between">
-<div>
-<p>Independent Researcher</p>
+<p>Progression-free survival bundles multiple distinct events — disease progression and death — under mechanisms that typically differ in hazard shape and covariate dependence. Conventional PFS analyses collapse this structure and can mislead trial-vs-historical comparisons when the event mix shifts between cohorts. And although much of progression is driven by underlying tumor-burden dynamics (SLD, PSA), important events are <em>not</em> automatically explained by burden — non-target lesion progression and clinical progression are clinician-adjudicated and not mechanically tied to the modelled burden trajectory.</p>
 </div>
-<div class="text-end">
-<p>Nov 2022 — Aug 2023</p>
+<div class="project-section">
+<div class="project-section-label">
+<p>Method</p>
 </div>
+<p>A Bayesian illness-death multistate model with three transitions (progression, death-without-progression, death-after-progression) <strong>jointly fitted with the mechanistic tumor-dynamics model</strong> above. The patient-level latent tumor state enters the progression hazard directly, so burden-driven progression is captured mechanistically; the multistate layer adds the structure needed for progression events <em>not</em> driven by modelled burden and for competing death hazards. The same framework supports treating informative dropout — non-administrative censoring and line-of-therapy switches — as explicit transitions rather than ignorable censoring. Trial-level hierarchy; interval censoring for assessment-gap uncertainty; weighted likelihood for downstream real-world-data borrowing.</p>
 </div>
-<p>Reinforcement learning for intervention optimization.</p>
-<ul>
-<li>Built a <a href="https://www.github.com/karimn/FundingPOMDPs.jl">Julia package</a> for a partially observable MDP solution using Monte Carlo tree search to optimize intervention implementation and evaluation decisions.</li>
-<li>Bayesian hierarchical models for future-state prediction inside the POMDP; particle filters for faster online planning.</li>
-<li>Project writeup: <a href="https://karimn.github.io/effective-funding/funder-meta-problem-1.html"><em>The Funder’s Meta-Problem</em></a>.</li>
-<li><a href="https://github.com/karimn/grokking-drl">Implemented</a> various deep RL agents and models using Julia and Flux.jl.</li>
-</ul>
-<div class="d-flex justify-content-between">
-<div>
-<p>Senior Data Scientist — <em>Opendoor</em></p>
+<div class="project-section">
+<div class="project-section-label">
+<p>Impact</p>
 </div>
-<div class="text-end">
-<p>May 2021 — May 2022</p>
+<p>Makes competing-risk and informative-censoring structure explicit in survival comparisons, enabling defensible hazard-level comparisons between trial arms and historical or real-world cohorts where event mix and follow-up structure differ.</p>
 </div>
+</section>
 </div>
-<ul>
-<li>Designed randomized experiments to estimate demand and supply elasticities for pricing policy across regional real-estate markets.</li>
-<li>Hierarchical Bayesian models and Gaussian-process priors over spatial/temporal structure to pool across markets while preserving local heterogeneity.</li>
-<li>Worked across experiment design, inference, and decision-facing deployment.</li>
-</ul>
-<div class="d-flex justify-content-between">
-<div>
-<p>Independent Researcher / Consultant</p>
+<div class="project">
+<div class="project-number">
+<p>03</p>
 </div>
-<div class="text-end">
-<p>May 2019 — May 2021</p>
+<section id="modular-bayesian-inference-infrastructure-for-clinical-trial-analyses" class="level3">
+<h3 data-anchor-id="modular-bayesian-inference-infrastructure-for-clinical-trial-analyses">Modular Bayesian inference infrastructure for clinical trial analyses</h3>
+<div class="project-section">
+<div class="project-section-label">
+<p>Problem</p>
 </div>
+<p>Bayesian trial models accumulate components (tumor dynamics, multistate survival, covariate effects, data-borrowing schemes) that are repeatedly recombined for different trial analyses; hand-rolled Stan models drift in interface and diagnostics across analyses, making results hard to reproduce and compare.</p>
 </div>
-<ul>
-<li><a href="https://www.github.com/karimn/takeup">Built</a> a structural Bayesian model representing a behavior model, using data from a large-scale social experiment conducted in Kenya.</li>
-<li><a href="https://github.com/karimn/covid-19-transmission">Built</a> a hierarchical model to evaluate a scaled economic intervention program in Bangladesh.</li>
-<li>Gaussian processes to model correlation in intervention effects by spatial proximity; hierarchical model of COVID-19 transmission heterogeneity under stay-at-home restrictions.</li>
-<li>R <a href="https://www.github.com/karimn/boundr">package</a> for bounded identification of counterfactuals in DAGs under imperfect compliance.</li>
-</ul>
-<div class="d-flex justify-content-between">
-<div>
-<p>Economist — <em>Evidence Action</em></p>
+<div class="project-section">
+<div class="project-section-label">
+<p>Method</p>
 </div>
-<div class="text-end">
-<p>May 2014 — May 2019</p>
+<p>A modular Stan architecture in which each sub-model (tumor regression, growth fraction, initial state, multistate hazards, measurement error, RWD borrowing) exposes a uniform 7-file interface — flags, data, hyperparameters, transformed data, parameters, transformed parameters, priors. Wired into a <code>targets</code>-based R pipeline with standardized diagnostics reports, prior-sensitivity checks, and reproducible artifact storage.</p>
 </div>
+<div class="project-section">
+<div class="project-section-label">
+<p>Impact</p>
 </div>
-<ul>
-<li>Designed and analyzed large-scale randomized evaluations for Evidence Action’s flagship programs: deworming across East Africa and the at-scale replication of the No Lean Season seasonal-migration subsidy in Bangladesh.</li>
-<li>On No Lean Season, contributed to the analysis that failed to replicate the earlier pilot’s effect on migration and consumption; the finding informed Evidence Action’s decision to close the program — <em>an instance of rigorous evidence driving a hard organizational decision</em>.</li>
-<li>Study design, power analysis, field data-collection supervision, and Bayesian and frequentist analysis for operational and policy audiences.</li>
-</ul>
-<div class="d-flex justify-content-between">
-<div>
-<p>Software Design Engineer in Test — <em>Microsoft</em></p>
+<p>Same components now feed multiple concurrent trial analyses with consistent diagnostics and priors; new model variants are composed rather than rewritten.</p>
 </div>
-<div class="text-end">
-<p>Apr 1999 — Mar 2007</p>
+</section>
 </div>
+<div class="project">
+<div class="project-number">
+<p>04</p>
 </div>
-<ul>
-<li>Testing framework for the Windows Debugging Tools and command-line utilities; C/C++, systems-level testing.</li>
-</ul>
+<section id="leave-future-out-cross-validation-for-hierarchical-longitudinalsurvival-models" class="level3">
+<h3 data-anchor-id="leave-future-out-cross-validation-for-hierarchical-longitudinalsurvival-models">Leave-future-out cross-validation for hierarchical longitudinal–survival models</h3>
+<div class="project-section">
+<div class="project-section-label">
+<p>Problem</p>
+</div>
+<p>Assessing the predictive accuracy of a patient-level tumor-dynamics and survival model requires scoring forecasts against data the model has not seen, but standard cross-validation (leave-one-out over visits or patients) conflates two kinds of held-out information — <em>future</em> observations from seen patients and <em>unseen patients at seen times</em> — and can make a model look better than it actually is at the forward-in-time forecasting task that matters for Phase 3 decision support. Leave-future-out cross-validation is well-established for time-series models (Bürkner, Gabry, Vehtari 2020) but is not routine for hierarchical longitudinal-plus-survival models, where validation typically leans on leave-one-subject-out or survival-specific summaries (time-dependent ROC, Brier scores).</p>
+</div>
+<div class="project-section">
+<div class="project-section-label">
+<p>Method</p>
+</div>
+<p>Adapted LFO-CV to a hierarchical state-space digital-twin model of tumor dynamics and survival: refit at successive truncation times and score out-of-sample predictive density on every held-out quantity with a log-likelihood contribution — longitudinal tumor-size visits <em>and</em> survival/multistate events — then summarize forecast performance as a function of prediction horizon. Primary workflow uses full-refit LFO-CV; PSIS-based approximate LFO is also supported for faster iteration. Built as a separate Stan variant sharing the base model’s modular structure so validation tracks the production model exactly.</p>
+</div>
+<div class="project-section">
+<div class="project-section-label">
+<p>Impact</p>
+</div>
+<p>Horizon-stratified predictive-accuracy curves across both biomarker and survival outcomes — a more honest answer to <em>“how well does the digital twin forecast?”</em> than aggregate LOO — making forecast calibration directly auditable for Phase 3 decision reviews.</p>
+</div>
+</section>
+</div>
+<div class="project">
+<div class="project-number">
+<p>05</p>
+</div>
+<section id="agentic-workflow-layer-for-bayesian-statistical-modeling" class="level3">
+<h3 data-anchor-id="agentic-workflow-layer-for-bayesian-statistical-modeling">Agentic-workflow layer for Bayesian statistical modeling</h3>
+<div class="project-section">
+<div class="project-section-label">
+<p>Problem</p>
+</div>
+<p>Bayesian trial-modeling work has two hard parts that off-the-shelf AI assistants don’t address. First, the <em>mathematical</em> layer: multistate survival with joint longitudinal submodels, non-centered hierarchical parameterizations, competing risks, and interval censoring produce dense derivations where a single person working by hand is both slow and error-prone — small algebra mistakes propagate into Stan code and surface weeks later as pathological sampling. Second, the <em>development-loop</em> layer: MCMC runs take hours to days, diagnostics and reparameterization require domain judgment, and state across the feedback loop is hard to carry. Generic coding assistants miss the statistical context for both.</p>
+</div>
+<div class="project-section">
+<div class="project-section-label">
+<p>Method</p>
+</div>
+<p>An agentic-workflow layer on Claude Code, shared across the modeling team via an internal plugin marketplace. Core components: <strong>collaborative mathematical derivation</strong> — working through the underlying statistical mathematics with Claude as a derivation partner to produce accurate, well-documented, and computationally tractable formulations before they become Stan code; a persistent memory system for carrying model-specific context across sessions; domain-specific sub-agents (Stan diagnostic triage, prior sensitivity review, <code>targets</code> pipeline explorer); MCP-integrated skills for pipeline operations and job management on Domino; and reusable skill and plugin templates that codify team conventions for Bayesian workflow. Version-controlled and iterated like any other team codebase.</p>
+</div>
+<div class="project-section">
+<div class="project-section-label">
+<p>Impact</p>
+</div>
+<p>Shifts the mathematical-modeling step from error-prone solo derivation to collaboratively-verified, fully-documented specifications; compresses the hand-off between <em>“MCMC finished”</em> and <em>“I know what to do next,”</em> which is where most of the latency in Bayesian model development actually lives. Adopted across the modeling team for reproducible Stan development, MCMC diagnostics triage, and pipeline operations.</p>
+</div>
+</section>
+</div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

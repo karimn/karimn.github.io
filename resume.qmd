@@ -36,84 +36,54 @@ Economist/Data Scientist | Bayesian Methods \& Causal Inference\\
 
 ## Summary
 
-Economist/data scientist with 9+ years of experience in **causal inference**, **experiment design**, and **statistical modeling**. Currently applying advanced Bayesian methods in oncology drug development at AstraZeneca. Expert in building **hierarchical state-space models**, **survival analysis**, and **clinical trial analytics** using R, Stan, and Julia. Experienced in using **Bayesian networks** for causal identification in experimental and non-experimental contexts. Proficient in **reinforcement learning** for partially observable environments. Focused on rigorous quantification of uncertainty for decision-making.
+Economist and applied Bayesian statistician with 10+ years building **hierarchical models** for **longitudinal and survival data**. Current focus: **patient-level digital-twin models** of oncology tumor dynamics and real-world evidence integration at AstraZeneca; prior work spans field experiments in East Africa and South Asia, real-estate market design, and health-behavior interventions.
 
 ## Skills
 
-**Programming:** R, Tidyverse, Stan, Julia, Flux.jl, Turing.jl, C/C++, Ruby, Python, SQL
+**Methods:** Bayesian hierarchical modeling, state-space and longitudinal models, multistate survival and competing risks, joint longitudinal–survival ("digital twin") models, cross-validation and predictive assessment (LFO-CV, PSIS-LOO), MCMC diagnostics and prior sensitivity, causal inference and randomized experiment design, Gaussian processes
 
-**Statistical Methods:** Hierarchical modeling, Gaussian processes, state-space models, survival analysis, experimental design, instrumental variables, difference-in-differences, regression discontinuity, deep reinforcement learning, particle filters, Monte Carlo methods, Bayesian neural networks
+**Languages:** R (tidyverse), Stan, Julia, SQL, C/C++
 
-**Tools:** RStudio, VS Code, AWS EC2/S3/ECR, Azure, Docker, Cluster Computing (SLURM), Databricks, Git and Github, Snowflake, PostgreSQL, cmdstanr, targets workflow management, Domino, agentic AI (Claude, ChatGPT)
+**Agentic Workflows for Statistical Modeling:** Built and maintain an agentic-workflow layer on Claude Code, shared across the AstraZeneca modeling team via an internal plugin marketplace. Collaborative mathematical derivation, Stan diagnostic sub-agents, `targets` pipeline explorer, MCP-integrated skills for Domino, reusable plugin and skill templates codifying team conventions for Bayesian workflow.
+
+**Infrastructure:** CmdStan / cmdstanr, `targets` pipelines, Domino, Docker, AWS, Databricks, Snowflake, PostgreSQL, git, SLURM, RStudio / VS Code
 
 ## Education
 
-**Boston University** | Boston, MA | **Ph.D. in Economics** | 2014  
-*Focus: Development economics, health economics, and experimental economics*
+**Boston University** | Boston, MA | **Ph.D. in Economics** | 2014
+*Fields: development, health, and experimental economics*
 
 **The American University in Cairo** | Cairo, Egypt | **B.S. in Computer Science, Minor: Mathematics** | 1999
 
 ## Experience
 
-**Senior Data Scientist** | **AstraZeneca** | Aug 2023 - present
+**Senior Data Scientist** | **AstraZeneca** | Aug 2023 – present
 
-*Advanced Bayesian State-Space Modeling for Oncology Clinical Trials*
+- Bayesian digital-twin modeling of oncology tumor dynamics to forecast Phase 3 outcomes from Phase 2 trials, historical trials, and real-world data, supporting Phase 3 initiation decisions
+- Built multistate (illness-death) survival models and hierarchical state-space tumor-dynamics models, jointly fit for competing-risk decomposition of progression-free survival
+- Designed and shared an agentic-workflow layer for collaborative mathematical derivation and MCMC diagnostics, adopted across the modeling team
+- Contributed modular Stan architecture and a `targets`-based pipeline for reproducible trial analyses
 
-- Developed sophisticated hierarchical Bayesian state-space models for tumor growth dynamics using the Stein-Fojo framework with simultaneous regression and growth components
-- Implemented log-transformed state-space formulation with Gaussian process temporal correlations for irregular time intervals
-- Built comprehensive Stan models with efficient MCMC sampling across population, trial, and patient levels
-- Created scalable computational framework for patient-level state calculations
-- Developed RECIST response prediction models for clinical decision support
-- Integrated survival analysis with competing risks for progression-free survival and overall survival endpoints
-- Implemented real-time forecasting capabilities for censored patients
-- Created comprehensive validation framework with leave-future-out cross-validation for temporal model validation
+**Senior Data Scientist** | **Opendoor** | May 2021 – May 2022
 
-**Independent Researcher** | Nov 2022 - Aug 2023
+- Designed randomized experiments to estimate demand and supply elasticities for pricing policy
+- Built hierarchical Bayesian and Gaussian-process models pooling across regional real-estate markets
 
-*Reinforcement Learning for Intervention Optimization*
+**Independent Researcher / Consultant** | May 2019 – May 2021
 
-- Designed and built a [Julia package](https://www.github.com/karimn/FundingPOMDPs.jl) for a reinforcement learning solution (partially observable Markov decision process), using Monte Carlo tree search, to optimize intervention implementation and evaluation decisions
-- Used Bayesian hierarchical models to predict future states in POMDP
-- Used particle filters for faster online planning
-- Project writeup: [The Funder's Meta-Problem](https://karimn.github.io/effective-funding/funder-meta-problem-1.html)
-- [Implemented](https://github.com/karimn/grokking-drl) various deep reinforcement learning agents and models using Julia and Flux.jl
+- Built structural Bayesian models of social-experiment outcomes; hierarchical intervention-effect models
+- Estimated time-varying COVID-19 transmission dynamics during the early pandemic
 
-**Senior Data Scientist** | **Opendoor** | May 2021 - May 2022
+**Economist** | **Evidence Action** | May 2014 – May 2019
 
-- Designed and built continuous randomized experiments to estimate and predict demand and supply elasticity in real estate markets. These were the principal models used in determining offers for home buying/selling
-- Used Gaussian processes to construct nonlinear time-series prediction models
-- Used hierarchical models to capture heterogeneity in different markets, offer types, etc.
-- Designed a survival and time-series model to capture the duration homes are on the market and how this affects elasticity
-- Solicited stakeholders to capture prior beliefs about both the structure of models and distributional uncertainty, which is critical in facilitating decision-making in small data environments
-- Designed non-experimental causal identification strategies for contexts where experiment manipulation is not possible
+- Designed and analyzed large-scale randomized evaluations in Kenya and Bangladesh
+- Contributed to the at-scale replication analysis of No Lean Season (a seasonal-migration subsidy program); the failure to replicate the pilot effect informed the program's eventual closure
+- Spanned study design, power analysis, field data-collection supervision, and Bayesian/frequentist analysis for operational and policy audiences
 
-**Independent Researcher/Consultant** | May 2019 - May 2021
+**Software Design Engineer in Test** | **Microsoft**, Windows Debugging Tools | Apr 1999 – Mar 2007
 
-- [Built](https://www.github.com/karimn/takeup) a structural Bayesian model representing a behavior model, using data from a large-scale social experiment conducted in Kenya
-- Worked on authoring an economics research paper on findings from the experiment
-- [Built](https://github.com/karimn/covid-19-transmission) a hierarchical model to evaluate the effectiveness of a scaled economic intervention program in Bangladesh
-- Used Gaussian processes to model correlation in intervention effects based on spatial proximity
-- Designed and built a hierarchical model investigating the heterogeneity of COVID-19 transmission in different countries under different stay-at-home restrictions
-- [Used](https://github.com/karimn/vaccine-model-fit) a simulated method of moments approach to fit the AcceleratingHT model's parameters to the CGD model's predictions of vaccine success
-- Implemented R [package](https://www.github.com/karimn/boundr) for bounded identification of counterfactuals, in directed acyclic graphs, in the presence of imperfect compliance with experimental treatment assignment
-
-**Economist** | **Evidence Action** | May 2014 - May 2019
-
-- Designed and oversaw the implementation of two large-scale experiments in Kenya and Bangladesh, evaluating interventions aimed at altering health behavior and incentivizing seasonal migration to fight malnutrition, respectively
-- Responsible for evaluating any evidence-based decisions by the organization
-
-**Software Design Engineer in Test** | **Microsoft** | Apr 1999 - Mar 2007
-
-- Constructed testing framework for the Windows Debugging Tools and command line utilities
+- Test framework and automation for Windows debugging tools; C/C++, systems-level testing
 
 ## Publications
 
-**Published**
-
-Nathan Barker, C. Austin Davis, Paula López-Peña, Harrison Mitchell, Ahmed Mushfiq Mobarak, Karim Naguib, Maira Reimão, Ashish Shenoy, and Corey Vernot, "Migration and Resilience during a Global Crisis." *European Economic Review* (Accepted)
-
-**Working Papers**
-
-Harrison Mitchell, A. Mushfiq Mobarak, Karim Naguib, Maira Reimão, and Ashish Shenoy, "External Validity and Implementation at Scale: Evidence from a Migration Loan Program in Bangladesh."
-
-Edward Jee, Anne Karing, and Karim Naguib, "Optimal Incentives in the Presence of Social Norms: Experimental Evidence from Kenya."
+Barker, Davis, López-Peña, Mitchell, Mobarak, Naguib, Reimão, Shenoy, and Vernot, "Migration and Resilience during a Global Crisis," *European Economic Review* (accepted); two additional working papers on migration at scale (Bangladesh) and optimal incentives under social norms (Kenya).

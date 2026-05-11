@@ -1,27 +1,47 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "*.qmd"
 
 website:
   title: "Karim Naguib"
+  description: "Economist and applied Bayesian statistician — hierarchical models for longitudinal and survival data. Digital-twin oncology tumor dynamics at AstraZeneca; prior work in development economics, real-estate market design, and reinforcement learning."
+  site-url: "https://karimn.github.io"
   google-analytics: "G-SQNTJM494V"
+  open-graph:
+    image: "/og-image.png"
   navbar:
+    pinned: true
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: about.qmd
+        text: About
+      - href: projects.qmd
+        text: Projects
       - href: research.qmd
-        icon: lightbulb
+        text: Research
+    right:
+      - text: "CV"
+        href: cv.pdf
     tools:
+      - icon: linkedin
+        href: https://www.linkedin.com/in/karnag
       - icon: github
         href: https://www.github.com/karimn
+      - icon: envelope
+        href: mailto:karim.a.naguib@gmail.com
+  page-footer:
+    left: "© Karim Naguib — Built with Quarto"
+    right: "[karim.a.naguib@gmail.com](mailto:karim.a.naguib@gmail.com)"
 
 format:
   html:
-    theme: cosmo
+    theme:
+      - theme.scss
     css: styles.css
-    toc: true
-    page-layout: full
-
-
-
+    toc: false
+    page-layout: article
+    anchor-sections: false
+    title-block-style: none
