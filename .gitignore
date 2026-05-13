@@ -9,3 +9,6 @@
 /.quarto/
 
 **/*.quarto_ipynb
+
+scripts/.venv/
+scripts/.fonts/
