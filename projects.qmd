@@ -1,10 +1,25 @@
 ---
 title: "Selected Technical Work"
-description: "Five Bayesian modeling projects: hierarchical state-space digital-twin tumor dynamics, multistate illness-death survival models, modular Stan inference infrastructure, leave-future-out cross-validation, and an agentic-workflow layer for statistical modeling."
+description: "Six projects: hierarchical state-space digital-twin tumor dynamics, multistate illness-death survival models, modular Stan inference infrastructure, leave-future-out cross-validation, an agentic-workflow layer for statistical modeling, and an agentic LLM Game Master for solo Ironsworn."
 author: "Karim Naguib"
+anchor-sections: true
 ---
 
-Five projects that describe the shape of the modeling work I've been doing — problem, method, and what it moves.
+```{=html}
+<aside class="project-index" aria-label="Project index">
+  <p class="project-index-label">Contents</p>
+  <ol>
+    <li><a href="#hierarchical-state-space-digital-twin-model-for-longitudinal-tumor-dynamics">Digital twin tumor dynamics</a></li>
+    <li><a href="#multistate-illness-death-survival-model-for-competing-risk-decomposition">Multistate illness-death survival</a></li>
+    <li><a href="#modular-bayesian-inference-infrastructure-for-clinical-trial-analyses">Modular Stan infrastructure</a></li>
+    <li><a href="#leave-future-out-cross-validation-for-hierarchical-longitudinalsurvival-models">Leave-future-out CV</a></li>
+    <li><a href="#agentic-workflow-layer-for-bayesian-statistical-modeling">Agentic workflow layer</a></li>
+    <li><a href="#agentic-game-master-for-solo-ironsworn">Agentic Game Master</a></li>
+  </ol>
+</aside>
+```
+
+Six projects that describe the shape of the modeling and engineering work I've been doing — problem, method, and what it moves.
 
 ::: {.project}
 
@@ -161,6 +176,38 @@ An agentic-workflow layer on Claude Code, shared across the modeling team via an
 Impact
 :::
 Shifts the mathematical-modeling step from error-prone solo derivation to collaboratively-verified, fully-documented specifications; compresses the hand-off between *"MCMC finished"* and *"I know what to do next,"* which is where most of the latency in Bayesian model development actually lives. Adopted across the modeling team for reproducible Stan development, MCMC diagnostics triage, and pipeline operations.
+:::
+
+:::
+
+
+::: {.project}
+
+::: {.project-number}
+06
+:::
+
+### Agentic Game Master for solo Ironsworn
+
+::: {.project-section}
+::: {.project-section-label}
+Problem
+:::
+Running a coherent long-form RPG campaign as an LLM agent is a hard systems problem: move resolution must be deterministic and rules-accurate, a growing graph of NPCs, threads, and lore must stay consistent across sessions without hallucination, and narrative context must be reconstructable without relying on raw conversation history, which is ephemeral and token-limited.
+:::
+
+::: {.project-section}
+::: {.project-section-label}
+Method
+:::
+A Claude Code plugin (`agentic-rpg`) with a TypeScript MCP server — the *Scribe* — that backs the GM agent with tool-call interfaces for every stateful operation. The rules engine handles all Ironsworn mechanics (dice, moves, progress tracks, oracles, assets) as pure logic, keeping outputs deterministic and auditable. Campaign state persists across sessions in DuckDB: scenes and lore are embedded via Ollama (`nomic-embed-text`) for semantic retrieval; a GraphRAG layer with community detection organizes the lore graph; NPCs, threads, and a full state journal are structured records, not conversation memory. A separate Julia pipeline (`TomeRAG.jl`) ingested the rulebook into the RAG index. The agent itself handles only narrative generation — language — while all reads, writes, and mechanical resolution go through tools.
+:::
+
+::: {.project-section}
+::: {.project-section-label}
+Impact
+:::
+A working demonstration of the core LLM engineering problems that matter for production agentic systems: separating generation from deterministic state, managing long-horizon context at scale, and designing tool-use architectures where the model handles *language* and the tools handle *truth*.
 :::
 
 :::
