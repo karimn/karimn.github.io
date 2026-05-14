@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Karim Naguib">
+<meta name="dcterms.date" content="2026-05-14">
+<meta name="description" content="LFO cross-validation was built for univariate time series. Here I work out what it takes to bring it into hierarchical joint longitudinal–survival models: staggered enrolment, dual observation clocks, ELPD decomposition, and a patient-level bootstrap for standard errors.">
+
+<title>Leave-Future-Out Beyond Time Series – Karim Naguib</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-6ba7e341a90815074c4aa9165cdbf676.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-e7ad8b011ac98d4dc55b9474b0dbfe58.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-SQNTJM494V"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-SQNTJM494V', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="Leave-Future-Out Beyond Time Series – Karim Naguib">
+<meta property="og:description" content="LFO cross-validation was built for univariate time series. Here I work out what it takes to bring it into hierarchical joint longitudinal–survival models: staggered enrolment, dual observation clocks, ELPD decomposition, and a patient-level bootstrap for standard errors.">
+<meta property="og:image" content="https://karimn.github.io/og-image.png">
+<meta property="og:site_name" content="Karim Naguib">
+<meta property="og:image:height" content="630">
+<meta property="og:image:width" content="1200">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Karim Naguib</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../projects.html"> 
+<span class="menu-text">Projects</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../research.html"> 
+<span class="menu-text">Research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../writing/index.html"> 
+<span class="menu-text">Writing</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../cv.pdf"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools tools-wide">
+    <a href="https://www.linkedin.com/in/karnag" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-linkedin"></i></a>
+    <a href="https://www.github.com/karimn" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+    <a href="mailto:karim.a.naguib@gmail.com" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-envelope"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#carrying-lfo-into-a-new-neighborhood" id="toc-carrying-lfo-into-a-new-neighborhood" class="nav-link active" data-scroll-target="#carrying-lfo-into-a-new-neighborhood"><span class="header-section-number">1</span> Carrying LFO into a new neighborhood</a></li>
+  <li><a href="#what-this-post-is-and-is-not-claiming-as-new" id="toc-what-this-post-is-and-is-not-claiming-as-new" class="nav-link" data-scroll-target="#what-this-post-is-and-is-not-claiming-as-new"><span class="header-section-number">2</span> What this post is, and is not, claiming as new</a></li>
+  <li><a href="#what-lfo-is-before-we-complicate-it" id="toc-what-lfo-is-before-we-complicate-it" class="nav-link" data-scroll-target="#what-lfo-is-before-we-complicate-it"><span class="header-section-number">3</span> What LFO is, before we complicate it</a></li>
+  <li><a href="#the-joint-model-briefly" id="toc-the-joint-model-briefly" class="nav-link" data-scroll-target="#the-joint-model-briefly"><span class="header-section-number">4</span> The joint model, briefly</a></li>
+  <li><a href="#where-time-series-lfo-breaks-for-oncology" id="toc-where-time-series-lfo-breaks-for-oncology" class="nav-link" data-scroll-target="#where-time-series-lfo-breaks-for-oncology"><span class="header-section-number">5</span> Where time series LFO breaks for oncology</a></li>
+  <li><a href="#the-shape-of-the-solution" id="toc-the-shape-of-the-solution" class="nav-link" data-scroll-target="#the-shape-of-the-solution"><span class="header-section-number">6</span> The shape of the solution</a>
+  <ul class="collapse">
+  <li><a href="#calendar-day-cutoffs-on-patient-specific-clocks" id="toc-calendar-day-cutoffs-on-patient-specific-clocks" class="nav-link" data-scroll-target="#calendar-day-cutoffs-on-patient-specific-clocks"><span class="header-section-number">6.1</span> Calendar-day cutoffs on patient-specific clocks</a></li>
+  <li><a href="#two-cutoffs-per-patient-for-two-observation-mechanisms" id="toc-two-cutoffs-per-patient-for-two-observation-mechanisms" class="nav-link" data-scroll-target="#two-cutoffs-per-patient-for-two-observation-mechanisms"><span class="header-section-number">6.2</span> Two cutoffs per patient, for two observation mechanisms</a></li>
+  <li><a href="#scoring-decomposed-elpd-plus-endpoint-level-km" id="toc-scoring-decomposed-elpd-plus-endpoint-level-km" class="nav-link" data-scroll-target="#scoring-decomposed-elpd-plus-endpoint-level-km"><span class="header-section-number">6.3</span> Scoring: decomposed ELPD plus endpoint-level KM</a></li>
+  <li><a href="#exact-refits-vs-psis-when-is-the-shortcut-safe" id="toc-exact-refits-vs-psis-when-is-the-shortcut-safe" class="nav-link" data-scroll-target="#exact-refits-vs-psis-when-is-the-shortcut-safe"><span class="header-section-number">6.4</span> Exact refits vs PSIS: when is the shortcut safe?</a></li>
+  <li><a href="#standard-errors-why-the-time-series-recipe-does-not-transfer" id="toc-standard-errors-why-the-time-series-recipe-does-not-transfer" class="nav-link" data-scroll-target="#standard-errors-why-the-time-series-recipe-does-not-transfer"><span class="header-section-number">6.5</span> Standard errors: why the time-series recipe does not transfer</a></li>
+  </ul></li>
+  <li><a href="#why-this-matters-more-broadly" id="toc-why-this-matters-more-broadly" class="nav-link" data-scroll-target="#why-this-matters-more-broadly"><span class="header-section-number">7</span> Why this matters more broadly</a></li>
+  <li><a href="#a-short-closing-thought" id="toc-a-short-closing-thought" class="nav-link" data-scroll-target="#a-short-closing-thought"><span class="header-section-number">8</span> A short closing thought</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7">Leave-Future-Out Beyond Time Series</h1></header>
+
+<header id="title-block-header">
+
+<p class="subtitle lead">Temporal cross-validation for hierarchical mechanistic survival models</p>
+<p class="author">Karim Naguib</p>
+
+<p class="date">2026-05-14</p>
+</header>
+
+
+<section id="carrying-lfo-into-a-new-neighborhood" class="level2" data-number="1">
+<h2 data-number="1" data-anchor-id="carrying-lfo-into-a-new-neighborhood"><span class="header-section-number">1</span> Carrying LFO into a new neighborhood</h2>
+<p>Leave-future-out cross-validation (LFO) is one of those methods that, once you have seen it, feels obvious. Bürkner, Gabry and Vehtari put it on a firm footing in <span class="citation" data-cites="burkner2020lfo">Bürkner et al. (<a href="#ref-burkner2020lfo" role="doc-biblioref">2020</a>)</span>, addressing a real and well-recognised problem: Bayesian time-series models evaluated with leave-one-out cross-validation [LOO; <span class="citation" data-cites="vehtari2017loo">Vehtari et al. (<a href="#ref-vehtari2017loo" role="doc-biblioref">2017</a>)</span>] end up using observations from the future to “predict” observations in the past, and the resulting score systematically overstates predictive accuracy. The solution they develop is elegant — split by calendar time, not by observation index — and the lasting contribution of the paper is a practical recipe: when is an exact refit needed, when can you lean on Pareto-smoothed importance sampling (PSIS) for an approximation, and how do you accumulate the log predictive density across a rolling origin in a way that the <code>loo</code> package can ingest <span class="citation" data-cites="loo_lfo_vignette">(<a href="#ref-loo_lfo_vignette" role="doc-biblioref">Bürkner et al. 2024</a>)</span>. It is genuinely the reference treatment of the topic on the Bayesian side.</p>
+<p>The setting that paper develops, and the accompanying <code>loo</code> vignette, is univariate time series: AR(p) and ARMA models, a Gaussian process on a scalar outcome, an AR(4) fit to 98 Lake Huron measurements as the worked example. The “observations” are evenly spaced, univariate, and belong to a single series. The cross-validation question is, roughly, “if I had stopped watching at time <span class="math inline">\(t\)</span>, how well would I have predicted time <span class="math inline">\(t+1\)</span>, <span class="math inline">\(t+2\)</span>, <span class="math inline">\(\ldots\)</span>?” — and the machinery is built around exactly that question, very effectively.</p>
+<p>In oncology survival analysis — at least, the kind of survival analysis I spend most of my time on — almost none of that holds. There is no single time series. Patients enter the study at different calendar times. Each patient contributes a mix of longitudinal measurements (tumor burden at visits) and event times (progression, death). The clocks are different: tumor measurements live on a visit schedule, deaths arrive from a registry. There is a latent mechanistic state (tumor growth and shrinkage) that couples the longitudinal stream to the event stream. And the unit of interest is neither a single series nor a single “observation” — it is a patient, embedded in a trial, embedded in a hierarchy.</p>
+<p>Yet the question LFO answers is exactly the question an oncology team wants to ask: given the data cutoff we have today, how accurately can this model forecast next year’s Kaplan-Meier curve? How well does it forecast the next RECIST<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> classification? How does that accuracy degrade with forecast horizon?</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-lfo-rolling" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lfo-rolling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="lfo-beyond-time-series_files/figure-html/fig-lfo-rolling-1.png" class="img-fluid figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lfo-rolling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Rolling-cutoff LFO on a cohort of staggered-entry patients. Stacked top to bottom by cutoff date: each row is one cutoff with the same calendar axis, so the cutoff line walks rightward as you scan downward. Solid navy shows the patient history the model trains on; the gold band is the forecast horizon over which the model is scored; greyed rails are patients not yet enrolled at that cutoff. Progression diamonds (pink) are visit-observed; death triangles (dark plum) are registry-observed — a distinction that becomes load-bearing later in the post.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The diagram isolates three things that make LFO different from LOO on this kind of data.</p>
+<ul>
+<li>The <em>training region grows with the cutoff</em> — every panel refits on strictly more data, never less.</li>
+<li><em>Staggered enrollment interacts with the cutoff</em>: a patient not yet in the trial at Cutoff 1 contributes nothing to that fold (greyed-out rail), and is evaluated only from later cutoffs onward.</li>
+<li><em>Events are categorized by which side of the cutoff they fall on</em> — progression diamonds and death triangles in the navy region were known to the model, those in the gold band are what the model’s forecast is scored against, and anything beyond the gold band is outside the scoring horizon for that cutoff.</li>
+</ul>
+<p>The split between progression (pink diamonds, observed only at clinic visits) and death (dark plum triangles, observed exactly from registry linkage) is deliberate: the rest of the post is largely about what happens when those two observation mechanisms disagree about where the cutoff lies.</p>
+<p>This post is about what it took to bring LFO across that gap. It focuses on methodology rather than results from any particular program. The anonymized figures below are illustrative in shape, but scrubbed of trial, arm, or patient-identifying detail.</p>
+</section>
+<section id="what-this-post-is-and-is-not-claiming-as-new" class="level2" data-number="2">
+<h2 data-number="2" data-anchor-id="what-this-post-is-and-is-not-claiming-as-new"><span class="header-section-number">2</span> What this post is, and is not, claiming as new</h2>
+<p>Before going further it is worth being explicit about what came before, because the question “given data up to time <span class="math inline">\(t\)</span>, how well do we predict events after <span class="math inline">\(t\)</span>?” has a long history in biostatistics under names other than LFO.</p>
+<p>The single most important precedent is the <strong>dynamic-prediction-from-joint-models</strong> program initiated by <span class="citation" data-cites="rizopoulos2011dynamic">Rizopoulos (<a href="#ref-rizopoulos2011dynamic" role="doc-biblioref">2011</a>)</span>. It is the structural ancestor of what I do here: condition on a patient’s longitudinal history through a landmark time, generate posterior predictions of subsequent event times from a fitted joint model, and score those predictions on the still-at-risk cohort. Rizopoulos’s framework uses time-dependent ROC/AUC and Brier scores rather than ELPD, and is implemented today in <code>JMbayes2</code>; the more recent super-learner extension by <span class="citation" data-cites="rizopoulos2023superlearner">Rizopoulos and Taylor (<a href="#ref-rizopoulos2023superlearner" role="doc-biblioref">2023</a>)</span> uses V-fold cross-validation over subjects with expected quadratic prediction error and predictive cross-entropy as scoring rules. None of this is LFO in the <span class="citation" data-cites="burkner2020lfo">Bürkner et al. (<a href="#ref-burkner2020lfo" role="doc-biblioref">2020</a>)</span> sense, but it is unambiguously the same question with different machinery.</p>
+<p>Running parallel to that is the <strong>landmarking</strong> literature — the original landmark Cox model <span class="citation" data-cites="vanhouwelingen2007landmarking">(<a href="#ref-vanhouwelingen2007landmarking" role="doc-biblioref">van Houwelingen 2007</a>)</span>, and the more recent “Landmarking 2.0” paper by <span class="citation" data-cites="putter2021landmarking2">Putter and van Houwelingen (<a href="#ref-putter2021landmarking2" role="doc-biblioref">2021</a>)</span>, which deliberately reframes landmark analysis as a competitor to joint-model dynamic predictions. Landmarking already does, in spirit, exactly what LFO does: refit at a sequence of landmark times, evaluate prediction quality on data after each landmark. <span class="citation" data-cites="devaux2022landmark">Devaux et al. (<a href="#ref-devaux2022landmark" role="doc-biblioref">2022</a>)</span> take this further by combining landmarking with machine learning and cross-validated time-dependent Brier and AUC.</p>
+<p>Against that backdrop, the contribution of the work in this post is narrower than “LFO for survival.” It is closer to:</p>
+<ul>
+<li>Porting the Bayesian <strong>ELPD-LFO</strong> machinery <span class="citation" data-cites="burkner2020lfo">(<a href="#ref-burkner2020lfo" role="doc-biblioref">Bürkner et al. 2020</a>, plus the broader Vehtari <code>loo</code> ecosystem)</span> into a hierarchical <strong>joint longitudinal–multistate</strong> model in Stan, where the landmarking and AUC/Brier literatures already live;</li>
+<li>Working out an <strong>observation-mechanism-aware re-censoring</strong> rule for that setting — specifically, the dual visit-week / calendar-week cutoffs — which the time-series LFO literature does not need and the joint-model dynamic-prediction literature has not, as far as I can find, written down explicitly;</li>
+<li>Wiring the whole thing into a pipeline that runs exact refits on a calendar-cutoff schedule and reports both decomposed ELPD and posterior-predictive Kaplan-Meier overlays per cutoff.</li>
+</ul>
+<p>I do not claim novelty for the principle. I do claim usefulness for the specific construction, and I think the construction generalizes beyond the setting it was built for. The rest of the post is mostly about <em>what the construction has to look like</em> once you take the structure of oncology trial data seriously.</p>
+</section>
+<section id="what-lfo-is-before-we-complicate-it" class="level2" data-number="3">
+<h2 data-number="3" data-anchor-id="what-lfo-is-before-we-complicate-it"><span class="header-section-number">3</span> What LFO is, before we complicate it</h2>
+<p>The minimal <span class="citation" data-cites="burkner2020lfo">(<a href="#ref-burkner2020lfo" role="doc-biblioref">2020</a>)</span> LFO is easy to state. Let <span class="math inline">\(y_{1:T}\)</span> be a univariate time series. For each candidate cutoff <span class="math inline">\(t_c\)</span>, fit the model on <span class="math inline">\(y_{1:t_c}\)</span> and evaluate the expected log predictive density on what comes next:</p>
+<p><span class="math display">\[
+\text{ELPD}_{\text{LFO}} = \sum_{c} \sum_{t &gt; t_c} \log p(y_t \mid y_{1:t_c}).
+\]</span></p>
+<p>Two things make this useful. First, no future data leaks into training — the evaluation respects the causal structure of the data. Second, ELPD differences between models have a Bayesian interpretation and an estimable standard error, so “model A forecasts better than model B” becomes a quantitative, rather than rhetorical, claim.</p>
+<p>For our setting we will need a slightly more general form. Patients are indexed by <span class="math inline">\(i\)</span>, and the data we have on each one — visits, events — is a multidimensional history rather than a scalar. So the inner sum is over <span class="math inline">\((i, t)\)</span> pairs that fall after each cutoff, and the conditioning is on whatever has been observed for <em>all</em> patients up to the cutoff:</p>
+<p><span class="math display">\[
+\text{ELPD}_{\text{LFO}} = \sum_{c} \sum_{(i, t) \in \text{future}(c)} \log p\bigl(y_{i,t} \mid y_{1:c}\bigr),
+\]</span></p>
+<p>where <span class="math inline">\(y_{1:c}\)</span> is the cohort-level data up to cutoff <span class="math inline">\(c\)</span> and <span class="math inline">\(\text{future}(c)\)</span> is the set of patient–time pairs whose observations the model is being asked to forecast at <span class="math inline">\(c\)</span>. Picking <span class="math inline">\(\text{future}(c)\)</span> correctly — which patients, which observation channel, up to which clock — is what most of the rest of the post is about.</p>
+<p>The practical cost, of course, is refitting. A naive implementation requires one MCMC run per cutoff. <span class="citation" data-cites="burkner2020lfo">Bürkner et al. (<a href="#ref-burkner2020lfo" role="doc-biblioref">2020</a>)</span> show that for many models you can get away with a single full refit and then slide the cutoff using PSIS weights, triggering a refit only when the Pareto <span class="math inline">\(\hat k\)</span> diagnostic signals that importance sampling has broken down. That trick is what makes LFO tractable in practice.</p>
+</section>
+<section id="the-joint-model-briefly" class="level2" data-number="4">
+<h2 data-number="4" data-anchor-id="the-joint-model-briefly"><span class="header-section-number">4</span> The joint model, briefly</h2>
+<p>The rest of the post discusses an LFO construction built around a particular model, so a quick sketch here will save backtracking.</p>
+<p>The model has two coupled components, fitted jointly:</p>
+<ul>
+<li>A <strong>longitudinal state-space model</strong> for each patient’s tumor-burden trajectory — specifically, the sum of target-lesion diameters (SLD). Latent SLD trajectories are parameterized per patient (baseline, shrinkage, regrowth) with hierarchical pooling across the trial structure. SLD is observed only at scheduled imaging visits, and the <em>target-lesion</em> component of RECIST (CR / PR / SD / PD, driven only by SLD changes relative to baseline and nadir) is read off the SLD trajectory deterministically. Non-target response and new-lesion appearance are separate inputs to a full RECIST classification and sit outside this component.</li>
+<li>A <strong>three-state multistate hazard model</strong> for events: state 0 (on study, no recorded progression), state 1 (progressed), state 2 (dead). Three transitions are modelled — <span class="math inline">\(0\to 1\)</span>, <span class="math inline">\(0\to 2\)</span>, <span class="math inline">\(1\to 2\)</span>. The <span class="math inline">\(0\to 1\)</span> transition has two sources: target-lesion progression, which is a deterministic function of the SLD trajectory once it crosses the RECIST threshold, and non-target/new-lesion progression, which is modelled probabilistically with its own hazard. Both can only be declared at a visit. The <span class="math inline">\(0\to 2\)</span> and <span class="math inline">\(1\to 2\)</span> transitions are modelled as standard survival hazards and are reported continuously through registry records.</li>
+</ul>
+<p>The two components are coupled because the event hazards depend on the latent tumor <em>state</em>, not only on the SLD values that happen to be observed at visits. That dependence is what makes the model “joint” in the dynamic-prediction sense, and it gives the factorization</p>
+<p><span class="math display">\[
+p(\text{SLD}_i, \text{MS}_i \mid \theta) = p(\text{SLD}_i \mid \theta)\, p(\text{MS}_i \mid \text{SLD}_i, \theta),
+\]</span></p>
+<p>where <span class="math inline">\(\theta\)</span> collects all model parameters — the population-level trajectories, the per-patient random effects, and the multistate hazard coefficients.</p>
+<p>which the ELPD decomposition later in the post rests on. Three things to carry forward: SLD lives on a visit clock, the multistate model lives on mixed clocks, and the hazards see the latent tumor state.</p>
+</section>
+<section id="where-time-series-lfo-breaks-for-oncology" class="level2" data-number="5">
+<h2 data-number="5" data-anchor-id="where-time-series-lfo-breaks-for-oncology"><span class="header-section-number">5</span> Where time series LFO breaks for oncology</h2>
+<p>Take a typical phase-II or phase-III oncology trial. Patients are enrolled continuously over eighteen months or so. Each patient has:</p>
+<ul>
+<li>a latent tumor burden trajectory, observed at irregular visits through sums of lesion diameters (SLD),</li>
+<li>a baseline covariate profile (prior lines of therapy, PD-L1 status, metastatic sites, …),</li>
+<li>a set of potential event times: target-lesion progressive disease (target PD), non-target progression, death,</li>
+<li>a cluster membership (trial, arm, potentially site),</li>
+<li>and, above all else, a calendar day of enrolment which is not the same as anyone else’s.</li>
+</ul>
+<p>Any sensible predictive evaluation at a data cutoff <span class="math inline">\(D\)</span> has to answer several uncomfortable questions at once:</p>
+<ol type="1">
+<li><p><strong>Whose data counts?</strong> A patient enrolled after <span class="math inline">\(D\)</span> has never been seen by the model; their trajectory is out-of-sample in a much stronger sense than a visit occurring after <span class="math inline">\(D\)</span> for an already-enrolled patient. Are we evaluating the model’s ability to forecast existing patients’ futures, or its ability to generalize to unseen patients, or both? These are different tasks and they deserve different evaluations.</p></li>
+<li><p><strong>Which clock do we cut on?</strong> Tumor measurements are only made at visits. Deaths are observed exactly (to the day, typically from registry linkage). A patient whose last visit before the cutoff was week 14 but who dies at week 31 — where <span class="math inline">\(D\)</span> falls after week 31 — has a <em>known</em> death that was never recorded at a visit. Cutting by visit would throw that information away. Cutting by calendar day alone would assume we observe progression continuously, which we do not.</p></li>
+<li><p><strong>What are we scoring?</strong> The primary model output might be a posterior-predictive Kaplan-Meier for overall survival. It might be a RECIST confusion matrix. It might be the joint log likelihood over the SLD stream and the multistate event stream. These are not interchangeable; they have different units, different sensitivities, and different clinical meanings.</p></li>
+</ol>
+<p>None of these questions has a counterpart in the <span class="citation" data-cites="burkner2020lfo">Bürkner et al. (<a href="#ref-burkner2020lfo" role="doc-biblioref">2020</a>)</span> time-series LFO. They are not failures of the original method — they are features of the problem.</p>
+</section>
+<section id="the-shape-of-the-solution" class="level2" data-number="6">
+<h2 data-number="6" data-anchor-id="the-shape-of-the-solution"><span class="header-section-number">6</span> The shape of the solution</h2>
+<p>The rest of this post is about how my LFO implementation, built on top of the joint longitudinal–multistate model sketched in the previous section, handles each of those questions. I will not try to show all the code; the key pieces I point at are in a modular Stan include system and a small R pipeline of helper functions. The architecture matters less than the ideas behind it.</p>
+<section id="calendar-day-cutoffs-on-patient-specific-clocks" class="level3" data-number="6.1">
+<h3 data-number="6.1" data-anchor-id="calendar-day-cutoffs-on-patient-specific-clocks"><span class="header-section-number">6.1</span> Calendar-day cutoffs on patient-specific clocks</h3>
+<p>The first design decision: cutoffs are <strong>calendar dates</strong>, not study weeks. A cutoff of 2025-09-30 translates, for each patient, into a <em>different</em> study week — specifically, the week of that patient’s last pre-cutoff visit on their own time axis. This is handled in Stan by a per-patient date arithmetic step: given the patient’s enrolment calendar day and the global cutoff, compute the patient’s cutoff in their internal week scale, then walk the patient’s visit array backwards to find the last visit that falls at or before it.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> patient_cutoff_study_day =</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    calendar_date_to_study_date(patient_calendar_day[i], cutoff_calendar_day);</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">// ... find last visit day &lt;= patient_cutoff_study_day, record its week.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is the innocuous-looking conversion that makes everything else well-defined. Without it, a shared cutoff means very different things for a patient enrolled early in the trial (lots of follow-up) and a patient enrolled late (perhaps only one or two visits past baseline).</p>
+</section>
+<section id="two-cutoffs-per-patient-for-two-observation-mechanisms" class="level3" data-number="6.2">
+<h3 data-number="6.2" data-anchor-id="two-cutoffs-per-patient-for-two-observation-mechanisms"><span class="header-section-number">6.2</span> Two cutoffs per patient, for two observation mechanisms</h3>
+<p>At any calendar cutoff, what we know about a patient arrives through two separate channels:</p>
+<ul>
+<li><strong>Imaging visits.</strong> Tumor size, RECIST category, and therefore target-lesion progression are measurable only at scheduled visits. Between visits, the tumor state is silent.</li>
+<li><strong>Registry records.</strong> Deaths are reported to the exact day, continuously, from sources independent of the visit schedule.</li>
+</ul>
+<p>These two channels do <em>not</em> run up to the same point on the patient’s timeline. At any calendar cutoff, visit information ends at the patient’s last pre-cutoff visit. Registry information ends at the calendar cutoff itself. A patient whose last visit was week 14 but who is known to have died at week 31 through a registry report has visit data that ends at week 14 and registry data that ends wherever the calendar cutoff falls — week 40, say. The same cutoff date produces two different “last-known” points on the same timeline.</p>
+<p><a href="#fig-dual-cutoff" class="quarto-xref">Figure&nbsp;2</a> shows what goes wrong if you try to collapse both into a single cutoff time. If you censor everything at the last visit, you throw away the week-31 death that the registry told you about. If you censor everything at the calendar cutoff, you implicitly insert phantom visits at weeks 21, 28, 35 that were never actually performed — meaning the patient would have to be classified as progression-free through those weeks on the basis of data that does not exist.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dual-cutoff" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dual-cutoff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="lfo-beyond-time-series_files/figure-html/fig-dual-cutoff-1.png" class="img-fluid figure-img" width="864">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dual-cutoff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Three censoring schemes applied to the same worked example: a patient whose last on-trial visit was week 14, who died at week 31 (registry-recorded), with a calendar cutoff at week 40 in this patient’s scale. The two dashed vertical rules mark <code>cv = cutoff_visit_week</code> and <code>cc = cutoff_cal_week</code>. Top panel: censoring at <code>cv</code> alone discards the registry-recorded death (faded triangle) and treats the patient as alive-at-last-visit. Middle panel: censoring at <code>cc</code> alone implicitly inserts phantom visits (gold ticks) between week 14 and week 40 that the trial never observed. Bottom panel: the dual rule keeps visit-derived information up to <code>cv</code> and registry-derived information up to <code>cc</code>, so the death at week 31 is correctly attributed and no progression is fabricated.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The re-censoring rule is then just: use each channel up to its own “last-known” point, and nothing beyond.</p>
+<ul>
+<li>For anything visit-observed — progression, continued at-risk follow-up, RECIST category — take the patient up to the last pre-cutoff visit, and treat everything after that as unknown.</li>
+<li>For anything registry-observed — death, whether or not it followed a recorded progression — take the patient up to the calendar cutoff itself, and treat anything after it as not yet happened.</li>
+</ul>
+<p>When an event crosses the cutoff, it is rolled back one step: a progression recorded after the last visit reverts to at-risk follow-up, a post-cutoff death reverts to whatever state the patient was in before dying. Patients not yet enrolled at the calendar cutoff have no visit history and no registry follow-up to keep; they are dropped from that cutoff’s evaluation entirely. This rule is packaged in a single Stan function, but the rule itself is the point, not the function.</p>
+<p>I want to stress that this is not a technicality. It is the <em>operational definition</em> of what LFO means when applied to a multistate survival process where different transitions are observed through different mechanisms. Getting it wrong quietly inflates or deflates predictive accuracy depending on which direction the error pulls, and you will only catch it by checking that observed and posterior-predictive Kaplan-Meier curves at each cutoff match in the training region — a check worth automating into the pipeline and one I recommend anyone adapting this approach do the same.</p>
+</section>
+<section id="scoring-decomposed-elpd-plus-endpoint-level-km" class="level3" data-number="6.3">
+<h3 data-number="6.3" data-anchor-id="scoring-decomposed-elpd-plus-endpoint-level-km"><span class="header-section-number">6.3</span> Scoring: decomposed ELPD plus endpoint-level KM</h3>
+<p>With re-censoring settled, the rest of the evaluation is comparatively straightforward, but worth laying out for clarity.</p>
+<p>The full log predictive density at a cutoff decomposes cleanly, along the same factorization as the model itself:</p>
+<p><span class="math display">\[
+\log p(y_i^{\text{future}} \mid y_i^{\text{past}}, \theta)
+= \underbrace{\log p(\text{SLD}_i^{\text{future}} \mid y_i^{\text{past}}, \theta)}_{\text{tumor component}}
++ \underbrace{\log p(\text{MS}_i^{\text{future}} \mid \text{SLD}_i, y_i^{\text{past}}, \theta)}_{\text{multistate component}}.
+\]</span></p>
+<p>Summing over patients and cutoffs, and averaging over the posterior of <span class="math inline">\(\theta\)</span> from each refit, gives a total ELPD and two sub-totals. The sub-totals are diagnostically valuable: a model that forecasts SLD well but multistate transitions poorly tells you something quite different from a model that fails symmetrically, and the decomposition makes which half is struggling immediately visible.</p>
+<p>Alongside ELPD I track two endpoint-level diagnostics:</p>
+<ul>
+<li><strong>Cutoff-by-cutoff Kaplan-Meier overlays.</strong> At each cutoff I plot the posterior-predictive KM (overall survival, PFS, per-arm or per-subgroup) from the refit at that cutoff, and let subsequent cutoffs’ observed curves fill in the region that was “future” at the time. This is where LFO earns its keep visually: a model that looks fine when the observed curve is averaged over the whole study can still be persistently too-optimistic between two adjacent cutoffs, and that is exactly the kind of miss no single summary number flags. Posterior-predictive vs observed KM at a fixed cutoff is a standard joint-model check; what is new here is that the comparison is made against <em>later observed reality</em>, not against the training cohort that produced the fit.</li>
+<li><strong>RECIST confusion matrices</strong> aggregated over all out-of-sample visits and cutoffs, from which I compute per-class sensitivity and specificity. This is a side benefit of the joint model: once the tumor trajectory is forecast, the RECIST classification is deterministic, so “how often did the model correctly predict that this patient would be in progressive disease a year from the cutoff?” becomes a quantity with a posterior distribution.</li>
+</ul>
+</section>
+<section id="exact-refits-vs-psis-when-is-the-shortcut-safe" class="level3" data-number="6.4">
+<h3 data-number="6.4" data-anchor-id="exact-refits-vs-psis-when-is-the-shortcut-safe"><span class="header-section-number">6.4</span> Exact refits vs PSIS: when is the shortcut safe?</h3>
+<p>The <span class="citation" data-cites="burkner2020lfo">Bürkner et al. (<a href="#ref-burkner2020lfo" role="doc-biblioref">2020</a>)</span> PSIS-LFO trick is tempting, and the pipeline supports it (<code>max_n_rows = n_cutoffs</code> with a forecast horizon spanning all cutoffs, triggering a single refit whose posterior is reweighted at each cutoff). In practice, I default to exact refits. The reason is specific to the problem: when the cutoff moves, the <em>structure of the data</em> changes, not just its volume. A patient who was at-risk at cutoff <span class="math inline">\(c_1\)</span> may be in state 1 at cutoff <span class="math inline">\(c_2\)</span>; a patient enrolled between <span class="math inline">\(c_1\)</span> and <span class="math inline">\(c_2\)</span> is admitted to the likelihood only at the later cutoff. The mapping from posterior at <span class="math inline">\(c_1\)</span> to the likelihood at <span class="math inline">\(c_2\)</span> is therefore not the simple “add a few more observations” that PSIS handles gracefully. The Pareto <span class="math inline">\(\hat k\)</span> diagnostic flags this reliably, but by the time you have diagnosed it across several cutoffs you have effectively paid the cost of refitting anyway. For production evaluation I run exact refits on a schedule of cutoffs spaced by a configurable number of days, starting at the first landmark-eligible date. For development iteration, PSIS is a useful shortcut.</p>
+</section>
+<section id="standard-errors-why-the-time-series-recipe-does-not-transfer" class="level3" data-number="6.5">
+<h3 data-number="6.5" data-anchor-id="standard-errors-why-the-time-series-recipe-does-not-transfer"><span class="header-section-number">6.5</span> Standard errors: why the time-series recipe does not transfer</h3>
+<p>In the <span class="citation" data-cites="burkner2020lfo">Bürkner et al. (<a href="#ref-burkner2020lfo" role="doc-biblioref">2020</a>)</span> setting, uncertainty in the ELPD estimate comes from a single analytic formula: if the <span class="math inline">\(T\)</span> pointwise log scores are treated as exchangeable contributions, then the SE is <span class="math inline">\(\sqrt{T \cdot \widehat{\mathrm{Var}}_t(\hat\ell_t)}\)</span>. That is what <code>loo</code> reports, and it works because the summation unit — time <span class="math inline">\(t\)</span> on a single series — is also the unit the exchangeability assumption is pinned to.</p>
+<p>In the oncology setting that assumption fails twice over. A single patient contributes correlated scores across their own visits, and the <em>same</em> patient reappears at every cutoff they were enrolled for. So the <span class="math inline">\((i, t, c)\)</span> contributions inside the ELPD sum are heavily nested: not <span class="math inline">\(T\)</span> independent draws, but rather <span class="math inline">\(\sim N\)</span> patient-clusters, each contributing many correlated scores. Treating them as independent — which is what the time-series formula does — counts the same evidence many times over and produces an SE that dramatically understates uncertainty.</p>
+<p>We therefore need an SE estimator built around the right unit of independence. Across patients we are willing to assume exchangeability (that is exactly the assumption the hierarchical model encodes); within a patient we are not. The natural way to express that asymmetry without a closed-form variance derivation is <strong>a non-parametric bootstrap over patients</strong>: simulate the variability we would see if we had drawn a different cohort of patients from the same population, and let the empirical spread of ELPD across simulated cohorts stand in for the SE.</p>
+<p>Concretely: at each bootstrap replicate I draw <span class="math inline">\(N\)</span> patient indices with replacement from the trial cohort. For <em>those</em> patients (and only those), I re-evaluate the ELPD — summing each patient’s contribution across the visits and cutoffs at which they were observed — and record a single number <span class="math inline">\(\text{ELPD}^{(b)}\)</span>. Repeating <span class="math inline">\(B\)</span> times gives a distribution of ELPD estimates over hypothetical cohorts, and the standard deviation of that distribution is the reported SE.</p>
+<p>There is one subtlety in the re-evaluation step, and it is where PSIS comes back in. At cutoff <span class="math inline">\(c\)</span> my exact refit gives posterior draws from <span class="math inline">\(p(\theta \mid y_{1:c})\)</span> — conditional on the <em>full</em> cohort at <span class="math inline">\(c\)</span>. But the replicate’s ELPD should really be evaluated under <span class="math inline">\(p(\theta \mid y^{(b)}_{1:c})\)</span>, the posterior I would have obtained had I trained on the bootstrapped patients only. Refitting per replicate is hopelessly expensive, so I use the same importance-reweighting trick PSIS uses in ordinary LOO: reweight the full-cohort posterior draws by the ratio of bootstrap-subsample likelihood to full-cohort likelihood, smooth the weights with Pareto <span class="math inline">\(\hat k\)</span>, and compute the replicate’s per-patient scores against the reweighted draws. The move is mathematically the same as LOO’s <span class="math inline">\(p(\theta \mid y_{-i}) \approx\)</span> reweighted draws from <span class="math inline">\(p(\theta \mid y)\)</span>, just with a different target posterior: “condition on the bootstrap subcohort” instead of “condition on everything except <span class="math inline">\(i\)</span>.” The weights are recomputed fresh for every replicate × cutoff combination, so the importance-sampling correction always matches the cohort being scored.</p>
+<p>Two things to notice about this construction. First, because each replicate carries a whole patient with all of their visits and all of their cutoff appearances bundled into one draw, the within-patient correlation that broke the analytic formula is absorbed automatically: a patient is in or out of replicate <span class="math inline">\(b\)</span> as a unit, never as a collection of pseudo-independent rows. Second, the SE is interpreted as cohort-resampling uncertainty, not posterior uncertainty in <span class="math inline">\(\theta\)</span> — the latter is already folded into each <span class="math inline">\(\hat\ell_{i,c}\)</span> when we average over posterior draws. The bootstrap is doing the work the analytic formula was trying to do (estimate cohort-level sampling variability), with an exchangeability assumption we are actually willing to make.</p>
+<p>Two caveats are worth flagging rather than hiding.</p>
+<p>The first is that PSIS now plays two roles — the between-cutoff approximation from the previous section, and the within-replicate reweighting just described — and a <span class="math inline">\(\hat k\)</span> failure in either one matters. The bootstrap drops cutoffs that fail the reliability filter at either stage, so the reported SE is conditional on PSIS-reliable cutoffs and bootstrap subcohorts. If the dropped configurations are systematically the most uncertain ones, the SE under-covers. When <span class="math inline">\(\hat k\)</span> degrades for the within-replicate reweighting specifically, the honest fix is to reduce the effective step size of the bootstrap (resample fewer patients out at a time, e.g.&nbsp;via blocked resampling) or, in the limit, refit per replicate — the latter is rarely tractable, but the former is on the to-do list.</p>
+<p>The second is more consequential and worth stating plainly: <strong>my current implementation resamples patients independently per model</strong>. That gives correct marginal SEs for each model’s absolute ELPD, but it is wrong for <em>model comparisons</em>. The variance identity</p>
+<p><span class="math display">\[
+\mathrm{Var}(\text{ELPD}_A - \text{ELPD}_B) = \mathrm{Var}(\text{ELPD}_A) + \mathrm{Var}(\text{ELPD}_B) - 2\,\mathrm{Cov}(\text{ELPD}_A, \text{ELPD}_B)
+\]</span></p>
+<p>requires a covariance that an unpaired bootstrap cannot identify. Two models scored on the same patients tend to produce highly positively correlated per-patient ELPDs — if patient <span class="math inline">\(i\)</span> is an outlier, both models will struggle with them — and the correct paired-bootstrap SE of the difference is typically much smaller than <span class="math inline">\(\sqrt{\mathrm{Var}(A) + \mathrm{Var}(B)}\)</span>. This is exactly why <code>loo_compare</code> reports a paired SE on ELPD differences rather than the individual model SEs in quadrature. In my current setup, the two models’ bootstrap replicates come from independently drawn patient index sets, so differences of replicates do not estimate <span class="math inline">\(\mathrm{Var}(A - B)\)</span> — they estimate <span class="math inline">\(\mathrm{Var}(A) + \mathrm{Var}(B)\)</span>, which is inflated.</p>
+<p>The bias is one-sided: unpaired SEs of differences are conservative, so I have probably been <em>understating</em> the confidence with which one model out-forecasts another, not overstating it. Still, the fix is mechanical (draw one set of patient indices per replicate and apply it to all models) and is next on the list of pipeline corrections. Anyone adopting a patient-level bootstrap for multi-model LFO comparisons should plan for this from the start: the exchangeable unit you resample needs to be held constant across the models you compare.</p>
+</section>
+</section>
+<section id="why-this-matters-more-broadly" class="level2" data-number="7">
+<h2 data-number="7" data-anchor-id="why-this-matters-more-broadly"><span class="header-section-number">7</span> Why this matters more broadly</h2>
+<p>I want to pull back from the specifics and say something about the broader case.</p>
+<p><strong>For Bayesian modelers familiar with <code>loo</code> and LFO from the time-series side.</strong> The temporal-integrity principle underlying LFO generalizes beyond univariate series, but generalizing it requires explicit design choices about (a) <em>who</em> is in the evaluation cohort at each cutoff, (b) <em>which clock</em> each observation uses, and (c) <em>what quantity</em> you are scoring. These choices are not downstream implementation details; they determine what the ELPD number actually means. The single piece of the implementation I would single out as worth borrowing is the dual-cutoff re-censoring — it is the place where the biostatistical reality of the data leaks into the Bayesian formalism, and as far as I can find it does not appear in the existing LFO literature.</p>
+<p><strong>For oncology biostatisticians familiar with landmarking and joint models.</strong> Most of what LFO buys you here is <em>already</em> available in your toolkit, just under different names. Landmarking and dynamic prediction from joint models <span class="citation" data-cites="rizopoulos2011dynamic vanhouwelingen2007landmarking putter2021landmarking2">(<a href="#ref-rizopoulos2011dynamic" role="doc-biblioref">Rizopoulos 2011</a>; <a href="#ref-vanhouwelingen2007landmarking" role="doc-biblioref">van Houwelingen 2007</a>; <a href="#ref-putter2021landmarking2" role="doc-biblioref">Putter and van Houwelingen 2021</a>)</span> ask the same temporal question. What ELPD-LFO adds is (i) a single coherent log-predictive scoring rule that decomposes cleanly into longitudinal and event components for joint models, and (ii) a Bayesian posterior over the score itself, with estimable standard errors for model comparison. Whether you want that on top of time-dependent AUC and Brier scores is a real question; my own view is that they are complementary, not substitutes, and that ELPD-LFO is most useful when comparing competing <em>generative</em> mechanisms rather than competing point predictions. Practically, the cutoff-by-cutoff KM overlay is the diagnostic that has earned its keep most reliably in conversations with stakeholders.</p>
+<p><strong>For people working in other domains entirely.</strong> The structure of the problem — multiple actors entering the system at different times, a latent mechanistic process generating both longitudinal and event streams, different observation mechanisms for different outcomes — is not unique to oncology. Infectious-disease surveillance with serology and case reports, reliability engineering with sensor readings and failure events, and customer-lifetime modeling with usage logs and churn events all share the same skeleton. I suspect the pattern of calendar-cutoff LFO with observation-mechanism-aware re-censoring is directly portable, and I would be interested to hear from anyone who has tried it in a different context.</p>
+</section>
+<section id="a-short-closing-thought" class="level2" data-number="8">
+<h2 data-number="8" data-anchor-id="a-short-closing-thought"><span class="header-section-number">8</span> A short closing thought</h2>
+<p>There is a tendency, when importing a method from one literature to another, to keep it at the level of the name — “we used leave-future-out cross-validation” — without examining whether the assumptions the method was built on still hold. My experience with LFO in oncology has been that the <em>principle</em> transfers cleanly and is even more valuable here than in univariate time series, but that the <em>machinery</em> has to be rebuilt around the structure of the data: staggered enrolment, mixed observation clocks, competing risks, hierarchical pooling, and joint longitudinal–event likelihoods.</p>
+<p>The pay-off for doing that work, at least for me, is that the ELPD numbers and KM overlays coming out of the pipeline feel <em>trustworthy</em> in a way that no in-sample criterion ever did. When a sponsor asks “how well will this model forecast?” I can point at a specific data cutoff from six months ago, show the forecast the model would have produced at that cutoff, and show where the observed curve landed. That is a conversation LFO makes possible, and one that internal goodness-of-fit cannot.</p>
+<hr>
+</section>
+<section id="references" class="level2 unnumbered">
+<h2 class="unnumbered" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-andersen2002multistate" class="csl-entry" role="listitem">
+Andersen, Per Kragh, and Niels Keiding. 2002. <span>“Multi-State Models for Event History Analysis.”</span> <em>Statistical Methods in Medical Research</em> 11 (2): 91–115. <a href="https://doi.org/10.1191/0962280202SM276ra">https://doi.org/10.1191/0962280202SM276ra</a>.
+</div>
+<div id="ref-andrinopoulou2016shrinkage" class="csl-entry" role="listitem">
+Andrinopoulou, Eleni-Rosalina, and Dimitris Rizopoulos. 2016. <span>“Bayesian Shrinkage Approach for a Joint Model of Longitudinal and Survival Outcomes Assuming Different Association Structures.”</span> <em>Statistics in Medicine</em> 35 (26): 4813–23. <a href="https://doi.org/10.1002/sim.7027">https://doi.org/10.1002/sim.7027</a>.
+</div>
+<div id="ref-burkner2020lfo" class="csl-entry" role="listitem">
+Bürkner, Paul-Christian, Jonah Gabry, and Aki Vehtari. 2020. <span>“Approximate Leave-Future-Out Cross-Validation for Bayesian Time Series Models.”</span> <em>Journal of Statistical Computation and Simulation</em> 90 (14): 2499–523. <a href="https://doi.org/10.1080/00949655.2020.1783262">https://doi.org/10.1080/00949655.2020.1783262</a>.
+</div>
+<div id="ref-loo_lfo_vignette" class="csl-entry" role="listitem">
+Bürkner, Paul-Christian, Jonah Gabry, and Aki Vehtari. 2024. <span>“Approximate Leave-Future-Out Cross-Validation for Bayesian Time Series Models.”</span> <a href="https://mc-stan.org/loo/articles/loo2-lfo.html">https://mc-stan.org/loo/articles/loo2-lfo.html</a>.
+</div>
+<div id="ref-cooper2023arx" class="csl-entry" role="listitem">
+Cooper, Andrew, Daniel Simpson, Lauren Kennedy, Catherine Forbes, and Aki Vehtari. 2023. <em>Cross-Validation Methods for ARX(p,q) Models</em>.
+</div>
+<div id="ref-devaux2022landmark" class="csl-entry" role="listitem">
+Devaux, Anthony, Robin Genuer, Karine Pérès, and Cécile Proust-Lima. 2022. <em>Individual Dynamic Prediction of Clinical Endpoint from Large Dimensional Longitudinal Biomarker History: A Landmark Approach</em>.
+</div>
+<div id="ref-eisenhauer2009recist" class="csl-entry" role="listitem">
+Eisenhauer, E. A., P. Therasse, J. Bogaerts, et al. 2009. <span>“New Response Evaluation Criteria in Solid Tumours: Revised RECIST Guideline (Version 1.1).”</span> <em>European Journal of Cancer</em> 45 (2): 228–47. <a href="https://doi.org/10.1016/j.ejca.2008.10.026">https://doi.org/10.1016/j.ejca.2008.10.026</a>.
+</div>
+<div id="ref-gerds2006brier" class="csl-entry" role="listitem">
+Gerds, Thomas A., and Martin Schumacher. 2006. <span>“Consistent Estimation of the Expected Brier Score in General Survival Models with Right-Censored Event Times.”</span> <em>Biometrical Journal</em> 48 (6): 1029–40. <a href="https://doi.org/10.1002/bimj.200610301">https://doi.org/10.1002/bimj.200610301</a>.
+</div>
+<div id="ref-gneiting2007proper" class="csl-entry" role="listitem">
+Gneiting, Tilmann, and Adrian E. Raftery. 2007. <span>“Strictly Proper Scoring Rules, Prediction, and Estimation.”</span> <em>Journal of the American Statistical Association</em> 102 (477): 359–78. <a href="https://doi.org/10.1198/016214506000001437">https://doi.org/10.1198/016214506000001437</a>.
+</div>
+<div id="ref-vanhouwelingen2007landmarking" class="csl-entry" role="listitem">
+Houwelingen, Hans C. van. 2007. <span>“Dynamic Prediction by Landmarking in Event History Analysis.”</span> <em>Scandinavian Journal of Statistics</em> 34 (1): 70–85. <a href="https://doi.org/10.1111/j.1467-9469.2006.00529.x">https://doi.org/10.1111/j.1467-9469.2006.00529.x</a>.
+</div>
+<div id="ref-putter2021landmarking2" class="csl-entry" role="listitem">
+Putter, Hein, and Hans C. van Houwelingen. 2021. <em>Landmarking 2.0: Bridging the Gap Between Joint Models and Landmarking</em>.
+</div>
+<div id="ref-rizopoulos2011dynamic" class="csl-entry" role="listitem">
+Rizopoulos, Dimitris. 2011. <span>“Dynamic Predictions and Prospective Accuracy in Joint Models for Longitudinal and Time-to-Event Data.”</span> <em>Biometrics</em> 67 (3): 819–29. <a href="https://doi.org/10.1111/j.1541-0420.2010.01546.x">https://doi.org/10.1111/j.1541-0420.2010.01546.x</a>.
+</div>
+<div id="ref-rizopoulos2023superlearner" class="csl-entry" role="listitem">
+Rizopoulos, Dimitris, and Jeremy M. G. Taylor. 2023. <em>Optimizing Dynamic Predictions from Joint Models Using Super Learning</em>.
+</div>
+<div id="ref-vehtari_cv_faq" class="csl-entry" role="listitem">
+Vehtari, Aki. 2024. <span>“Cross-Validation FAQ.”</span> <a href="https://avehtari.github.io/modelselection/CV-FAQ.html">https://avehtari.github.io/modelselection/CV-FAQ.html</a>.
+</div>
+<div id="ref-vehtari2017loo" class="csl-entry" role="listitem">
+Vehtari, Aki, Andrew Gelman, and Jonah Gabry. 2017. <span>“Practical Bayesian Model Evaluation Using Leave-One-Out Cross-Validation and WAIC.”</span> <em>Statistics and Computing</em> 27 (5): 1413–32. <a href="https://doi.org/10.1007/s11222-016-9696-4">https://doi.org/10.1007/s11222-016-9696-4</a>.
+</div>
+</div>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>RECIST (Response Evaluation Criteria in Solid Tumors) is the standard classification scheme used to summarize tumor response in oncology trials. Each patient visit is assigned one of four categories — complete response (CR), partial response (PR), stable disease (SD), or progressive disease (PD) — based on changes in the sum of target-lesion diameters relative to baseline and the nadir, together with the appearance or progression of non-target lesions. The current version is RECIST 1.1 <span class="citation" data-cites="eisenhauer2009recist">(<a href="#ref-eisenhauer2009recist" role="doc-biblioref">Eisenhauer et al. 2009</a>)</span>. For the purposes of this post, the relevant facts are that RECIST categories are (i) observable only at imaging visits, not continuously, and (ii) the <em>target-lesion</em> component of the classification is a deterministic function of the underlying tumor-size trajectory — which is the part this post’s model handles.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/karimn\.github\.io");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Karim Naguib — Built with Quarto &amp; Claude Code</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p><a href="mailto:karim.a.naguib@gmail.com">karim.a.naguib@gmail.com</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

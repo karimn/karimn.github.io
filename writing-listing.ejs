@@ -1,0 +1,21 @@
+<div class="writing-listing">
+<% for (const item of items) { %>
+<article class="writing-entry">
+<div class="writing-entry-meta">
+<time class="writing-entry-date"><%= item.date %></time>
+<% if (item.categories && item.categories.length > 0) { %>
+<ul class="writing-entry-categories">
+<% for (const cat of item.categories) { %>
+<li><a href="index.html#category=<%= encodeURIComponent(cat) %>"><%= cat %></a></li>
+<% } %>
+</ul>
+<% } %>
+</div>
+<div class="writing-entry-body">
+<h2 class="writing-entry-title"><a href="<%= item.path.replace(/\.qmd$/, '.html') %>"><%= item.title %></a></h2>
+<% if (item.subtitle) { %><p class="writing-entry-subtitle"><%= item.subtitle %></p><% } %>
+<% if (item.description) { %><p class="writing-entry-description"><%= item.description %></p><% } %>
+</div>
+</article>
+<% } %>
+</div>

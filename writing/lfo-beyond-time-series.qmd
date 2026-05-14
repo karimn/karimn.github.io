@@ -1,0 +1,858 @@
+---
+title: "Leave-Future-Out Beyond Time Series"
+subtitle: "Temporal cross-validation for hierarchical mechanistic survival models"
+description: "LFO cross-validation was built for univariate time series. Here I work out what it takes to bring it into hierarchical joint longitudinal–survival models: staggered enrolment, dual observation clocks, ELPD decomposition, and a patient-level bootstrap for standard errors."
+author: "Karim Naguib"
+date: "2026-05-14"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    fig-width: 10
+    fig-height: 6
+categories: [Bayesian, Survival Analysis, Cross-Validation, Oncology]
+image: "../og-image.png"
+link-citations: true
+citations-hover: true
+nocite: |
+  @vehtari_cv_faq, @cooper2023arx, @gneiting2007proper,
+  @andrinopoulou2016shrinkage, @gerds2006brier, @andersen2002multistate
+references:
+  - id: burkner2020lfo
+    type: article-journal
+    author:
+      - family: Bürkner
+        given: Paul-Christian
+      - family: Gabry
+        given: Jonah
+      - family: Vehtari
+        given: Aki
+    title: "Approximate leave-future-out cross-validation for Bayesian time series models"
+    container-title: "Journal of Statistical Computation and Simulation"
+    volume: 90
+    issue: 14
+    page: 2499-2523
+    issued: { year: 2020 }
+    DOI: 10.1080/00949655.2020.1783262
+  - id: vehtari2017loo
+    type: article-journal
+    author:
+      - family: Vehtari
+        given: Aki
+      - family: Gelman
+        given: Andrew
+      - family: Gabry
+        given: Jonah
+    title: "Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC"
+    container-title: "Statistics and Computing"
+    volume: 27
+    issue: 5
+    page: 1413-1432
+    issued: { year: 2017 }
+    DOI: 10.1007/s11222-016-9696-4
+  - id: vehtari_cv_faq
+    type: webpage
+    author:
+      - family: Vehtari
+        given: Aki
+    title: "Cross-validation FAQ"
+    URL: "https://avehtari.github.io/modelselection/CV-FAQ.html"
+    issued: { year: 2024 }
+    note: "Accessed 2026-05-14"
+  - id: loo_lfo_vignette
+    type: webpage
+    author:
+      - family: Bürkner
+        given: Paul-Christian
+      - family: Gabry
+        given: Jonah
+      - family: Vehtari
+        given: Aki
+    title: "Approximate leave-future-out cross-validation for Bayesian time series models"
+    URL: "https://mc-stan.org/loo/articles/loo2-lfo.html"
+    issued: { year: 2024 }
+    note: "loo package vignette"
+  - id: cooper2023arx
+    type: article-journal
+    author:
+      - family: Cooper
+        given: Andrew
+      - family: Simpson
+        given: Daniel
+      - family: Kennedy
+        given: Lauren
+      - family: Forbes
+        given: Catherine
+      - family: Vehtari
+        given: Aki
+    title: "Cross-validation methods for ARX(p,q) models"
+    issued: { year: 2023 }
+    note: "arXiv:2301.08276"
+  - id: gneiting2007proper
+    type: article-journal
+    author:
+      - family: Gneiting
+        given: Tilmann
+      - family: Raftery
+        given: Adrian E.
+    title: "Strictly proper scoring rules, prediction, and estimation"
+    container-title: "Journal of the American Statistical Association"
+    volume: 102
+    issue: 477
+    page: 359-378
+    issued: { year: 2007 }
+    DOI: 10.1198/016214506000001437
+  - id: rizopoulos2011dynamic
+    type: article-journal
+    author:
+      - family: Rizopoulos
+        given: Dimitris
+    title: "Dynamic predictions and prospective accuracy in joint models for longitudinal and time-to-event data"
+    container-title: "Biometrics"
+    volume: 67
+    issue: 3
+    page: 819-829
+    issued: { year: 2011 }
+    DOI: 10.1111/j.1541-0420.2010.01546.x
+  - id: rizopoulos2023superlearner
+    type: article-journal
+    author:
+      - family: Rizopoulos
+        given: Dimitris
+      - family: Taylor
+        given: Jeremy M. G.
+    title: "Optimizing dynamic predictions from joint models using super learning"
+    issued: { year: 2023 }
+    note: "arXiv:2309.11472"
+  - id: andrinopoulou2016shrinkage
+    type: article-journal
+    author:
+      - family: Andrinopoulou
+        given: Eleni-Rosalina
+      - family: Rizopoulos
+        given: Dimitris
+    title: "Bayesian shrinkage approach for a joint model of longitudinal and survival outcomes assuming different association structures"
+    container-title: "Statistics in Medicine"
+    volume: 35
+    issue: 26
+    page: 4813-4823
+    issued: { year: 2016 }
+    DOI: 10.1002/sim.7027
+  - id: vanhouwelingen2007landmarking
+    type: article-journal
+    author:
+      - family: van Houwelingen
+        given: Hans C.
+    title: "Dynamic prediction by landmarking in event history analysis"
+    container-title: "Scandinavian Journal of Statistics"
+    volume: 34
+    issue: 1
+    page: 70-85
+    issued: { year: 2007 }
+    DOI: 10.1111/j.1467-9469.2006.00529.x
+  - id: putter2021landmarking2
+    type: article-journal
+    author:
+      - family: Putter
+        given: Hein
+      - family: van Houwelingen
+        given: Hans C.
+    title: "Landmarking 2.0: bridging the gap between joint models and landmarking"
+    issued: { year: 2021 }
+    note: "arXiv:2103.16252"
+  - id: devaux2022landmark
+    type: article-journal
+    author:
+      - family: Devaux
+        given: Anthony
+      - family: Genuer
+        given: Robin
+      - family: Pérès
+        given: Karine
+      - family: Proust-Lima
+        given: Cécile
+    title: "Individual dynamic prediction of clinical endpoint from large dimensional longitudinal biomarker history: a landmark approach"
+    issued: { year: 2022 }
+    note: "arXiv:2102.01466"
+  - id: gerds2006brier
+    type: article-journal
+    author:
+      - family: Gerds
+        given: Thomas A.
+      - family: Schumacher
+        given: Martin
+    title: "Consistent estimation of the expected Brier score in general survival models with right-censored event times"
+    container-title: "Biometrical Journal"
+    volume: 48
+    issue: 6
+    page: 1029-1040
+    issued: { year: 2006 }
+    DOI: 10.1002/bimj.200610301
+  - id: andersen2002multistate
+    type: article-journal
+    author:
+      - family: Andersen
+        given: Per Kragh
+      - family: Keiding
+        given: Niels
+    title: "Multi-state models for event history analysis"
+    container-title: "Statistical Methods in Medical Research"
+    volume: 11
+    issue: 2
+    page: 91-115
+    issued: { year: 2002 }
+    DOI: 10.1191/0962280202SM276ra
+  - id: eisenhauer2009recist
+    type: article-journal
+    author:
+      - family: Eisenhauer
+        given: E. A.
+      - family: Therasse
+        given: P.
+      - family: Bogaerts
+        given: J.
+      - family: Schwartz
+        given: L. H.
+      - family: Sargent
+        given: D.
+      - family: Ford
+        given: R.
+      - family: Dancey
+        given: J.
+      - family: Arbuck
+        given: S.
+      - family: Gwyther
+        given: S.
+      - family: Mooney
+        given: M.
+      - family: Rubinstein
+        given: L.
+      - family: Shankar
+        given: L.
+      - family: Dodd
+        given: L.
+      - family: Kaplan
+        given: R.
+      - family: Lacombe
+        given: D.
+      - family: Verweij
+        given: J.
+    title: "New response evaluation criteria in solid tumours: revised RECIST guideline (version 1.1)"
+    container-title: "European Journal of Cancer"
+    volume: 45
+    issue: 2
+    page: 228-247
+    issued: { year: 2009 }
+    DOI: 10.1016/j.ejca.2008.10.026
+---
+
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(showtext)
+
+font_add_google("IBM Plex Mono", "ibm")
+font_add_google("Newsreader", "newsreader")
+showtext_auto()
+
+clr_paper <- "#FAF8F3"   # site background
+clr_ink   <- "#1a1612"   # site body text
+clr_muted <- "#8a7f70"   # site ink-muted
+clr_rule  <- "#d9d1c0"   # site hairline
+
+theme_site <- function(base_size = 13) {
+  theme_minimal(base_size = base_size, base_family = "ibm") +
+  theme(
+    plot.background    = element_rect(fill = clr_paper, color = NA),
+    panel.background   = element_rect(fill = clr_paper, color = NA),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color = clr_rule, linewidth = 0.4),
+    panel.spacing.y    = unit(8, "pt"),
+    axis.title.x       = element_text(family = "ibm", size = rel(0.75),
+                                      color = clr_muted, letter_spacing = 0.08,
+                                      margin = margin(t = 6)),
+    axis.text          = element_text(family = "ibm", size = rel(0.72),
+                                      color = clr_muted),
+    strip.text         = element_text(family = "ibm", size = rel(0.88),
+                                      color = clr_ink, face = "bold",
+                                      hjust = 0),
+    strip.text.y.right = element_text(family = "ibm", size = rel(0.88),
+                                      color = clr_ink, face = "bold",
+                                      angle = 0, hjust = 0),
+    legend.position    = "bottom",
+    legend.box         = "vertical",
+    legend.box.just    = "left",
+    legend.background  = element_rect(fill = clr_paper, color = NA),
+    legend.key         = element_rect(fill = clr_paper, color = NA),
+    legend.text        = element_text(family = "ibm", size = rel(0.72),
+                                      color = clr_ink),
+    legend.title       = element_blank(),
+    legend.margin      = margin(2, 0, 0, 0),
+    legend.spacing.y   = unit(2, "pt"),
+    plot.margin        = margin(6, 10, 6, 10)
+  )
+}
+```
+
+## Carrying LFO into a new neighborhood
+
+Leave-future-out cross-validation (LFO) is one of those methods that, once you have seen it, feels obvious. Bürkner, Gabry and Vehtari put it on a firm footing in @burkner2020lfo, addressing a real and well-recognised problem: Bayesian time-series models evaluated with leave-one-out cross-validation [LOO; @vehtari2017loo] end up using observations from the future to "predict" observations in the past, and the resulting score systematically overstates predictive accuracy. The solution they develop is elegant --- split by calendar time, not by observation index --- and the lasting contribution of the paper is a practical recipe: when is an exact refit needed, when can you lean on Pareto-smoothed importance sampling (PSIS) for an approximation, and how do you accumulate the log predictive density across a rolling origin in a way that the `loo` package can ingest [@loo_lfo_vignette]. It is genuinely the reference treatment of the topic on the Bayesian side.
+
+The setting that paper develops, and the accompanying `loo` vignette, is univariate time series: AR(p) and ARMA models, a Gaussian process on a scalar outcome, an AR(4) fit to 98 Lake Huron measurements as the worked example. The "observations" are evenly spaced, univariate, and belong to a single series. The cross-validation question is, roughly, "if I had stopped watching at time $t$, how well would I have predicted time $t+1$, $t+2$, $\ldots$?" --- and the machinery is built around exactly that question, very effectively.
+
+In oncology survival analysis --- at least, the kind of survival analysis I spend most of my time on --- almost none of that holds. There is no single time series. Patients enter the study at different calendar times. Each patient contributes a mix of longitudinal measurements (tumor burden at visits) and event times (progression, death). The clocks are different: tumor measurements live on a visit schedule, deaths arrive from a registry. There is a latent mechanistic state (tumor growth and shrinkage) that couples the longitudinal stream to the event stream. And the unit of interest is neither a single series nor a single "observation" --- it is a patient, embedded in a trial, embedded in a hierarchy.
+
+Yet the question LFO answers is exactly the question an oncology team wants to ask: given the data cutoff we have today, how accurately can this model forecast next year's Kaplan-Meier curve? How well does it forecast the next RECIST[^recist] classification? How does that accuracy degrade with forecast horizon?
+
+```{r}
+#| label: fig-lfo-rolling
+#| fig-cap: "Rolling-cutoff LFO on a cohort of staggered-entry patients. Stacked top to bottom by cutoff date: each row is one cutoff with the same calendar axis, so the cutoff line walks rightward as you scan downward. Solid navy shows the patient history the model trains on; the gold band is the forecast horizon over which the model is scored; greyed rails are patients not yet enrolled at that cutoff. Progression diamonds (pink) are visit-observed; death triangles (dark plum) are registry-observed — a distinction that becomes load-bearing later in the post."
+#| fig-width: 9
+#| fig-height: 9
+#| echo: false
+#| warning: false
+#| message: false
+
+clr_train  <- "#003865"  # navy  — trained on
+clr_test   <- "#F0AB00"  # gold  — scored against
+clr_future <- "#7A8A92"  # slate — observed but outside the scoring window
+clr_unseen <- "#D5DCE0"  # light gray — not yet enrolled
+clr_entry  <- "#830051"  # plum  — enrollment
+clr_prog   <- "#D0006F"  # pink  — progression (visit-observed)
+clr_death  <- "#3C1053"  # dark plum — death (registry-observed)
+
+# 6 synthetic patients with staggered enrollment, a mix of events,
+# and a deliberate split between visit-observed (progression) and
+# registry-observed (death) events
+patients <- tibble(
+  pid       = factor(paste0("P", 1:6), levels = paste0("P", 6:1)),  # P1 on top
+  entry_day = c(10, 35, 70, 110, 150, 200),
+  follow_up = c(320, 260, 240, 210, 180, 140),
+  # P2 dies without a visit-observed progression — the canonical case that
+  # motivates the dual-cutoff (visit week vs calendar week) re-censoring
+  # discussed later in the post.
+  prog_rel  = c(NA,  NA, NA,  95, NA,  60),  # progression (only at visits)
+  death_rel = c(NA, 180, NA, 160, NA,  95)   # death (registry-exact)
+) |>
+  mutate(
+    death_day = entry_day + death_rel,
+    # Timeline ends at death where observed, else at administrative follow-up
+    exit_day  = pmin(entry_day + follow_up, death_day, na.rm = TRUE)
+  )
+
+# Visits are on a ~28-day schedule from entry to exit
+visits <- patients |>
+  rowwise() |>
+  mutate(vis = list(seq(entry_day, exit_day, by = 28))) |>
+  unnest(vis) |>
+  select(pid, entry_day, vis)
+
+# Snap each progression day to the nearest scheduled visit — progression
+# can only be declared at an imaging visit, so the diamond should sit
+# exactly on a tick.
+snap_to_visit <- function(pid_i, target_day, visits_df) {
+  if (is.na(target_day)) return(NA_real_)
+  vv <- visits_df$vis[visits_df$pid == pid_i]
+  vv[which.min(abs(vv - target_day))]
+}
+patients <- patients |>
+  mutate(
+    prog_day = purrr::map2_dbl(
+      pid, entry_day + prog_rel,
+      \(p, d) snap_to_visit(p, d, visits)
+    )
+  )
+
+cutoffs <- tibble(
+  label  = c("Cutoff 1 (early)", "Cutoff 2", "Cutoff 3", "Cutoff 4 (latest)"),
+  cutoff = c(120, 190, 260, 330)
+) |>
+  mutate(label = factor(label, levels = label))
+
+forecast_horizon <- 80
+
+# Build one long segment table with a `phase` aesthetic that drives the legend
+seg_levels <- c("Trained on",
+                "Forecast horizon",
+                "Observed but outside scoring window",
+                "Not yet enrolled")
+
+seg_df <- tidyr::expand_grid(patients, cutoffs) |>
+  mutate(
+    enrolled    = entry_day <= cutoff,
+    train_end   = pmin(exit_day, cutoff),
+    test_start  = cutoff,
+    test_end    = pmin(exit_day, cutoff + forecast_horizon),
+    future_end  = exit_day
+  ) |>
+  mutate(
+    # Future-but-still-real follow-up before enrollment (calendar before entry)
+    pre_entry = pmap(list(entry_day, cutoff, enrolled), \(s, c, en)
+                     if (!en && s > c) tibble(x = c, xend = s, phase = "Not yet enrolled")
+                     else              tibble(x = double(), xend = double(), phase = character())),
+    # Pre-enrollment when the cutoff has already passed entry — patient just isn't seen yet
+    rail_pre = pmap(list(entry_day, cutoff, enrolled), \(s, c, en)
+                    if (!en && s <= c) tibble(x = s, xend = pmin(s, c), phase = "Not yet enrolled")
+                    else               tibble(x = double(), xend = double(), phase = character())),
+    # Trained-on segment (entry → cutoff)
+    train = pmap(list(entry_day, train_end, enrolled), \(s, e, en)
+                 if (en && e > s) tibble(x = s, xend = e, phase = "Trained on")
+                 else             tibble(x = double(), xend = double(), phase = character())),
+    # Forecast-window segment (cutoff → cutoff + horizon, clipped to exit_day)
+    test  = pmap(list(test_start, test_end, enrolled), \(s, e, en)
+                 if (en && e > s) tibble(x = s, xend = e, phase = "Forecast horizon")
+                 else             tibble(x = double(), xend = double(), phase = character())),
+    # Observed follow-up beyond the scoring window (cutoff + horizon → exit_day)
+    future = pmap(list(test_end, future_end, enrolled), \(s, e, en)
+                  if (en && e > s) tibble(x = s, xend = e, phase = "Observed but outside scoring window")
+                  else             tibble(x = double(), xend = double(), phase = character())),
+    # Full rail for not-yet-enrolled patients (entry → exit, plotted faintly)
+    rail  = pmap(list(entry_day, exit_day, enrolled), \(s, e, en)
+                 if (!en) tibble(x = s, xend = e, phase = "Not yet enrolled")
+                 else     tibble(x = double(), xend = double(), phase = character()))
+  ) |>
+  select(pid, label, train, test, future, rail) |>
+  pivot_longer(c(train, test, future, rail), values_to = "seg") |>
+  unnest(seg) |>
+  mutate(phase = factor(phase, levels = seg_levels))
+
+# Visit ticks: same color encoding as the segment they sit on
+visit_df <- tidyr::expand_grid(visits, cutoffs) |>
+  mutate(
+    enrolled = entry_day <= cutoff,
+    phase = case_when(
+      !enrolled                          ~ "Not yet enrolled",
+      vis <= cutoff                      ~ "Trained on",
+      vis <= cutoff + forecast_horizon   ~ "Forecast horizon",
+      TRUE                               ~ "Observed but outside scoring window"
+    )
+  ) |>
+  mutate(phase = factor(phase, levels = seg_levels))
+
+# Markers — three categories, each gets its own shape + fill
+mark_levels <- c("Enrollment",
+                 "Progression (visit)",
+                 "Death (registry)")
+
+# Markers are plotted for every panel regardless of the cutoff —
+# the same underlying data is always on display; only the cutoff and
+# the gold window slide across it.
+enroll_df <- tidyr::expand_grid(patients, cutoffs) |>
+  transmute(pid, label, x = entry_day, marker = "Enrollment")
+
+prog_df <- patients |>
+  filter(!is.na(prog_day)) |>
+  tidyr::expand_grid(cutoffs) |>
+  transmute(pid, label, x = prog_day, marker = "Progression (visit)")
+
+death_df <- patients |>
+  filter(!is.na(death_day)) |>
+  tidyr::expand_grid(cutoffs) |>
+  transmute(pid, label, x = death_day, marker = "Death (registry)")
+
+mark_df <- bind_rows(enroll_df, prog_df, death_df) |>
+  mutate(marker = factor(marker, levels = mark_levels))
+
+ggplot() +
+  # forecast-window band per panel (described in caption, kept out of the legend)
+  geom_rect(
+    data = cutoffs,
+    aes(xmin = cutoff, xmax = cutoff + forecast_horizon,
+        ymin = 0.4,    ymax = 6.6),
+    fill = clr_test, alpha = 0.11, inherit.aes = FALSE
+  ) +
+  # patient timelines: colored by phase → drives the colour legend
+  geom_segment(
+    data = seg_df,
+    aes(x = x, xend = xend, y = pid, yend = pid, color = phase),
+    linewidth = 3.2, lineend = "round"
+  ) +
+  # visit ticks: inherit the same color scale as segments
+  geom_point(
+    data = visit_df,
+    aes(x = vis, y = pid, color = phase),
+    shape = 124, size = 3, show.legend = FALSE
+  ) +
+  # cutoff line per panel (described in caption)
+  geom_vline(
+    data = cutoffs, aes(xintercept = cutoff),
+    linetype = "22", color = "#333", linewidth = 0.6
+  ) +
+  # markers: shape mapped → drives the shape legend
+  geom_point(
+    data = mark_df,
+    aes(x = x, y = pid, shape = marker, fill = marker),
+    color = "white", size = 3, stroke = 0.6
+  ) +
+  facet_wrap(~ label, ncol = 1, strip.position = "right") +
+  scale_color_manual(
+    name   = NULL,
+    values = c("Trained on"                          = clr_train,
+               "Forecast horizon"                    = clr_test,
+               "Observed but outside scoring window" = clr_future,
+               "Not yet enrolled"                    = clr_unseen),
+    drop   = FALSE
+  ) +
+  scale_shape_manual(
+    name   = NULL,
+    values = c("Enrollment"          = 21,
+               "Progression (visit)" = 23,
+               "Death (registry)"    = 25)
+  ) +
+  scale_fill_manual(
+    name   = NULL,
+    values = c("Enrollment"          = clr_entry,
+               "Progression (visit)" = clr_prog,
+               "Death (registry)"    = clr_death)
+  ) +
+  scale_x_continuous(
+    "Calendar day", breaks = seq(0, 400, 100),
+    limits = c(0, 400), expand = c(0.01, 0.01)
+  ) +
+  scale_y_discrete(NULL) +
+  guides(
+    color = guide_legend(order = 1, override.aes = list(linewidth = 4)),
+    shape = guide_legend(order = 2),
+    fill  = guide_legend(order = 2)
+  ) +
+  theme_site() +
+  theme(
+    strip.text         = element_text(color = clr_train, size = rel(0.9)),
+    strip.text.y.right = element_text(color = clr_train, size = rel(0.9),
+                                      angle = 0, hjust = 0)
+  )
+```
+
+The diagram isolates three things that make LFO different from LOO on this kind of data.
+
+- The *training region grows with the cutoff* --- every panel refits on strictly more data, never less.
+- *Staggered enrollment interacts with the cutoff*: a patient not yet in the trial at Cutoff 1 contributes nothing to that fold (greyed-out rail), and is evaluated only from later cutoffs onward.
+- *Events are categorized by which side of the cutoff they fall on* --- progression diamonds and death triangles in the navy region were known to the model, those in the gold band are what the model's forecast is scored against, and anything beyond the gold band is outside the scoring horizon for that cutoff.
+
+The split between progression (pink diamonds, observed only at clinic visits) and death (dark plum triangles, observed exactly from registry linkage) is deliberate: the rest of the post is largely about what happens when those two observation mechanisms disagree about where the cutoff lies.
+
+[^recist]: RECIST (Response Evaluation Criteria in Solid Tumors) is the standard classification scheme used to summarize tumor response in oncology trials. Each patient visit is assigned one of four categories --- complete response (CR), partial response (PR), stable disease (SD), or progressive disease (PD) --- based on changes in the sum of target-lesion diameters relative to baseline and the nadir, together with the appearance or progression of non-target lesions. The current version is RECIST 1.1 [@eisenhauer2009recist]. For the purposes of this post, the relevant facts are that RECIST categories are (i) observable only at imaging visits, not continuously, and (ii) the *target-lesion* component of the classification is a deterministic function of the underlying tumor-size trajectory --- which is the part this post's model handles.
+
+This post is about what it took to bring LFO across that gap. It focuses on methodology rather than results from any particular program. The anonymized figures below are illustrative in shape, but scrubbed of trial, arm, or patient-identifying detail.
+
+## What this post is, and is not, claiming as new
+
+Before going further it is worth being explicit about what came before, because the question "given data up to time $t$, how well do we predict events after $t$?" has a long history in biostatistics under names other than LFO.
+
+The single most important precedent is the **dynamic-prediction-from-joint-models** program initiated by @rizopoulos2011dynamic. It is the structural ancestor of what I do here: condition on a patient's longitudinal history through a landmark time, generate posterior predictions of subsequent event times from a fitted joint model, and score those predictions on the still-at-risk cohort. Rizopoulos's framework uses time-dependent ROC/AUC and Brier scores rather than ELPD, and is implemented today in `JMbayes2`; the more recent super-learner extension by @rizopoulos2023superlearner uses V-fold cross-validation over subjects with expected quadratic prediction error and predictive cross-entropy as scoring rules. None of this is LFO in the @burkner2020lfo sense, but it is unambiguously the same question with different machinery.
+
+Running parallel to that is the **landmarking** literature --- the original landmark Cox model [@vanhouwelingen2007landmarking], and the more recent "Landmarking 2.0" paper by @putter2021landmarking2, which deliberately reframes landmark analysis as a competitor to joint-model dynamic predictions. Landmarking already does, in spirit, exactly what LFO does: refit at a sequence of landmark times, evaluate prediction quality on data after each landmark. @devaux2022landmark take this further by combining landmarking with machine learning and cross-validated time-dependent Brier and AUC.
+
+Against that backdrop, the contribution of the work in this post is narrower than "LFO for survival." It is closer to:
+
+- Porting the Bayesian **ELPD-LFO** machinery [@burkner2020lfo, plus the broader Vehtari `loo` ecosystem] into a hierarchical **joint longitudinal–multistate** model in Stan, where the landmarking and AUC/Brier literatures already live;
+- Working out an **observation-mechanism-aware re-censoring** rule for that setting --- specifically, the dual visit-week / calendar-week cutoffs --- which the time-series LFO literature does not need and the joint-model dynamic-prediction literature has not, as far as I can find, written down explicitly;
+- Wiring the whole thing into a pipeline that runs exact refits on a calendar-cutoff schedule and reports both decomposed ELPD and posterior-predictive Kaplan-Meier overlays per cutoff.
+
+I do not claim novelty for the principle. I do claim usefulness for the specific construction, and I think the construction generalizes beyond the setting it was built for. The rest of the post is mostly about *what the construction has to look like* once you take the structure of oncology trial data seriously.
+
+## What LFO is, before we complicate it
+
+The minimal [-@burkner2020lfo] LFO is easy to state. Let $y_{1:T}$ be a univariate time series. For each candidate cutoff $t_c$, fit the model on $y_{1:t_c}$ and evaluate the expected log predictive density on what comes next:
+
+$$
+\text{ELPD}_{\text{LFO}} = \sum_{c} \sum_{t > t_c} \log p(y_t \mid y_{1:t_c}).
+$$
+
+Two things make this useful. First, no future data leaks into training --- the evaluation respects the causal structure of the data. Second, ELPD differences between models have a Bayesian interpretation and an estimable standard error, so "model A forecasts better than model B" becomes a quantitative, rather than rhetorical, claim.
+
+For our setting we will need a slightly more general form. Patients are indexed by $i$, and the data we have on each one --- visits, events --- is a multidimensional history rather than a scalar. So the inner sum is over $(i, t)$ pairs that fall after each cutoff, and the conditioning is on whatever has been observed for *all* patients up to the cutoff:
+
+$$
+\text{ELPD}_{\text{LFO}} = \sum_{c} \sum_{(i, t) \in \text{future}(c)} \log p\bigl(y_{i,t} \mid y_{1:c}\bigr),
+$$
+
+where $y_{1:c}$ is the cohort-level data up to cutoff $c$ and $\text{future}(c)$ is the set of patient–time pairs whose observations the model is being asked to forecast at $c$. Picking $\text{future}(c)$ correctly --- which patients, which observation channel, up to which clock --- is what most of the rest of the post is about.
+
+The practical cost, of course, is refitting. A naive implementation requires one MCMC run per cutoff. @burkner2020lfo show that for many models you can get away with a single full refit and then slide the cutoff using PSIS weights, triggering a refit only when the Pareto $\hat k$ diagnostic signals that importance sampling has broken down. That trick is what makes LFO tractable in practice.
+
+## The joint model, briefly
+
+The rest of the post discusses an LFO construction built around a particular model, so a quick sketch here will save backtracking.
+
+The model has two coupled components, fitted jointly:
+
+- A **longitudinal state-space model** for each patient's tumor-burden trajectory --- specifically, the sum of target-lesion diameters (SLD). Latent SLD trajectories are parameterized per patient (baseline, shrinkage, regrowth) with hierarchical pooling across the trial structure. SLD is observed only at scheduled imaging visits, and the *target-lesion* component of RECIST (CR / PR / SD / PD, driven only by SLD changes relative to baseline and nadir) is read off the SLD trajectory deterministically. Non-target response and new-lesion appearance are separate inputs to a full RECIST classification and sit outside this component.
+- A **three-state multistate hazard model** for events: state 0 (on study, no recorded progression), state 1 (progressed), state 2 (dead). Three transitions are modelled --- $0\to 1$, $0\to 2$, $1\to 2$. The $0\to 1$ transition has two sources: target-lesion progression, which is a deterministic function of the SLD trajectory once it crosses the RECIST threshold, and non-target/new-lesion progression, which is modelled probabilistically with its own hazard. Both can only be declared at a visit. The $0\to 2$ and $1\to 2$ transitions are modelled as standard survival hazards and are reported continuously through registry records.
+
+The two components are coupled because the event hazards depend on the latent tumor *state*, not only on the SLD values that happen to be observed at visits. That dependence is what makes the model "joint" in the dynamic-prediction sense, and it gives the factorization
+
+$$
+p(\text{SLD}_i, \text{MS}_i \mid \theta) = p(\text{SLD}_i \mid \theta)\, p(\text{MS}_i \mid \text{SLD}_i, \theta),
+$$
+
+where $\theta$ collects all model parameters --- the population-level trajectories, the per-patient random effects, and the multistate hazard coefficients.
+
+which the ELPD decomposition later in the post rests on. Three things to carry forward: SLD lives on a visit clock, the multistate model lives on mixed clocks, and the hazards see the latent tumor state.
+
+## Where time series LFO breaks for oncology
+
+Take a typical phase-II or phase-III oncology trial. Patients are enrolled continuously over eighteen months or so. Each patient has:
+
+- a latent tumor burden trajectory, observed at irregular visits through sums of lesion diameters (SLD),
+- a baseline covariate profile (prior lines of therapy, PD-L1 status, metastatic sites, ...),
+- a set of potential event times: target-lesion progressive disease (target PD), non-target progression, death,
+- a cluster membership (trial, arm, potentially site),
+- and, above all else, a calendar day of enrolment which is not the same as anyone else's.
+
+Any sensible predictive evaluation at a data cutoff $D$ has to answer several uncomfortable questions at once:
+
+1. **Whose data counts?** A patient enrolled after $D$ has never been seen by the model; their trajectory is out-of-sample in a much stronger sense than a visit occurring after $D$ for an already-enrolled patient. Are we evaluating the model's ability to forecast existing patients' futures, or its ability to generalize to unseen patients, or both? These are different tasks and they deserve different evaluations.
+
+2. **Which clock do we cut on?** Tumor measurements are only made at visits. Deaths are observed exactly (to the day, typically from registry linkage). A patient whose last visit before the cutoff was week 14 but who dies at week 31 --- where $D$ falls after week 31 --- has a *known* death that was never recorded at a visit. Cutting by visit would throw that information away. Cutting by calendar day alone would assume we observe progression continuously, which we do not.
+
+3. **What are we scoring?** The primary model output might be a posterior-predictive Kaplan-Meier for overall survival. It might be a RECIST confusion matrix. It might be the joint log likelihood over the SLD stream and the multistate event stream. These are not interchangeable; they have different units, different sensitivities, and different clinical meanings.
+
+None of these questions has a counterpart in the @burkner2020lfo time-series LFO. They are not failures of the original method --- they are features of the problem.
+
+## The shape of the solution
+
+The rest of this post is about how my LFO implementation, built on top of the joint longitudinal–multistate model sketched in the previous section, handles each of those questions. I will not try to show all the code; the key pieces I point at are in a modular Stan include system and a small R pipeline of helper functions. The architecture matters less than the ideas behind it.
+
+### Calendar-day cutoffs on patient-specific clocks
+
+The first design decision: cutoffs are **calendar dates**, not study weeks. A cutoff of 2025-09-30 translates, for each patient, into a *different* study week --- specifically, the week of that patient's last pre-cutoff visit on their own time axis. This is handled in Stan by a per-patient date arithmetic step: given the patient's enrolment calendar day and the global cutoff, compute the patient's cutoff in their internal week scale, then walk the patient's visit array backwards to find the last visit that falls at or before it.
+
+```stan
+int patient_cutoff_study_day =
+    calendar_date_to_study_date(patient_calendar_day[i], cutoff_calendar_day);
+// ... find last visit day <= patient_cutoff_study_day, record its week.
+```
+
+This is the innocuous-looking conversion that makes everything else well-defined. Without it, a shared cutoff means very different things for a patient enrolled early in the trial (lots of follow-up) and a patient enrolled late (perhaps only one or two visits past baseline).
+
+### Two cutoffs per patient, for two observation mechanisms
+
+At any calendar cutoff, what we know about a patient arrives through two separate channels:
+
+- **Imaging visits.** Tumor size, RECIST category, and therefore target-lesion progression are measurable only at scheduled visits. Between visits, the tumor state is silent.
+- **Registry records.** Deaths are reported to the exact day, continuously, from sources independent of the visit schedule.
+
+These two channels do *not* run up to the same point on the patient's timeline. At any calendar cutoff, visit information ends at the patient's last pre-cutoff visit. Registry information ends at the calendar cutoff itself. A patient whose last visit was week 14 but who is known to have died at week 31 through a registry report has visit data that ends at week 14 and registry data that ends wherever the calendar cutoff falls --- week 40, say. The same cutoff date produces two different "last-known" points on the same timeline.
+
+@fig-dual-cutoff shows what goes wrong if you try to collapse both into a single cutoff time. If you censor everything at the last visit, you throw away the week-31 death that the registry told you about. If you censor everything at the calendar cutoff, you implicitly insert phantom visits at weeks 21, 28, 35 that were never actually performed --- meaning the patient would have to be classified as progression-free through those weeks on the basis of data that does not exist.
+
+```{r}
+#| label: fig-dual-cutoff
+#| fig-cap: "Three censoring schemes applied to the same worked example: a patient whose last on-trial visit was week 14, who died at week 31 (registry-recorded), with a calendar cutoff at week 40 in this patient's scale. The two dashed vertical rules mark `cv = cutoff_visit_week` and `cc = cutoff_cal_week`. Top panel: censoring at `cv` alone discards the registry-recorded death (faded triangle) and treats the patient as alive-at-last-visit. Middle panel: censoring at `cc` alone implicitly inserts phantom visits (gold ticks) between week 14 and week 40 that the trial never observed. Bottom panel: the dual rule keeps visit-derived information up to `cv` and registry-derived information up to `cc`, so the death at week 31 is correctly attributed and no progression is fabricated."
+#| fig-width: 9
+#| fig-height: 4.6
+#| echo: false
+#| warning: false
+#| message: false
+
+clr_kept    <- "#003865"  # navy — recorded by the model
+clr_dim     <- "#7A8A92"  # slate — registry-only follow-up (no visits)
+clr_lost    <- "#D5DCE0"  # light gray — discarded
+clr_phantom <- "#F0AB00"  # gold — incorrectly inferred / phantom
+clr_death   <- "#3C1053"  # dark plum — death (registry)
+clr_visit   <- "#003865"  # navy — real visit
+
+cv          <- 14
+cc          <- 40
+death_week  <- 31
+visits_real <- c(0, 7, 14)
+visits_phan <- c(21, 28, 35)
+
+scheme_levels <- c(
+  "Visit-only cutoff: death at week 31 thrown away",
+  "Calendar-only cutoff: phantom visits assumed",
+  "Dual cutoff: visits to cv, registry to cc"
+)
+
+bars <- tribble(
+  ~scheme,             ~x,  ~xend,        ~bar_kind,
+  scheme_levels[1],    0,   cv,           "kept",
+  scheme_levels[1],    cv,  death_week,   "lost",
+  scheme_levels[2],    0,   cc,           "kept",
+  scheme_levels[3],    0,   cv,           "kept",
+  scheme_levels[3],    cv,  death_week,   "registry_only"
+) |> mutate(scheme = factor(scheme, levels = scheme_levels),
+            bar_kind = factor(bar_kind,
+                              levels = c("kept", "registry_only", "lost")))
+
+visits_df <- bind_rows(
+  tibble(scheme = scheme_levels[1], week = visits_real, vkind = "Real visit"),
+  tibble(scheme = scheme_levels[2], week = visits_real, vkind = "Real visit"),
+  tibble(scheme = scheme_levels[2], week = visits_phan, vkind = "Phantom visit"),
+  tibble(scheme = scheme_levels[3], week = visits_real, vkind = "Real visit")
+) |> mutate(
+  scheme = factor(scheme, levels = scheme_levels),
+  vkind  = factor(vkind, levels = c("Real visit", "Phantom visit"))
+)
+
+death_df <- tribble(
+  ~scheme,          ~week,       ~dkind,
+  scheme_levels[1], death_week,  "Death discarded",
+  scheme_levels[3], death_week,  "Death recorded"
+) |> mutate(
+  scheme = factor(scheme, levels = scheme_levels),
+  dkind  = factor(dkind, levels = c("Death recorded", "Death discarded"))
+)
+
+cutoff_lines <- tibble(
+  scheme = factor(rep(scheme_levels, each = 2), levels = scheme_levels),
+  x      = rep(c(cv, cc), times = 3)
+)
+cutoff_labels <- tibble(
+  scheme = factor(rep(scheme_levels[1], 2), levels = scheme_levels),
+  x      = c(cv, cc),
+  label  = c("cv = 14", "cc = 40")
+)
+
+ggplot() +
+  geom_vline(
+    data = cutoff_lines, aes(xintercept = x),
+    linetype = "22", color = "#666", linewidth = 0.5
+  ) +
+  geom_segment(
+    data = bars,
+    aes(x = x, xend = xend, y = 1, yend = 1, color = bar_kind),
+    linewidth = 4, lineend = "butt"
+  ) +
+  geom_point(
+    data = visits_df,
+    aes(x = week, y = 1, fill = vkind),
+    shape = 21, size = 3.4, color = "white", stroke = 0.6
+  ) +
+  geom_point(
+    data = death_df,
+    aes(x = week, y = 1, fill = dkind),
+    shape = 25, size = 4.2, color = "white", stroke = 0.6
+  ) +
+  geom_text(
+    data = cutoff_labels, aes(x = x, y = 1.55, label = label),
+    color = "#444", size = 3.2, vjust = 0
+  ) +
+  facet_wrap(~ scheme, ncol = 1, strip.position = "top") +
+  scale_color_manual(
+    name   = NULL,
+    values = c("kept"          = clr_kept,
+               "registry_only" = clr_dim,
+               "lost"          = clr_lost),
+    labels = c("kept"          = "Follow-up kept",
+               "registry_only" = "Registry-only (no visits)",
+               "lost"          = "Follow-up discarded"),
+    drop   = FALSE
+  ) +
+  scale_fill_manual(
+    name   = NULL,
+    values = c("Real visit"      = clr_visit,
+               "Phantom visit"   = clr_phantom,
+               "Death recorded"  = clr_death,
+               "Death discarded" = clr_lost)
+  ) +
+  scale_x_continuous(
+    "Week (patient scale)",
+    breaks = c(0, 7, 14, 21, 28, 35, 40, 50),
+    limits = c(-1, 50), expand = c(0, 0)
+  ) +
+  scale_y_continuous(NULL, breaks = NULL, limits = c(0.4, 1.9)) +
+  guides(
+    color = guide_legend(order = 1, override.aes = list(linewidth = 4)),
+    fill  = guide_legend(order = 2,
+                         override.aes = list(shape = c(21, 21, 25, 25),
+                                             size = 3.4))
+  ) +
+  theme_site() +
+  theme(
+    strip.text     = element_text(color = clr_kept),
+    panel.grid     = element_blank(),
+    panel.grid.major.x = element_line(color = clr_rule, linewidth = 0.4)
+  )
+```
+
+The re-censoring rule is then just: use each channel up to its own "last-known" point, and nothing beyond.
+
+- For anything visit-observed --- progression, continued at-risk follow-up, RECIST category --- take the patient up to the last pre-cutoff visit, and treat everything after that as unknown.
+- For anything registry-observed --- death, whether or not it followed a recorded progression --- take the patient up to the calendar cutoff itself, and treat anything after it as not yet happened.
+
+When an event crosses the cutoff, it is rolled back one step: a progression recorded after the last visit reverts to at-risk follow-up, a post-cutoff death reverts to whatever state the patient was in before dying. Patients not yet enrolled at the calendar cutoff have no visit history and no registry follow-up to keep; they are dropped from that cutoff's evaluation entirely. This rule is packaged in a single Stan function, but the rule itself is the point, not the function.
+
+I want to stress that this is not a technicality. It is the *operational definition* of what LFO means when applied to a multistate survival process where different transitions are observed through different mechanisms. Getting it wrong quietly inflates or deflates predictive accuracy depending on which direction the error pulls, and you will only catch it by checking that observed and posterior-predictive Kaplan-Meier curves at each cutoff match in the training region --- a check worth automating into the pipeline and one I recommend anyone adapting this approach do the same.
+
+### Scoring: decomposed ELPD plus endpoint-level KM
+
+With re-censoring settled, the rest of the evaluation is comparatively straightforward, but worth laying out for clarity.
+
+The full log predictive density at a cutoff decomposes cleanly, along the same factorization as the model itself:
+
+$$
+\log p(y_i^{\text{future}} \mid y_i^{\text{past}}, \theta)
+= \underbrace{\log p(\text{SLD}_i^{\text{future}} \mid y_i^{\text{past}}, \theta)}_{\text{tumor component}}
++ \underbrace{\log p(\text{MS}_i^{\text{future}} \mid \text{SLD}_i, y_i^{\text{past}}, \theta)}_{\text{multistate component}}.
+$$
+
+Summing over patients and cutoffs, and averaging over the posterior of $\theta$ from each refit, gives a total ELPD and two sub-totals. The sub-totals are diagnostically valuable: a model that forecasts SLD well but multistate transitions poorly tells you something quite different from a model that fails symmetrically, and the decomposition makes which half is struggling immediately visible.
+
+Alongside ELPD I track two endpoint-level diagnostics:
+
+- **Cutoff-by-cutoff Kaplan-Meier overlays.** At each cutoff I plot the posterior-predictive KM (overall survival, PFS, per-arm or per-subgroup) from the refit at that cutoff, and let subsequent cutoffs' observed curves fill in the region that was "future" at the time. This is where LFO earns its keep visually: a model that looks fine when the observed curve is averaged over the whole study can still be persistently too-optimistic between two adjacent cutoffs, and that is exactly the kind of miss no single summary number flags. Posterior-predictive vs observed KM at a fixed cutoff is a standard joint-model check; what is new here is that the comparison is made against *later observed reality*, not against the training cohort that produced the fit.
+- **RECIST confusion matrices** aggregated over all out-of-sample visits and cutoffs, from which I compute per-class sensitivity and specificity. This is a side benefit of the joint model: once the tumor trajectory is forecast, the RECIST classification is deterministic, so "how often did the model correctly predict that this patient would be in progressive disease a year from the cutoff?" becomes a quantity with a posterior distribution.
+
+### Exact refits vs PSIS: when is the shortcut safe?
+
+The @burkner2020lfo PSIS-LFO trick is tempting, and the pipeline supports it (`max_n_rows = n_cutoffs` with a forecast horizon spanning all cutoffs, triggering a single refit whose posterior is reweighted at each cutoff). In practice, I default to exact refits. The reason is specific to the problem: when the cutoff moves, the *structure of the data* changes, not just its volume. A patient who was at-risk at cutoff $c_1$ may be in state 1 at cutoff $c_2$; a patient enrolled between $c_1$ and $c_2$ is admitted to the likelihood only at the later cutoff. The mapping from posterior at $c_1$ to the likelihood at $c_2$ is therefore not the simple "add a few more observations" that PSIS handles gracefully. The Pareto $\hat k$ diagnostic flags this reliably, but by the time you have diagnosed it across several cutoffs you have effectively paid the cost of refitting anyway. For production evaluation I run exact refits on a schedule of cutoffs spaced by a configurable number of days, starting at the first landmark-eligible date. For development iteration, PSIS is a useful shortcut.
+
+### Standard errors: why the time-series recipe does not transfer
+
+In the @burkner2020lfo setting, uncertainty in the ELPD estimate comes from a single analytic formula: if the $T$ pointwise log scores are treated as exchangeable contributions, then the SE is $\sqrt{T \cdot \widehat{\mathrm{Var}}_t(\hat\ell_t)}$. That is what `loo` reports, and it works because the summation unit --- time $t$ on a single series --- is also the unit the exchangeability assumption is pinned to.
+
+In the oncology setting that assumption fails twice over. A single patient contributes correlated scores across their own visits, and the *same* patient reappears at every cutoff they were enrolled for. So the $(i, t, c)$ contributions inside the ELPD sum are heavily nested: not $T$ independent draws, but rather $\sim N$ patient-clusters, each contributing many correlated scores. Treating them as independent --- which is what the time-series formula does --- counts the same evidence many times over and produces an SE that dramatically understates uncertainty.
+
+We therefore need an SE estimator built around the right unit of independence. Across patients we are willing to assume exchangeability (that is exactly the assumption the hierarchical model encodes); within a patient we are not. The natural way to express that asymmetry without a closed-form variance derivation is **a non-parametric bootstrap over patients**: simulate the variability we would see if we had drawn a different cohort of patients from the same population, and let the empirical spread of ELPD across simulated cohorts stand in for the SE.
+
+Concretely: at each bootstrap replicate I draw $N$ patient indices with replacement from the trial cohort. For *those* patients (and only those), I re-evaluate the ELPD --- summing each patient's contribution across the visits and cutoffs at which they were observed --- and record a single number $\text{ELPD}^{(b)}$. Repeating $B$ times gives a distribution of ELPD estimates over hypothetical cohorts, and the standard deviation of that distribution is the reported SE.
+
+There is one subtlety in the re-evaluation step, and it is where PSIS comes back in. At cutoff $c$ my exact refit gives posterior draws from $p(\theta \mid y_{1:c})$ --- conditional on the *full* cohort at $c$. But the replicate's ELPD should really be evaluated under $p(\theta \mid y^{(b)}_{1:c})$, the posterior I would have obtained had I trained on the bootstrapped patients only. Refitting per replicate is hopelessly expensive, so I use the same importance-reweighting trick PSIS uses in ordinary LOO: reweight the full-cohort posterior draws by the ratio of bootstrap-subsample likelihood to full-cohort likelihood, smooth the weights with Pareto $\hat k$, and compute the replicate's per-patient scores against the reweighted draws. The move is mathematically the same as LOO's $p(\theta \mid y_{-i}) \approx$ reweighted draws from $p(\theta \mid y)$, just with a different target posterior: "condition on the bootstrap subcohort" instead of "condition on everything except $i$." The weights are recomputed fresh for every replicate × cutoff combination, so the importance-sampling correction always matches the cohort being scored.
+
+Two things to notice about this construction. First, because each replicate carries a whole patient with all of their visits and all of their cutoff appearances bundled into one draw, the within-patient correlation that broke the analytic formula is absorbed automatically: a patient is in or out of replicate $b$ as a unit, never as a collection of pseudo-independent rows. Second, the SE is interpreted as cohort-resampling uncertainty, not posterior uncertainty in $\theta$ --- the latter is already folded into each $\hat\ell_{i,c}$ when we average over posterior draws. The bootstrap is doing the work the analytic formula was trying to do (estimate cohort-level sampling variability), with an exchangeability assumption we are actually willing to make.
+
+Two caveats are worth flagging rather than hiding.
+
+The first is that PSIS now plays two roles --- the between-cutoff approximation from the previous section, and the within-replicate reweighting just described --- and a $\hat k$ failure in either one matters. The bootstrap drops cutoffs that fail the reliability filter at either stage, so the reported SE is conditional on PSIS-reliable cutoffs and bootstrap subcohorts. If the dropped configurations are systematically the most uncertain ones, the SE under-covers. When $\hat k$ degrades for the within-replicate reweighting specifically, the honest fix is to reduce the effective step size of the bootstrap (resample fewer patients out at a time, e.g. via blocked resampling) or, in the limit, refit per replicate --- the latter is rarely tractable, but the former is on the to-do list.
+
+The second is more consequential and worth stating plainly: **my current implementation resamples patients independently per model**. That gives correct marginal SEs for each model's absolute ELPD, but it is wrong for *model comparisons*. The variance identity
+
+$$
+\mathrm{Var}(\text{ELPD}_A - \text{ELPD}_B) = \mathrm{Var}(\text{ELPD}_A) + \mathrm{Var}(\text{ELPD}_B) - 2\,\mathrm{Cov}(\text{ELPD}_A, \text{ELPD}_B)
+$$
+
+requires a covariance that an unpaired bootstrap cannot identify. Two models scored on the same patients tend to produce highly positively correlated per-patient ELPDs --- if patient $i$ is an outlier, both models will struggle with them --- and the correct paired-bootstrap SE of the difference is typically much smaller than $\sqrt{\mathrm{Var}(A) + \mathrm{Var}(B)}$. This is exactly why `loo_compare` reports a paired SE on ELPD differences rather than the individual model SEs in quadrature. In my current setup, the two models' bootstrap replicates come from independently drawn patient index sets, so differences of replicates do not estimate $\mathrm{Var}(A - B)$ --- they estimate $\mathrm{Var}(A) + \mathrm{Var}(B)$, which is inflated.
+
+The bias is one-sided: unpaired SEs of differences are conservative, so I have probably been *understating* the confidence with which one model out-forecasts another, not overstating it. Still, the fix is mechanical (draw one set of patient indices per replicate and apply it to all models) and is next on the list of pipeline corrections. Anyone adopting a patient-level bootstrap for multi-model LFO comparisons should plan for this from the start: the exchangeable unit you resample needs to be held constant across the models you compare.
+
+## Why this matters more broadly
+
+I want to pull back from the specifics and say something about the broader case.
+
+**For Bayesian modelers familiar with `loo` and LFO from the time-series side.** The temporal-integrity principle underlying LFO generalizes beyond univariate series, but generalizing it requires explicit design choices about (a) *who* is in the evaluation cohort at each cutoff, (b) *which clock* each observation uses, and (c) *what quantity* you are scoring. These choices are not downstream implementation details; they determine what the ELPD number actually means. The single piece of the implementation I would single out as worth borrowing is the dual-cutoff re-censoring --- it is the place where the biostatistical reality of the data leaks into the Bayesian formalism, and as far as I can find it does not appear in the existing LFO literature.
+
+**For oncology biostatisticians familiar with landmarking and joint models.** Most of what LFO buys you here is *already* available in your toolkit, just under different names. Landmarking and dynamic prediction from joint models [@rizopoulos2011dynamic; @vanhouwelingen2007landmarking; @putter2021landmarking2] ask the same temporal question. What ELPD-LFO adds is (i) a single coherent log-predictive scoring rule that decomposes cleanly into longitudinal and event components for joint models, and (ii) a Bayesian posterior over the score itself, with estimable standard errors for model comparison. Whether you want that on top of time-dependent AUC and Brier scores is a real question; my own view is that they are complementary, not substitutes, and that ELPD-LFO is most useful when comparing competing *generative* mechanisms rather than competing point predictions. Practically, the cutoff-by-cutoff KM overlay is the diagnostic that has earned its keep most reliably in conversations with stakeholders.
+
+**For people working in other domains entirely.** The structure of the problem --- multiple actors entering the system at different times, a latent mechanistic process generating both longitudinal and event streams, different observation mechanisms for different outcomes --- is not unique to oncology. Infectious-disease surveillance with serology and case reports, reliability engineering with sensor readings and failure events, and customer-lifetime modeling with usage logs and churn events all share the same skeleton. I suspect the pattern of calendar-cutoff LFO with observation-mechanism-aware re-censoring is directly portable, and I would be interested to hear from anyone who has tried it in a different context.
+
+## A short closing thought
+
+There is a tendency, when importing a method from one literature to another, to keep it at the level of the name --- "we used leave-future-out cross-validation" --- without examining whether the assumptions the method was built on still hold. My experience with LFO in oncology has been that the *principle* transfers cleanly and is even more valuable here than in univariate time series, but that the *machinery* has to be rebuilt around the structure of the data: staggered enrolment, mixed observation clocks, competing risks, hierarchical pooling, and joint longitudinal–event likelihoods.
+
+The pay-off for doing that work, at least for me, is that the ELPD numbers and KM overlays coming out of the pipeline feel *trustworthy* in a way that no in-sample criterion ever did. When a sponsor asks "how well will this model forecast?" I can point at a specific data cutoff from six months ago, show the forecast the model would have produced at that cutoff, and show where the observed curve landed. That is a conversation LFO makes possible, and one that internal goodness-of-fit cannot.
+
+---
+
+## References {.unnumbered}
+
+::: {#refs}
+:::

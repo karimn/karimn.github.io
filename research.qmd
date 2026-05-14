@@ -54,14 +54,6 @@ author: "Karim Naguib"
     ],
     "about": ["seasonal migration", "delegation risk", "external validity", "scaling", "Bangladesh", "randomized evaluation"]
   },
-  {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": "The Funder's Meta-Problem",
-    "author": {"@type": "Person", "name": "Karim Naguib", "url": "https://karimn.github.io"},
-    "url": "https://karimn.github.io/effective-funding/funder-meta-problem-1.html",
-    "about": ["effective altruism", "funder decision-making", "simulation", "policy re-evaluation", "sequential decision-making"]
-  }
 ]
 </script>
 ```
@@ -82,8 +74,4 @@ Harrison Mitchell, A. Mushfiq Mobarak, Karim Naguib, Maira Reimão, and Ashish S
 
 > Many economic policies show promising pilot results that fail to replicate at scale. We demonstrate how delegation of authority to implementing agents can threaten scalability in a randomized evaluation of a migration loan program in Bangladesh. Pilot evaluations found the loan offer to increase temporary migration by 25–40p.p., but this effect fell to 12p.p. at scale. To explain the attenuation, we introduce a theory of delegation risk that leads implementing agents to systematically mistarget intended program beneficiaries. Mistargeting occurs because benefits are concentrated among those enabled to migrate with a loan — i.e. program compliers — but capacity constraints lead effort to be directed toward those already planning to migrate — i.e. always-takers. We present evidence consistent with this theory that the characteristics that predict pre-loan migration are strongly correlated with the likelihood of remembering the loan offer in endline surveying, and we show delegation risk can quantitatively account for the diminished treatment effect. Policy impacts are further tempered by expansion to adjacent geographic regions despite participants being observably similar. We rule out two additional explanations: First, our geographically clustered randomization design reveals treatment intensity crowds in rather than crowds out migrants. Second, changes in population characteristics over time appear to have little influence. Delegation risk identified in this study has the potential to undermine a number of common development policies, and is exacerbated by management practices frequently used by development organizations.
 
-#### Essays & Writeups
-
-Karim Naguib. [**The Funder's Meta-Problem.**](https://karimn.github.io/effective-funding/funder-meta-problem-1.html)
-
-> A simulation study of planning policies for an Effective Altruism funder maximizing welfare through intervention selection. Accumulated welfare differs substantially between naive policies — e.g., relying on a single study to form beliefs about effectiveness — and more advanced probabilistic policies that optimize re-evaluation timing. The gap is more pronounced in sequential decision-making and persists even against a hypothetical optimal policy, indicating considerable room for methodological improvement in how funders update beliefs.
+See also the [Writing](/writing/) page for essays and methodological notes.

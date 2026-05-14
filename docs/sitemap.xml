@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://karimn.github.io/projects.html</loc>
-    <lastmod>2026-05-13T20:28:12.037Z</lastmod>
+    <loc>https://karimn.github.io/writing/lfo-beyond-time-series.html</loc>
+    <lastmod>2026-05-14T19:20:56.743Z</lastmod>
   </url>
   <url>
-    <loc>https://karimn.github.io/about.html</loc>
-    <lastmod>2026-05-11T22:03:52.485Z</lastmod>
+    <loc>https://karimn.github.io/writing/funder-meta-problem.html</loc>
+    <lastmod>2026-05-14T19:05:52.363Z</lastmod>
+  </url>
+  <url>
+    <loc>https://karimn.github.io/research.html</loc>
+    <lastmod>2026-05-14T19:06:44.564Z</lastmod>
   </url>
   <url>
     <loc>https://karimn.github.io/index.html</loc>
     <lastmod>2026-05-11T22:03:52.540Z</lastmod>
   </url>
   <url>
-    <loc>https://karimn.github.io/research.html</loc>
-    <lastmod>2026-05-11T22:03:52.554Z</lastmod>
+    <loc>https://karimn.github.io/about.html</loc>
+    <lastmod>2026-05-11T22:03:52.485Z</lastmod>
+  </url>
+  <url>
+    <loc>https://karimn.github.io/projects.html</loc>
+    <lastmod>2026-05-13T20:28:12.037Z</lastmod>
+  </url>
+  <url>
+    <loc>https://karimn.github.io/writing/index.html</loc>
+    <lastmod>2026-05-14T19:06:01.518Z</lastmod>
   </url>
 </urlset>

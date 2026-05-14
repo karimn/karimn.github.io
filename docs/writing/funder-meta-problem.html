@@ -7,9 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Karim Naguib">
-<meta name="description" content="Economist and applied Bayesian statistician. Digital-twin oncology tumor dynamics at AstraZeneca; prior work in development economics, real-estate market design, and reinforcement learning.">
+<meta name="dcterms.date" content="2023-01-01">
+<meta name="description" content="A simulation study of planning policies for an EA funder maximising welfare through intervention selection. Naive policies — single-study belief updating — perform substantially worse than probabilistic policies that optimise re-evaluation timing, with the gap widening in sequential settings.">
 
-<title>Karim Naguib</title>
+<title>The Funder’s Meta-Problem – Karim Naguib</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -28,21 +29,21 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-6ba7e341a90815074c4aa9165cdbf676.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e7ad8b011ac98d4dc55b9474b0dbfe58.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-6ba7e341a90815074c4aa9165cdbf676.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-e7ad8b011ac98d4dc55b9474b0dbfe58.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -81,9 +82,9 @@ gtag('config', 'G-SQNTJM494V', { 'anonymize_ip': true});
 </script>
 
 
-<link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Karim Naguib">
-<meta property="og:description" content="Economist and applied Bayesian statistician. Digital-twin oncology tumor dynamics at AstraZeneca; prior work in development economics, real-estate market design, and reinforcement learning.">
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="The Funder’s Meta-Problem – Karim Naguib">
+<meta property="og:description" content="A simulation study of planning policies for an EA funder maximising welfare through intervention selection. Naive policies — single-study belief updating — perform substantially worse than probabilistic policies that optimise re-evaluation timing, with the gap widening in sequential settings.">
 <meta property="og:image" content="https://karimn.github.io/og-image.png">
 <meta property="og:site_name" content="Karim Naguib">
 <meta property="og:image:height" content="630">
@@ -97,7 +98,7 @@ gtag('config', 'G-SQNTJM494V', { 'anonymize_ip': true});
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Karim Naguib</span>
     </a>
   </div>
@@ -108,29 +109,29 @@ gtag('config', 'G-SQNTJM494V', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./projects.html"> 
+    <a class="nav-link" href="../projects.html"> 
 <span class="menu-text">Projects</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./research.html"> 
+    <a class="nav-link" href="../research.html"> 
 <span class="menu-text">Research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./writing/index.html"> 
+    <a class="nav-link" href="../writing/index.html"> 
 <span class="menu-text">Writing</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./cv.pdf"> 
+    <a class="nav-link" href="../cv.pdf"> 
 <span class="menu-text">CV</span></a>
   </li>  
 </ul>
@@ -149,136 +150,28 @@ gtag('config', 'G-SQNTJM494V', { 'anonymize_ip': true});
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7">The Funder’s Meta-Problem</h1></header>
 
 <header id="title-block-header">
 
+<p class="subtitle lead">Sequential decision-making under uncertainty for Effective Altruism funders</p>
 <p class="author">Karim Naguib</p>
 
+<p class="date">2023-01-01</p>
 </header>
 
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Karim Naguib",
-  "url": "https://karimn.github.io",
-  "email": "mailto:karim.a.naguib@gmail.com",
-  "jobTitle": "Senior Data Scientist",
-  "description": "Economist and applied Bayesian statistician specializing in hierarchical models for longitudinal and survival data. Current focus: patient-level digital-twin models of oncology tumor dynamics at AstraZeneca. Open to senior/staff roles applying Bayesian methods and causal inference in health, pharma, or high-stakes decision contexts.",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Silver Spring",
-    "addressRegion": "MD",
-    "addressCountry": "US"
-  },
-  "workLocation": {
-    "@type": "Place",
-    "name": "Remote-first; open to hybrid"
-  },
-  "seeks": {
-    "@type": "JobPosting",
-    "title": "Senior / Staff Data Scientist or Biostatistician",
-    "description": "Applying Bayesian methods and causal inference in health, pharma, biotech, or high-stakes decision contexts."
-  },
-  "worksFor": {
-    "@type": "Organization",
-    "name": "AstraZeneca"
-  },
-  "alumniOf": [
-    {
-      "@type": "CollegeOrUniversity",
-      "name": "Boston University",
-      "description": "Ph.D. in Economics, 2014"
-    },
-    {
-      "@type": "CollegeOrUniversity",
-      "name": "The American University in Cairo",
-      "description": "B.S. in Computer Science (Minor: Mathematics), 1999"
-    }
-  ],
-  "knowsAbout": [
-    "Bayesian hierarchical modeling",
-    "State-space and longitudinal models",
-    "Multistate survival analysis and competing risks",
-    "Joint longitudinal-survival (digital twin) models",
-    "Cross-validation and predictive assessment (LFO-CV, PSIS-LOO)",
-    "MCMC diagnostics and prior sensitivity",
-    "Causal inference and randomized experiment design",
-    "Gaussian processes",
-    "Deep reinforcement learning",
-    "Reinforcement learning for intervention policy",
-    "Oncology clinical trial analytics",
-    "Drug development",
-    "Real-world evidence integration",
-    "Pharmaceutical statistics",
-    "Development economics",
-    "Health economics",
-    "Experimental economics",
-    "Field experiments",
-    "Stan",
-    "R",
-    "Julia",
-    "Agentic workflows for statistical modeling"
-  ],
-  "sameAs": [
-    "https://github.com/karimn",
-    "https://www.linkedin.com/in/karnag"
-  ]
-}
-</script>
-<div class="masthead">
-<div class="masthead-eyebrow">
-<p>Economist · Applied Bayesian Statistician</p>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
 </div>
-<section id="karim-naguib" class="level1">
-<h1>Karim Naguib</h1>
-<div class="masthead-lede">
-<p>I build <strong>hierarchical models</strong> for longitudinal and survival data — currently patient-level <em>digital twins</em> of oncology tumor dynamics at AstraZeneca. Prior work spans field experiments in East Africa and South Asia, real-estate market design, and reinforcement learning for intervention policy.</p>
-</div>
-<div class="availability">
-<div class="availability-label">
-<p>Currently</p>
-</div>
-<div class="availability-text">
-<p>Open to <strong>senior/staff roles</strong> applying Bayesian methods and causal inference in health, pharma, or high-stakes decision contexts. Based in Silver Spring, MD — remote-first, flexible on hybrid.</p>
-</div>
-<div class="availability-cta">
-<p><a href="mailto:karim.a.naguib@gmail.com" class="btn">Get in touch</a> <a href="cv.pdf" class="btn btn-ghost">Download CV</a></p>
+<div class="callout-body-container">
+<p>This post is hosted externally. <a href="https://karimn.github.io/effective-funding/funder-meta-problem-1.html">Read it here →</a></p>
 </div>
 </div>
-</section>
 </div>
-<div class="signposts">
-<div class="signpost">
-<div class="signpost-label">
-<p>01 — Bio</p>
-</div>
-<section id="about" class="level3">
-<h3 data-anchor-id="about"><a href="./about.html">About</a></h3>
-<p>Background, experience, and the methods I work in.</p>
-</section>
-</div>
-<div class="signpost">
-<div class="signpost-label">
-<p>02 — Projects</p>
-</div>
-<section id="projects" class="level3">
-<h3 data-anchor-id="projects"><a href="./projects.html">Projects</a></h3>
-<p>Digital-twin tumor dynamics, multistate survival, LFO-CV, agentic Bayesian workflows.</p>
-</section>
-</div>
-<div class="signpost">
-<div class="signpost-label">
-<p>03 — Papers</p>
-</div>
-<section id="research" class="level3">
-<h3 data-anchor-id="research"><a href="./research.html">Research</a></h3>
-<p>Peer-reviewed and working papers on migration, incentives, and social norms.</p>
-</section>
-</div>
-</div>
+<p>A simulation study of planning policies for an Effective Altruism funder maximizing welfare through intervention selection. Accumulated welfare differs substantially between naive policies — e.g., relying on a single study to form beliefs about effectiveness — and more advanced probabilistic policies that optimize re-evaluation timing. The gap is more pronounced in sequential decision-making and persists even against a hypothetical optimal policy, indicating considerable room for methodological improvement in how funders update beliefs.</p>
 
 
 

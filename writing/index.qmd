@@ -1,0 +1,13 @@
+---
+title: "Writing"
+description: "Essays and methodological notes by Karim Naguib — Bayesian modelling, survival analysis, decision theory."
+listing:
+  contents: "*.qmd"
+  sort: "date desc"
+  type: custom
+  template: ../writing-listing.ejs
+  categories: true
+  fields: [title, subtitle, description, date, categories]
+page-layout: article
+title-block-style: none
+---

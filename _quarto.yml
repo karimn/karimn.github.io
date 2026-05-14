@@ -22,6 +22,8 @@ website:
         text: Projects
       - href: research.qmd
         text: Research
+      - href: writing/index.qmd
+        text: Writing
     right:
       - text: "CV"
         href: cv.pdf
