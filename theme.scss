@@ -602,6 +602,12 @@ ul, ol {
       font-size: 0.7rem;
       color: $ink-muted;
       margin-bottom: 0.5rem;
+      a {
+        color: $ink-muted;
+        background-image: none;
+        text-decoration: none;
+        &:hover { color: $accent; }
+      }
     }
     h3 {
       font-family: $font-family-display;
