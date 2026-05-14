@@ -86,7 +86,7 @@ Economist · Applied Bayesian Statistician
 # Karim Naguib
 
 ::: {.masthead-lede}
-I build **hierarchical models** for longitudinal and survival data — currently patient-level *digital twins* of oncology tumor dynamics at AstraZeneca. Prior work spans field experiments in East Africa and South Asia, real-estate market design, and reinforcement learning for intervention policy.
+I sit at the intersection of **causal inference**, **Bayesian hierarchical modeling**, and **agentic tooling** — a combination that's rare in pharma. Right now that means patient-level *digital twins* of oncology tumor dynamics at AstraZeneca: joint longitudinal-survival models that borrow across trials to support Phase 3 initiation decisions. Before that: field experiments in Kenya and South Asia, real-estate market design, and RL for intervention policy.
 :::
 
 ::: {.availability}
