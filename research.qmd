@@ -54,6 +54,20 @@ author: "Karim Naguib"
     ],
     "about": ["seasonal migration", "delegation risk", "external validity", "scaling", "Bangladesh", "randomized evaluation"]
   },
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Bayesian joint modelling of mechanistic tumour growth and time-to-event endpoints for dynamic prediction of ongoing oncology trials",
+    "creativeWorkStatus": "In Preparation",
+    "author": [
+      {"@type": "Person", "name": "Karim Naguib", "url": "https://karimn.github.io"},
+      {"@type": "Person", "name": "R. Berché"},
+      {"@type": "Person", "name": "L. Li"},
+      {"@type": "Person", "name": "A. Bevan"},
+      {"@type": "Person", "name": "P. Metcalfe"}
+    ],
+    "about": ["Bayesian joint model", "tumour dynamics", "state-space model", "multistate hazard", "survival analysis", "oncology", "digital twin", "Hamiltonian Monte Carlo", "dynamic prediction"]
+  }
 ]
 </script>
 ```
@@ -73,5 +87,11 @@ Edward Jee, Anne Karing, and Karim Naguib. [**Optimal Incentives in the Presence
 Harrison Mitchell, A. Mushfiq Mobarak, Karim Naguib, Maira Reimão, and Ashish Shenoy. **External Validity and Implementation at Scale: Evidence from a Migration Loan Program in Bangladesh.**
 
 > Many economic policies show promising pilot results that fail to replicate at scale. We demonstrate how delegation of authority to implementing agents can threaten scalability in a randomized evaluation of a migration loan program in Bangladesh. Pilot evaluations found the loan offer to increase temporary migration by 25–40p.p., but this effect fell to 12p.p. at scale. To explain the attenuation, we introduce a theory of delegation risk that leads implementing agents to systematically mistarget intended program beneficiaries. Mistargeting occurs because benefits are concentrated among those enabled to migrate with a loan — i.e. program compliers — but capacity constraints lead effort to be directed toward those already planning to migrate — i.e. always-takers. We present evidence consistent with this theory that the characteristics that predict pre-loan migration are strongly correlated with the likelihood of remembering the loan offer in endline surveying, and we show delegation risk can quantitatively account for the diminished treatment effect. Policy impacts are further tempered by expansion to adjacent geographic regions despite participants being observably similar. We rule out two additional explanations: First, our geographically clustered randomization design reveals treatment intensity crowds in rather than crowds out migrants. Second, changes in population characteristics over time appear to have little influence. Delegation risk identified in this study has the potential to undermine a number of common development policies, and is exacerbated by management practices frequently used by development organizations.
+
+#### In Preparation
+
+Karim Naguib, R. Berché, L. Li, A. Bevan, and P. Metcalfe. **Bayesian joint modelling of mechanistic tumour growth and time-to-event endpoints for dynamic prediction of ongoing oncology trials.**
+
+> We present a Bayesian joint model for dynamic prediction of clinical outcomes in oncology trials. The model links a mechanistic state-space representation of longitudinal tumour burden to a multistate hazard for progression and death, estimated within a hierarchical framework that pools information across patients. Inference is performed via Hamiltonian Monte Carlo, with the joint likelihood enabling coherent uncertainty propagation from tumour dynamics to survival endpoints. Applied to simulated trial data, we show that predictive accuracy improves as follow-up lengthens and that the model produces well-calibrated credible intervals for progression-free and overall survival throughout the trial period. The approach supports continuously updated predictions as new observations accumulate, without requiring a fixed data cut-off.
 
 See also the [Writing](/writing/) page for essays and methodological notes.
