@@ -140,3 +140,7 @@ Barker, N., Davis, C. A., López-Peña, P., Mitchell, H., Mobarak, A. M., Naguib
 Mitchell, H., Mobarak, A. M., Naguib, K., Reimão, M., & Shenoy, A. "External Validity and Implementation at Scale: Evidence from a Migration Loan Program in Bangladesh."
 
 Jee, E., Karing, A., & Naguib, K. "Optimal Incentives in the Presence of Social Norms: Experimental Evidence from Kenya."
+
+**In preparation**
+
+Naguib, K., Berché, R., Li, L., Bevan, A., & Metcalfe, P. "Bayesian joint modelling of mechanistic tumour growth and time-to-event endpoints for dynamic prediction of ongoing oncology trials."
