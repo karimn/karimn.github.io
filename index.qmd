@@ -111,7 +111,7 @@ Open to **senior/staff roles** applying Bayesian methods and causal inference in
 01 — Bio
 :::
 ### [About](about.qmd)
-Background, experience, and the methods I work in.
+How an economist ends up building digital twins: field experiments, causal inference, and the path to pharma.
 :::
 
 ::: {.signpost}
@@ -119,15 +119,23 @@ Background, experience, and the methods I work in.
 02 — Projects
 :::
 ### [Projects](projects.qmd)
-Digital-twin tumor dynamics, multistate survival, LFO-CV, agentic Bayesian workflows.
+Six technical projects: predicting Phase 3 outcomes from Phase 2 tumor dynamics, decomposing competing risks in survival data, and building agentic tooling for Bayesian modeling teams.
 :::
 
 ::: {.signpost}
 ::: {.signpost-label}
-03 — Papers
+03 — Research
 :::
 ### [Research](research.qmd)
-Peer-reviewed and working papers on migration, incentives, and social norms.
+Peer-reviewed work on migration, social norms, and incentive design — where the causal-inference instincts were trained.
+:::
+
+::: {.signpost}
+::: {.signpost-label}
+04 — Writing
+:::
+### [Writing](writing/index.qmd)
+Methodological notes on Bayesian modeling, survival analysis, and the tools I work in.
 :::
 
 :::
