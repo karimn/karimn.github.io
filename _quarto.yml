@@ -8,7 +8,6 @@ website:
   title: "Karim Naguib"
   description: "Economist and applied Bayesian statistician — hierarchical models for longitudinal and survival data. Digital-twin oncology tumor dynamics at AstraZeneca; prior work in development economics, real-estate market design, and reinforcement learning."
   site-url: "https://karimn.github.io"
-  google-analytics: "G-SQNTJM494V"
   open-graph:
     image: "/og-image.png"
   navbar:
@@ -47,3 +46,4 @@ format:
     page-layout: article
     anchor-sections: false
     title-block-style: none
+    include-in-header: _goatcounter.html
