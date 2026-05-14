@@ -2,6 +2,8 @@
 title: "Research"
 description: "Peer-reviewed and working papers by Karim Naguib on migration, incentives, and social norms — with essays on Effective Altruism funder decision-making."
 author: "Karim Naguib"
+toc: true
+toc-depth: 2
 ---
 
 ```{=html}
@@ -72,13 +74,13 @@ author: "Karim Naguib"
 </script>
 ```
 
-#### Peer-Reviewed
+## Peer-Reviewed
 
 Nathan Barker, C. Austin Davis, Paula López-Peña, Harrison Mitchell, Ahmed Mushfiq Mobarak, Karim Naguib, Maira Reimão, Ashish Shenoy, and Corey Vernot. [**Migration and Resilience during a Global Crisis.**](/Paper_Migration_Disruption.pdf) *Accepted: European Economic Review.*
 
 > This study explores the relationship between migration and household resilience during a global crisis that eliminated the option to migrate. We link prior data from four populations in Bangladesh and Nepal to new phone surveys conducted during the early months of the COVID-19 pandemic. While earnings fell universally, pandemic-induced declines were 14–25% greater among previously migration-dependent households and urban migrant workers, with household remittance losses far exceeding official statistics. Heightened economic exposure during the pandemic erased prior gains achieved by transnational migrants and caused fourfold greater prevalence of food insecurity among domestic subsistence migrants. Economic distress spilled over onto non-migrants in high-migration villages and labor markets. We show that migration contributed to economic contagion independent of its role in disease transmission. Losing the option to migrate differentially increased the vulnerability of migration-dependent households during a crisis.
 
-#### Working Papers
+## Working Papers
 
 Edward Jee, Anne Karing, and Karim Naguib. [**Optimal Incentives in the Presence of Social Norms: Experimental Evidence from Kenya.**](/Kenya_Social_Multiplier-6.pdf)
 
@@ -88,7 +90,7 @@ Harrison Mitchell, A. Mushfiq Mobarak, Karim Naguib, Maira Reimão, and Ashish S
 
 > Many economic policies show promising pilot results that fail to replicate at scale. We demonstrate how delegation of authority to implementing agents can threaten scalability in a randomized evaluation of a migration loan program in Bangladesh. Pilot evaluations found the loan offer to increase temporary migration by 25–40p.p., but this effect fell to 12p.p. at scale. To explain the attenuation, we introduce a theory of delegation risk that leads implementing agents to systematically mistarget intended program beneficiaries. Mistargeting occurs because benefits are concentrated among those enabled to migrate with a loan — i.e. program compliers — but capacity constraints lead effort to be directed toward those already planning to migrate — i.e. always-takers. We present evidence consistent with this theory that the characteristics that predict pre-loan migration are strongly correlated with the likelihood of remembering the loan offer in endline surveying, and we show delegation risk can quantitatively account for the diminished treatment effect. Policy impacts are further tempered by expansion to adjacent geographic regions despite participants being observably similar. We rule out two additional explanations: First, our geographically clustered randomization design reveals treatment intensity crowds in rather than crowds out migrants. Second, changes in population characteristics over time appear to have little influence. Delegation risk identified in this study has the potential to undermine a number of common development policies, and is exacerbated by management practices frequently used by development organizations.
 
-#### In Preparation
+## In Preparation
 
 Karim Naguib, R. Berché, L. Li, A. Bevan, and P. Metcalfe. **Bayesian joint modelling of mechanistic tumour growth and time-to-event endpoints for dynamic prediction of ongoing oncology trials.**
 
