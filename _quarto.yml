@@ -2,7 +2,16 @@ project:
   type: website
   output-dir: docs
   render:
-    - "*.qmd"
+    - "index.qmd"
+    - "about.qmd"
+    - "projects.qmd"
+    - "research.qmd"
+    - "writing/index.qmd"
+    - "writing/funder-meta-problem.qmd"
+    - "writing/lfo-beyond-time-series.qmd"
+  post-render:
+    - lualatex -interaction=nonstopmode -output-directory=docs cv.tex
+    - lualatex -interaction=nonstopmode -output-directory=docs resume.tex
 
 website:
   title: "Karim Naguib"

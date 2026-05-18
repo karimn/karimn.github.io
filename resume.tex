@@ -1,0 +1,109 @@
+\documentclass[11pt]{article}
+
+\usepackage[top=0.7in, bottom=0.7in, left=0.7in, right=0.7in]{geometry}
+\usepackage{enumitem}
+\setlist{nosep, leftmargin=1.2em}
+\usepackage{titlesec}
+\titlespacing{\section}{0pt}{12pt}{6pt}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage[hidelinks]{hyperref}
+\pagenumbering{gobble}
+\setlength{\parindent}{0pt}
+\linespread{1.1}
+
+\begin{document}
+
+\begin{center}
+{\Large \textbf{Karim Naguib}}\\[2mm]
+Economist/Data Scientist | Bayesian Methods \& Causal Inference\\[1mm]
+karim.a.naguib@gmail.com \quad karimn.github.io \quad github.com/karimn
+\end{center}
+
+\vspace{4mm}
+
+\section*{Summary}
+
+Economist and applied Bayesian statistician with 10+ years building \textbf{hierarchical models} for \textbf{longitudinal and survival data}. Current focus: \textbf{patient-level digital-twin models} of oncology tumor dynamics and real-world evidence integration at AstraZeneca; prior work spans field experiments in East Africa and South Asia, real-estate market design, and health-behavior interventions.
+
+\section*{Skills}
+
+\textbf{Methods:} Bayesian hierarchical modeling, state-space and longitudinal models, multistate survival and competing risks, joint longitudinal--survival (``digital twin'') models, cross-validation and predictive assessment (LFO-CV, PSIS-LOO), MCMC diagnostics and prior sensitivity, causal inference and randomized experiment design, Gaussian processes
+
+\textbf{Languages:} R (tidyverse), Stan, Julia, SQL, C/C++
+
+\textbf{Agentic Workflows:} Built and maintain an agentic-workflow layer on Claude Code, shared across the AstraZeneca modeling team. Components include collaborative mathematical derivation, Stan diagnostic sub-agents, \texttt{targets} pipeline explorer, MCP-integrated skills for Domino, and reusable plugin templates codifying team Bayesian workflow conventions.
+
+\textbf{Infrastructure:} CmdStan / cmdstanr, \texttt{targets} pipelines, Domino, Docker, AWS, Databricks, Snowflake, PostgreSQL, git, SLURM
+
+\section*{Education}
+
+\textbf{Boston University} \hfill Boston, MA\\
+Ph.D.\ in Economics \hfill 2014\\
+\textit{Fields: development, health, and experimental economics}
+
+\medskip
+
+\textbf{The American University in Cairo} \hfill Cairo, Egypt\\
+B.S.\ in Computer Science, Minor: Mathematics \hfill 1999
+
+\section*{Experience}
+
+\textbf{Senior Data Scientist} | \textit{AstraZeneca} \hfill Aug 2023 -- present
+\begin{itemize}
+  \item Bayesian digital-twin modeling of oncology tumor dynamics to forecast Phase 3 outcomes from Phase 2 trials, historical data, and real-world evidence, supporting Phase 3 initiation decisions
+  \item Hierarchical state-space tumor-dynamics models and multistate survival models, jointly fit for competing-risk decomposition of progression-free survival; validated with leave-future-out cross-validation
+  \item Modular Stan architecture and \texttt{targets}-based pipeline for reproducible trial analyses
+  \item Agentic-workflow layer for collaborative mathematical derivation and MCMC diagnostics, adopted across the modeling team
+\end{itemize}
+
+\medskip
+
+\textbf{Independent Researcher} \hfill Nov 2022 -- Aug 2023
+\begin{itemize}
+  \item Built a Julia package for a partially observable MDP solution using Monte Carlo tree search to optimize intervention implementation and evaluation decisions
+  \item Bayesian hierarchical models for future-state prediction inside the POMDP; particle filters for online planning
+\end{itemize}
+
+\medskip
+
+\textbf{Senior Data Scientist} | \textit{Opendoor} \hfill May 2021 -- May 2022
+\begin{itemize}
+  \item Designed randomized experiments to estimate demand and supply elasticities for pricing policy across regional real-estate markets
+  \item Hierarchical Bayesian and Gaussian-process models pooling across markets while preserving local heterogeneity
+\end{itemize}
+
+\medskip
+
+\textbf{Independent Researcher / Consultant} \hfill May 2019 -- May 2021
+\begin{itemize}
+  \item Structural Bayesian model of social-experiment outcomes using data from a large-scale RCT in Kenya; hierarchical intervention-effect models
+  \item Hierarchical model of COVID-19 transmission heterogeneity; Gaussian processes for spatial correlation in intervention effects
+  \item R package for bounded identification of counterfactuals in DAGs under imperfect compliance
+\end{itemize}
+
+\medskip
+
+\textbf{Economist} | \textit{Evidence Action} \hfill May 2014 -- May 2019
+\begin{itemize}
+  \item Designed and analyzed large-scale randomized evaluations in Kenya and Bangladesh for flagship programs: deworming across East Africa and the at-scale replication of the No Lean Season seasonal-migration subsidy
+  \item Contributed to the replication analysis of No Lean Season; the failure to replicate the pilot effect informed Evidence Action's decision to close the program
+  \item Study design, power analysis, field data-collection supervision, and Bayesian and frequentist analysis for operational and policy audiences
+\end{itemize}
+
+\medskip
+
+\textbf{Software Design Engineer in Test} | \textit{Microsoft}, Windows Debugging Tools \hfill Apr 1999 -- Mar 2007
+\begin{itemize}
+  \item Test framework and automation for Windows debugging tools; C/C++, systems-level testing
+\end{itemize}
+
+\section*{Publications}
+
+Barker, Davis, L\'opez-Pe\~na, Mitchell, Mobarak, Naguib, Reim\~ao, Shenoy, and Vernot,
+``Migration and Resilience during a Global Crisis,'' \textit{European Economic Review} (accepted);
+two additional working papers on migration at scale (Bangladesh) and optimal incentives under social norms (Kenya);
+Naguib et al., ``Bayesian joint modelling of mechanistic tumour growth and time-to-event endpoints
+for dynamic prediction of ongoing oncology trials'' (in preparation).
+
+\end{document}

@@ -18,11 +18,12 @@ quarto preview
 # Render a single file
 quarto render about.qmd
 
-# Render only the PDF resume
-quarto render resume.qmd --to pdf
+# Render individual PDFs manually (if needed)
+lualatex -interaction=nonstopmode -output-directory=docs cv.tex
+lualatex -interaction=nonstopmode -output-directory=docs resume.tex
 ```
 
-The rendered output goes to `docs/` (configured in `_quarto.yml`). The `resume.pdf` in `docs/` is the compiled output of `resume.qmd`.
+The rendered output goes to `docs/` (configured in `_quarto.yml`). Both `resume.pdf` and `cv.pdf` are built automatically by `quarto render` via `post-render` hooks in `_quarto.yml`. The sources are plain LaTeX (`cv.tex`, `resume.tex`) compiled with lualatex.
 
 ## Architecture
 
@@ -39,7 +40,8 @@ The rendered output goes to `docs/` (configured in `_quarto.yml`). The `resume.p
 | `index.qmd` | Home/landing page |
 | `about.qmd` | Full bio, skills, experience, and publications listing |
 | `research.qmd` | Research papers with abstracts |
-| `resume.qmd` | PDF-only resume (rendered to `docs/resume.pdf`) |
+| `cv.tex` | Full CV — source of truth (compiled to `docs/cv.pdf` via lualatex) |
+| `resume.tex` | Trimmed ATS-safe resume, derived from `cv.tex` (compiled to `docs/resume.pdf` via lualatex) |
 
 ## Social card (OG image)
 
@@ -56,7 +58,7 @@ Fonts and the venv live in `scripts/.fonts/` and `scripts/.venv/` (gitignored).
 
 ## Content Conventions
 
-- `about.qmd` and `resume.qmd` contain parallel content (bio, skills, experience, publications) — keep them in sync when updating either.
+- **`cv.tex` is the source of truth** for all professional content. When updating experience, skills, or publications, edit `cv.tex` first, then propagate to `resume.tex` (trimmed) and `about.qmd` (web-formatted). `projects.qmd` mirrors the Projects section of `cv.tex`.
 - Research paper PDFs (`Kenya_Social_Multiplier-6.pdf`, `Paper_Migration_Disruption.pdf`) are stored at the repo root and copied to `docs/` on render.
 - Bootstrap utility classes (`.d-flex`, `.justify-content-between`, `.text-end`, `.text-center`) are used directly in `.qmd` files for layout since the theme is Cosmo (Bootstrap-based).
-- The `resume.qmd` uses raw LaTeX (`\begin{center}`, `\usepackage{...}`) in the header for PDF formatting — this file renders only to PDF, not HTML.
+- `resume.tex` uses plain LaTeX with `fontspec` and `lualatex`; no hyperlinks in the contact header (ATS parsers extract link annotations out-of-band, corrupting field extraction).

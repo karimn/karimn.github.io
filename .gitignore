@@ -12,3 +12,8 @@
 
 scripts/.venv/
 scripts/.fonts/
+
+# lualatex build artifacts
+docs/*.aux
+docs/*.log
+docs/*.out
