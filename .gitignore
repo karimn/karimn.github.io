@@ -17,3 +17,14 @@ scripts/.fonts/
 docs/*.aux
 docs/*.log
 docs/*.out
+
+# Local AI tooling
+.claude/
+.superpowers/
+.playwright-mcp/
+
+# Personal cover letters (kept in a private backup repo, not published)
+cover_letter_*
+
+# Scratch
+step2-progress.png
