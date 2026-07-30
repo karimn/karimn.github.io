@@ -47,6 +47,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-15110b5557cc9cbaf354ed0943f62b8c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -182,7 +185,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="fig-model-overview" class="quarto-float quarto-figure quarto-figure-center" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-model-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/model-overview-site.svg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+<a href="figures/model-overview-site.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figure&nbsp;1: The three pieces and how they connect. Patient-level inputs on the left feed both submodels; the latent tumour states cross into the hazard as time-varying covariates (centre); every endpoint on the right comes off the same posterior. The dashed arrow back from the events is the joint likelihood — the part a two-stage workflow does not have."><img src="figures/model-overview-site.svg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-model-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: The three pieces and how they connect. Patient-level inputs on the left feed both submodels; the latent tumour states cross into the hazard as time-varying covariates (centre); every endpoint on the right comes off the same posterior. The dashed arrow back from the events is the joint likelihood — the part a two-stage workflow does not have.
@@ -321,8 +324,11 @@ Figure&nbsp;7
 <h2 data-anchor-id="what-this-does-and-does-not-show">What this does and does not show</h2>
 <p>Coverage is not the same thing as a decision.</p>
 <p>That the month-4 band contains the truth says the model was <em>not wrong</em>. It does not say the model was <em>useful</em> at month 4 — a band that wide is consistent with several conclusions at once. What a decision needs is an interval narrow enough to separate “keep going” from “stop”, and at month 4 this one is not. Read properly, month 4 says <strong>wait</strong>.</p>
-<p>The value is not one heroic early number. It is knowing, at every cut-off, which conclusions the data currently support and which it does not — and being told that in the units the decision is actually made in, the mature endpoint itself, rather than as a probability against a pre-specified effect size that someone would then have to defend.</p>
+<p>This is worth stating as a property rather than an accident: when the model cannot forecast well, that shows up <em>in</em> the output rather than hiding behind it. Uncertainty about the tumour parameters, about the hazards, and about where each unfinished trajectory is heading is carried through the same posterior into the endpoint, so sparse or uninformative data produces a wide band. The month-4 panel is the model reporting that nine patients do not determine a survival curve. There is no separate diagnostic to consult and no quiet failure mode where a confident-looking number comes out of data that cannot support it — the width <em>is</em> the diagnostic, and it is in the same picture as the answer.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The value is not one heroic early number. It is knowing, at every cut-off, which conclusions the data currently support and which it does not — and being told that on the endpoint’s own scale, in months of survival, rather than as a single probability of success.</p>
+<p>That distinction is worth being precise about, because the usual interim tools differ from each other. <em>Conditional power</em> gives the chance of a significant result at the final analysis <strong>given an assumed treatment effect</strong> — and that assumption then becomes the thing under debate, since the answer moves with it. <em>Bayesian predictive probability of success</em> is better on exactly this point: it integrates over the posterior for the effect instead of fixing it. But both collapse the picture to one number relative to a pre-specified success threshold. Forecasting the mature curve keeps the estimate and the threshold apart: the model says where the endpoint is heading and how uncertain that is, and where the go/no-go line sits stays an explicit statement of risk tolerance — the sponsor’s to make, not the model’s.</p>
 <p>I would also flag the obvious limitation: this is one indication, two trials, one retrospective replay. It is evidence that the approach works, not evidence about how well it works in general. Extensive-stage SCLC is a fast-moving disease with a strong tumour-burden signal, which is a comparatively favourable setting.</p>
+<p>The natural next question is whether it holds somewhere less favourable, and that is what we are running now: the same framework applied to colorectal cancer. Slower progression and a weaker link between tumour burden and survival make it a harder test, which is the point of doing it — a method that only works where the signal is strong is not much of a method. Results will follow in a later post.</p>
 </section>
 <section id="where-to-go-next" class="level2">
 <h2 data-anchor-id="where-to-go-next">Where to go next</h2>
@@ -332,7 +338,13 @@ Figure&nbsp;7
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>With one important limit. Wide intervals reflect the uncertainty the model can <em>see</em> — parameter uncertainty and predictive variability given its structure — not the possibility that the structure itself is wrong. A misspecified mechanism can be confidently mistaken, producing narrow bands around the wrong curve, and nothing internal to the posterior will announce it. That is why the retrospective replay above carries the weight it does: it is an external check that the intervals mean what they claim, on data the model had not seen.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const isCodeAnnotation = (el) => {
@@ -740,6 +752,38 @@ Figure&nbsp;7
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 

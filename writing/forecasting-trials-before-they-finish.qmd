@@ -22,6 +22,12 @@ execute:
   freeze: auto
   warning: false
   message: false
+# Click any figure to open it full-size. These are dense multi-panel grids —
+# eight KM panels, six patient trajectories — and even with the break-out width
+# the individual panels are small on a laptop. `auto` applies it to every image
+# in the document, which here is exactly the set we want (the six generated
+# plots plus the model diagram); there are no incidental images to exclude.
+lightbox: auto
 format:
   html:
     # No TOC. Seven headings over ~1500 words is navigable by scrolling, and the
@@ -266,17 +272,53 @@ several conclusions at once. What a decision needs is an interval narrow enough
 to separate "keep going" from "stop", and at month 4 this one is not. Read
 properly, month 4 says **wait**.
 
-The value is not one heroic early number. It is knowing, at every cut-off,
-which conclusions the data currently support and which it does not — and being
-told that in the units the decision is actually made in, the mature endpoint
-itself, rather than as a probability against a pre-specified effect size that
-someone would then have to defend.
+This is worth stating as a property rather than an accident: when the model
+cannot forecast well, that shows up *in* the output rather than hiding behind
+it. Uncertainty about the tumour parameters, about the hazards, and about where
+each unfinished trajectory is heading is carried through the same posterior into
+the endpoint, so sparse or uninformative data produces a wide band. The month-4
+panel is the model reporting that nine patients do not determine a survival
+curve. There is no separate diagnostic to consult and no quiet failure mode
+where a confident-looking number comes out of data that cannot support it — the
+width *is* the diagnostic, and it is in the same picture as the
+answer.^[With one important limit. Wide intervals reflect the uncertainty the
+model can *see* — parameter uncertainty and predictive variability given its
+structure — not the possibility that the structure itself is wrong. A
+misspecified mechanism can be confidently mistaken, producing narrow bands
+around the wrong curve, and nothing internal to the posterior will announce it.
+That is why the retrospective replay above carries the weight it does: it is an
+external check that the intervals mean what they claim, on data the model had
+not seen.]
+
+The value is not one heroic early number. It is knowing, at every cut-off, which
+conclusions the data currently support and which it does not — and being told
+that on the endpoint's own scale, in months of survival, rather than as a single
+probability of success.
+
+That distinction is worth being precise about, because the usual interim tools
+differ from each other. *Conditional power* gives the chance of a significant
+result at the final analysis **given an assumed treatment effect** — and that
+assumption then becomes the thing under debate, since the answer moves with it.
+*Bayesian predictive probability of success* is better on exactly this point: it
+integrates over the posterior for the effect instead of fixing it. But both
+collapse the picture to one number relative to a pre-specified success
+threshold. Forecasting the mature curve keeps the estimate and the threshold
+apart: the model says where the endpoint is heading and how uncertain that is,
+and where the go/no-go line sits stays an explicit statement of risk tolerance —
+the sponsor's to make, not the model's.
 
 I would also flag the obvious limitation: this is one indication, two trials,
 one retrospective replay. It is evidence that the approach works, not evidence
 about how well it works in general. Extensive-stage SCLC is a fast-moving
 disease with a strong tumour-burden signal, which is a comparatively favourable
 setting.
+
+The natural next question is whether it holds somewhere less favourable, and
+that is what we are running now: the same framework applied to colorectal
+cancer. Slower progression and a weaker link between tumour burden and survival
+make it a harder test, which is the point of doing it — a method that only works
+where the signal is strong is not much of a method. Results will follow in a
+later post.
 
 ## Where to go next
 
