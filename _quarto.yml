@@ -15,7 +15,7 @@ project:
 
 website:
   title: "Karim Naguib"
-  description: "Economist and applied Bayesian statistician — hierarchical models for longitudinal and survival data. Digital-twin oncology tumor dynamics at AstraZeneca; prior work in development economics, real-estate market design, and reinforcement learning."
+  description: "Economist and applied Bayesian statistician — hierarchical models for longitudinal and survival data. Digital-twin oncology tumor dynamics, most recently at AstraZeneca; prior work in development economics, real-estate market design, and reinforcement learning."
   site-url: "https://karimn.github.io"
   open-graph:
     image: "/og-image.png"
