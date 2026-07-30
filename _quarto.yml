@@ -41,10 +41,10 @@ website:
       - icon: github
         href: https://www.github.com/karimn
       - icon: envelope
-        href: mailto:karim.a.naguib@gmail.com
+        href: mailto:karimn2.0@pm.me
   page-footer:
     left: "© Karim Naguib — Built with Quarto & Claude Code"
-    right: "[karim.a.naguib@gmail.com](mailto:karim.a.naguib@gmail.com)"
+    right: "[karimn2.0@pm.me](mailto:karimn2.0@pm.me)"
 
 format:
   html:
