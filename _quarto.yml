@@ -9,6 +9,7 @@ project:
     - "writing/index.qmd"
     - "writing/funder-meta-problem.qmd"
     - "writing/lfo-beyond-time-series.qmd"
+    - "writing/forecasting-trials-before-they-finish.qmd"
   post-render:
     - lualatex -interaction=nonstopmode -output-directory=docs cv.tex
     - lualatex -interaction=nonstopmode -output-directory=docs resume.tex
