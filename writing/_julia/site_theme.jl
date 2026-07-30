@@ -21,7 +21,8 @@ module SiteTheme
 
 using Makie
 
-export site_theme, PAPER, INK, INK_SOFT, MUTED, RULE, ACCENT, ACCENT_SOFT
+export site_theme, PAPER, INK, INK_SOFT, MUTED, RULE, ACCENT, ACCENT_SOFT,
+       OBS_TEAL, OBS_BAND, FORECAST_BAND
 
 # theme.scss:21-29. Names kept identical to the SCSS variables so a change
 # there is greppable to here.
@@ -113,6 +114,16 @@ const SITE_PALETTE = [
 # samples the low end of the gradient.
 const FORECAST_BAND =
     Makie.cgrad([Makie.RGBf(0.859, 0.729, 0.702), Makie.RGBf(0.659, 0.333, 0.271)])
+
+# The observed phase in `fig_sld_censored`, which draws observed and forecast
+# ribbons on the SAME axis. That contrast is intra-figure, so it cannot come
+# from the `LineRibbon` theme entry (both ribbons are LineRibbons and would be
+# painted identically) — it is passed as arguments instead. Teal against the
+# forecast's terracotta: opposite sides of the wheel, so "already measured"
+# and "predicted" separate on hue rather than on lightness alone.
+const OBS_TEAL = Makie.RGBf(0.122, 0.337, 0.451)   # #1f5673
+const OBS_BAND =
+    Makie.cgrad([Makie.RGBf(0.643, 0.749, 0.796), OBS_TEAL])
 
 """
     site_theme() -> Makie.Theme

@@ -12,8 +12,10 @@ julia:
   # OWN environment, not this repo's, so PioneerManuscript's project must be
   # named here or the include below dies on its first `using DataFrames`. The
   # path is relative to this qmd's directory — the worker's working directory —
-  # and assumes the `pioneer` repo sits beside this one. See the note at the
-  # bottom of this file on why that is acceptable.
+  # and assumes the `pioneer` repo sits beside this one. That is only a
+  # requirement for REGENERATING the figures; `freeze: auto` below means a
+  # normal site build renders the committed `_freeze/` output instead, with no
+  # pioneer checkout and no artifact store.
   exeflags: ["--project=../../pioneer/lib/PioneerManuscript"]
 execute:
   echo: false
@@ -22,8 +24,11 @@ execute:
   message: false
 format:
   html:
-    toc: true
-    toc-depth: 2
+    # No TOC. Seven headings over ~1500 words is navigable by scrolling, and the
+    # TOC is rendered into a right margin sidebar that the wide figures overhang
+    # into — they collided. Dropping it removes the collision and returns the
+    # full width to the figures, rather than constraining them to avoid it.
+    toc: false
     fig-width: 10
     fig-height: 5
 ---
@@ -124,6 +129,14 @@ single joint posterior in one forward simulation pass. Not three models
 reconciled after the fact; one model, simulated forward, with full parameter
 uncertainty carried through.
 
+![The three pieces and how they connect. Patient-level inputs on the left feed
+both submodels; the latent tumour states cross into the hazard as time-varying
+covariates (centre); every endpoint on the right comes off the same posterior.
+The dashed arrow back from the events is the joint likelihood — the part a
+two-stage workflow does not
+have.](figures/model-overview-site.svg){#fig-model-overview
+fig-align="center" width="100%"}
+
 ## The data
 
 The case study is first-line extensive-stage small-cell lung cancer, using two
@@ -143,14 +156,17 @@ mature result it had not yet seen. This is leave-future-out cross-validation,
 and adapting it to this setting is fiddly enough that I wrote [a separate post
 about it](lfo-beyond-time-series.qmd).
 
+::: {.wide-figure}
 ```{julia}
 #| label: fig-sld
+#| out-width: "100%"
 #| fig-cap: "Observed tumour burden over time, both trials. Each faint line is one patient's sum of longest diameters; oxblood points mark the last observation for patients still under follow-up. Both trials show the same decline-then-regrowth shape — the empirical basis for pooling growth kinetics across them."
 #| fig-height: 4.2
 # The censored marker is a kwarg, not a theme entry: it is a single named
 # series, so theming all `Scatter` would also repaint the observation dots.
 fig_sld_trajectories(censored_color = SiteTheme.ACCENT)
 ```
+:::
 
 The 419 historical patients matter because nine patients cannot determine a
 survival curve on their own — but they do not have to. Growth kinetics are
@@ -160,15 +176,41 @@ decide the final answer; the historical trial supplies the shape of the process.
 
 ## Does it work?
 
-Here is the retrospective replay for progression-free survival. Each column is a
+Start one level below the survival curves, at the thing the mechanistic
+submodel actually produces: a trajectory for each individual patient, continued
+past the point where their data stops.
+
+::: {.wide-figure}
+```{julia}
+#| label: fig-sld-censored
+#| out-width: "100%"
+#| fig-cap: "Six patients still progression-free at their last scan, three per arm. Teal is the observed phase, up to each patient's last measurement; terracotta is the model's forecast beyond it. Black points are the actual scans. Bands are 50% and 80% credible intervals."
+#| fig-height: 5.5
+fig_sld_censored(obs_color = SiteTheme.OBS_TEAL,
+                 obs_colormap = SiteTheme.OBS_BAND,
+                 forecast_color = SiteTheme.ACCENT_SOFT,
+                 forecast_colormap = SiteTheme.FORECAST_BAND)
+```
+:::
+
+This is the step that makes the rest possible. Each of these patients is
+censored — no progression recorded — so a conventional analysis has nothing to
+say about them beyond "still enrolled". The model instead carries each one
+forward with an explicit uncertainty band, and those simulated trajectories are
+what drive the hazard, which is what produces the survival curve below.
+
+Now the retrospective replay for progression-free survival. Each column is a
 cut-off, labelled with how many target-trial patients had enrolled by then.
 
+::: {.wide-figure}
 ```{julia}
 #| label: fig-lfo-pfs
+#| out-width: "100%"
 #| fig-cap: "Progression-free survival by treatment arm (rows). Columns are successive cut-offs — months 4, 11 and 19 — each labelled with the target-trial patients observed by then. The fourth column is the same estimand fit to complete data, where observed and mature curves necessarily coincide."
 #| fig-height: 5.5
 fig_lfo_pfs()
 ```
+:::
 
 At **month 4**, with nine patients enrolled, the 80% credible band already
 covers the mature Kaplan-Meier curve — the dashed line the model had not yet
@@ -182,6 +224,7 @@ curve. Tracking the median directly makes the convergence easier to read:
 
 ```{julia}
 #| label: fig-median-pfs
+#| out-width: "100%"
 #| fig-cap: "Median PFS by arm at each cut-off. Vertical bar: the observed mature value."
 #| fig-width: 5.5
 #| fig-height: 5.0
@@ -190,6 +233,7 @@ fig_median_pfs(show_legend = false)
 
 ```{julia}
 #| label: fig-median-os
+#| out-width: "100%"
 #| fig-cap: "Median OS by arm at each cut-off. Same encoding."
 #| fig-width: 5.5
 #| fig-height: 5.0
@@ -200,6 +244,7 @@ fig_median_os(show_category_labels = false, show_legend = false)
 
 ```{julia}
 #| label: fig-cutoff-legend
+#| out-width: "100%"
 #| fig-width: 10
 #| fig-height: 0.9
 fig_cutoff_legend()
@@ -247,18 +292,3 @@ process generating both a longitudinal measurement stream and an event stream,
 with actors entering at different times — I would be glad to hear about it. The
 skeleton is not specific to oncology.
 
-::: {.callout-note appearance="minimal" collapse="true"}
-## A note on the figures
-
-Every figure above is generated at render time by `PioneerManuscript.jl`, the
-same package that builds the figures in the paper, reading the same posterior
-draws. Nothing here is a redrawn or hand-copied version of a published figure,
-so the numbers cannot drift apart from the manuscript's.
-
-That does mean this page can only be *regenerated* on a machine with the
-`pioneer` checkout beside this repo and the artifact store mounted. Quarto's
-`freeze: auto` handles everyone else: the committed `_freeze/` output is what
-gets rendered, so the site builds normally without either. The figures are
-restated in this site's palette through a theme override rather than by forking
-the plotting code — the manuscript's own figures are unaffected.
-:::
