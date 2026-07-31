@@ -47,7 +47,7 @@ A Bayesian state-space "digital twin" model of log tumor size under a Stein-Fojo
 ::: {.project-section-label}
 Impact
 :::
-Extracts tumor-dynamics signal from Phase 2 and historical trial data to forecast Phase 3 outcomes at both population and patient levels, supporting Phase 3 initiation decisions on programs combining emerging trial evidence with real-world data.
+Extracts tumor-dynamics signal from Phase 2 and historical trial data to forecast Phase 3 outcomes at both population and patient levels, supporting Phase 3 initiation decisions on programs combining emerging trial evidence with real-world data. In a small-cell lung cancer case study, this joint model — coupled to the multistate survival layer below — forecasts the mature PFS curve from 9 patients and converges on the OS result 8 months before it read out; see [PIONEER](https://arxiv.org/abs/2607.17908) and the [plain-language writeup](/writing/forecasting-trials-before-they-finish.html).
 :::
 
 :::
