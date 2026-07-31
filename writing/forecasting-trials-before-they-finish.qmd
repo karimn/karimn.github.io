@@ -22,14 +22,15 @@ execute:
   freeze: auto
   warning: false
   message: false
-# Click any figure to open it full-size. These are dense multi-panel grids —
-# eight KM panels, six patient trajectories — and even with the break-out width
-# the individual panels are small on a laptop. `auto` applies it to every image
-# in the document, which here is exactly the set we want (the six generated
-# plots plus the model diagram); there are no incidental images to exclude.
-lightbox: auto
 format:
   html:
+    # Click-to-enlarge. NOT Quarto's `lightbox` option: that filter walks the
+    # Pandoc AST for Image nodes, and the julia engine injects its figures as
+    # raw HTML, so `lightbox: auto` wired up only the one markdown image (the
+    # SVG diagram) and none of the six generated plots. _figure-zoom.html binds
+    # against the DOM instead, where all of them exist. Same root cause as the
+    # `out-width` problem this engine has.
+    include-after-body: _figure-zoom.html
     # No TOC. Seven headings over ~1500 words is navigable by scrolling, and the
     # TOC is rendered into a right margin sidebar that the wide figures overhang
     # into — they collided. Dropping it removes the collision and returns the
@@ -305,7 +306,7 @@ collapse the picture to one number relative to a pre-specified success
 threshold. Forecasting the mature curve keeps the estimate and the threshold
 apart: the model says where the endpoint is heading and how uncertain that is,
 and where the go/no-go line sits stays an explicit statement of risk tolerance —
-the sponsor's to make, not the model's.
+the stakeholder's to make, not the model's.
 
 I would also flag the obvious limitation: this is one indication, two trials,
 one retrospective replay. It is evidence that the approach works, not evidence
