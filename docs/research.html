@@ -149,7 +149,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#peer-reviewed" id="toc-peer-reviewed" class="nav-link active" data-scroll-target="#peer-reviewed">Peer-Reviewed</a></li>
   <li><a href="#working-papers" id="toc-working-papers" class="nav-link" data-scroll-target="#working-papers">Working Papers</a></li>
-  <li><a href="#in-preparation" id="toc-in-preparation" class="nav-link" data-scroll-target="#in-preparation">In Preparation</a></li>
+  <li><a href="#preprints" id="toc-preprints" class="nav-link" data-scroll-target="#preprints">Preprints</a></li>
   </ul>
 </nav>
     </div>
@@ -215,16 +215,19 @@ ul.task-list li input[type="checkbox"] {
   {
     "@context": "https://schema.org",
     "@type": "ScholarlyArticle",
-    "headline": "Bayesian joint modelling of mechanistic tumour growth and time-to-event endpoints for dynamic prediction of ongoing oncology trials",
-    "creativeWorkStatus": "In Preparation",
+    "headline": "PIONEER: Bayesian Joint Modelling of Mechanistic Tumour Growth and Time-to-Event Endpoints for Dynamic Prediction of Ongoing Oncology Trials",
+    "creativeWorkStatus": "Preprint",
     "author": [
       {"@type": "Person", "name": "Karim Naguib", "url": "https://karimn.github.io"},
-      {"@type": "Person", "name": "R. Berché"},
-      {"@type": "Person", "name": "L. Li"},
-      {"@type": "Person", "name": "A. Bevan"},
-      {"@type": "Person", "name": "P. Metcalfe"}
+      {"@type": "Person", "name": "Roger Berché"},
+      {"@type": "Person", "name": "Lu Li"},
+      {"@type": "Person", "name": "Antonia Bevan"},
+      {"@type": "Person", "name": "Sajan Khosla"},
+      {"@type": "Person", "name": "Jessica Davies"},
+      {"@type": "Person", "name": "Paul Metcalfe"}
     ],
-    "about": ["Bayesian joint model", "tumour dynamics", "state-space model", "multistate hazard", "survival analysis", "oncology", "digital twin", "Hamiltonian Monte Carlo", "dynamic prediction"]
+    "url": "https://arxiv.org/abs/2607.17908",
+    "about": ["Bayesian joint model", "tumour dynamics", "state-space model", "multistate hazard", "survival analysis", "oncology", "digital twin", "Hamiltonian Monte Carlo", "dynamic prediction", "leave-future-out cross-validation"]
   }
 ]
 </script>
@@ -246,11 +249,11 @@ ul.task-list li input[type="checkbox"] {
 <p>Many economic policies show promising pilot results that fail to replicate at scale. We demonstrate how delegation of authority to implementing agents can threaten scalability in a randomized evaluation of a migration loan program in Bangladesh. Pilot evaluations found the loan offer to increase temporary migration by 25–40p.p., but this effect fell to 12p.p. at scale. To explain the attenuation, we introduce a theory of delegation risk that leads implementing agents to systematically mistarget intended program beneficiaries. Mistargeting occurs because benefits are concentrated among those enabled to migrate with a loan — i.e.&nbsp;program compliers — but capacity constraints lead effort to be directed toward those already planning to migrate — i.e.&nbsp;always-takers. We present evidence consistent with this theory that the characteristics that predict pre-loan migration are strongly correlated with the likelihood of remembering the loan offer in endline surveying, and we show delegation risk can quantitatively account for the diminished treatment effect. Policy impacts are further tempered by expansion to adjacent geographic regions despite participants being observably similar. We rule out two additional explanations: First, our geographically clustered randomization design reveals treatment intensity crowds in rather than crowds out migrants. Second, changes in population characteristics over time appear to have little influence. Delegation risk identified in this study has the potential to undermine a number of common development policies, and is exacerbated by management practices frequently used by development organizations.</p>
 </blockquote>
 </section>
-<section id="in-preparation" class="level2">
-<h2 data-anchor-id="in-preparation">In Preparation</h2>
-<p>Karim Naguib, R. Berché, L. Li, A. Bevan, and P. Metcalfe. <strong>Bayesian joint modelling of mechanistic tumour growth and time-to-event endpoints for dynamic prediction of ongoing oncology trials.</strong></p>
+<section id="preprints" class="level2">
+<h2 data-anchor-id="preprints">Preprints</h2>
+<p>Karim Naguib, Roger Berché, Lu Li, Antonia Bevan, Sajan Khosla, Jessica Davies, and Paul Metcalfe. <a href="https://arxiv.org/abs/2607.17908"><strong>PIONEER: Bayesian Joint Modelling of Mechanistic Tumour Growth and Time-to-Event Endpoints for Dynamic Prediction of Ongoing Oncology Trials.</strong></a> <em>arXiv:2607.17908.</em></p>
 <blockquote class="blockquote">
-<p>We present a Bayesian joint model for dynamic prediction of clinical outcomes in oncology trials. The model links a mechanistic state-space representation of longitudinal tumour burden to a multistate hazard for progression and death, estimated within a hierarchical framework that pools information across patients. Inference is performed via Hamiltonian Monte Carlo, with the joint likelihood enabling coherent uncertainty propagation from tumour dynamics to survival endpoints. Applied to simulated trial data, we show that predictive accuracy improves as follow-up lengthens and that the model produces well-calibrated credible intervals for progression-free and overall survival throughout the trial period. The approach supports continuously updated predictions as new observations accumulate, without requiring a fixed data cut-off.</p>
+<p>High-stakes decisions in oncology clinical trials must often be made while survival data remains immature: progression-free survival (PFS) and overall survival (OS) are heavily censored, few events have accumulated, and the primary endpoint may be months or years from reading out. What is available at interim data cut-offs is information-rich longitudinal tumour measurements and baseline covariates. We present PIONEER, a Bayesian joint modelling framework that couples a mechanistic two-component state-space submodel of longitudinal tumour size dynamics to a multistate proportional-hazard submodel for competing clinical events, fitted simultaneously under a single posterior. The mechanistic submodel infers latent per-patient tumour trajectories — decomposed into treatment-responsive and refractory compartments with Gompertz-attenuated growth — from sparse, noisy sum-of-longest-diameter (SLD) observations. These latent trajectories feed the multistate hazard as time-varying covariates, while the event data simultaneously refines the tumour dynamics through the joint likelihood. All clinical endpoints (PFS, OS, objective response rate) are derived from the joint posterior in a single forward simulation pass, propagating full parameter uncertainty without any two-stage plug-in. Applied to a case study in extensive-stage small-cell lung cancer (two trials, N = 497), leave-future-out cross-validation demonstrates that at month 4 of enrolment (9 patients) the model produces calibrated PFS forecasts covering the mature month-19 Kaplan-Meier curve, and at month 11 (39 patients) the OS forecast converges — representing at least 8 months of advance forecasting with properly quantified uncertainty. We hope this work paves the way for broader adoption of Bayesian mechanistic state-space frameworks in clinical development, enabling earlier and more informed decision-making from immature trial data.</p>
 </blockquote>
 <p>See also the <a href="./writing/">Writing</a> page for essays and methodological notes.</p>
 
