@@ -1,0 +1,84 @@
+<!--
+  Click-to-enlarge for figures.
+
+  Quarto's built-in `lightbox` option does not work on this page. That filter
+  walks the Pandoc AST for Image nodes, but the `julia` engine injects its
+  figures as RAW HTML, so the filter never sees them: with `lightbox: auto` the
+  rendered page carried exactly one `data-glightbox` attribute — the markdown
+  SVG diagram — and none on the six generated plots. It is the same reason a
+  chunk's `out-width` produces no width style on this engine.
+
+  So the binding is done here against the DOM, where the raw-HTML figures do
+  exist, which also means one mechanism covers both the generated plots and the
+  markdown image instead of two overlapping ones.
+
+  Deliberately not reusing Quarto's bundled GLightbox: that would mean binding
+  to another library's initialisation order and internals to work around its own
+  filter having missed the elements. Twenty lines with no dependency is less to
+  keep working.
+-->
+<style>
+  .zoomable { cursor: zoom-in; }
+
+  #figure-zoom-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    /* $ink at high opacity rather than black: the page is warm, and a neutral
+       black scrim reads as a hole punched in it. */
+    background: rgba(26, 22, 18, 0.93);
+    cursor: zoom-out;
+  }
+
+  #figure-zoom-overlay.open { display: flex; }
+
+  #figure-zoom-overlay img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    /* The figures are drawn on $paper and have transparent margins; without a
+       ground they bleed into the scrim. */
+    background: #FAF8F3;
+  }
+</style>
+
+<div id="figure-zoom-overlay" role="dialog" aria-modal="true" aria-label="Enlarged figure">
+  <img alt="">
+</div>
+
+<script>
+  (function () {
+    var overlay = document.getElementById('figure-zoom-overlay');
+    if (!overlay) return;
+    var target = overlay.querySelector('img');
+
+    function open(img) {
+      target.src = img.currentSrc || img.src;
+      target.alt = img.alt || '';
+      overlay.classList.add('open');
+      // Stop the page scrolling behind the overlay.
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+      // Drop the src so a base64 figure is not held in memory twice.
+      target.removeAttribute('src');
+    }
+
+    document.querySelectorAll('figure img, img.figure-img').forEach(function (img) {
+      img.classList.add('zoomable');
+      img.addEventListener('click', function () { open(img); });
+    });
+
+    overlay.addEventListener('click', close);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') close();
+    });
+  })();
+</script>

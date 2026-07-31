@@ -86,7 +86,7 @@ ul.task-list li input[type="checkbox"] {
     const options = {
       valueNames: ['listing-title','listing-subtitle','listing-description','listing-date','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-date-modified-sort'] },{ data: ['listing-file-modified-sort'] },{ data: ['listing-reading-time-sort'] },{ data: ['listing-word-count-sort'] }],
       
-      searchColumns: ["listing-project","listing-website","listing-format","listing-engines","listing-language","listing-title","listing-subtitle","listing-description","listing-author","listing-date","listing-categories","listing-image","listing-external-link","listing-path","listing-outputHref","listing-date-modified","listing-filename","listing-file-modified","listing-reading-time","listing-word-count","listing-link-citations","listing-citations-hover","listing-nocite","listing-references"],
+      searchColumns: ["listing-project","listing-website","listing-format","listing-engines","listing-language","listing-title","listing-subtitle","listing-description","listing-author","listing-date","listing-categories","listing-image","listing-engine","listing-julia","listing-execute","listing-path","listing-outputHref","listing-date-modified","listing-filename","listing-file-modified","listing-reading-time","listing-word-count","listing-external-link","listing-link-citations","listing-citations-hover","listing-nocite","listing-references"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -202,7 +202,7 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="QmF5ZXNpYW4=">Bayesian <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q3Jvc3MtVmFsaWRhdGlvbg==">Cross-Validation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGVjaXNpb24lMjBUaGVvcnk=">Decision Theory <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RWZmZWN0aXZlJTIwQWx0cnVpc20=">Effective Altruism <span class="quarto-category-count">(1)</span></div><div class="category" data-category="T25jb2xvZ3k=">Oncology <span class="quarto-category-count">(1)</span></div><div class="category" data-category="UG9saWN5">Policy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U2ltdWxhdGlvbg==">Simulation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U3Vydml2YWwlMjBBbmFseXNpcw==">Survival Analysis <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="QmF5ZXNpYW4=">Bayesian <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Q3Jvc3MtVmFsaWRhdGlvbg==">Cross-Validation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RGVjaXNpb24lMjBUaGVvcnk=">Decision Theory <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RWZmZWN0aXZlJTIwQWx0cnVpc20=">Effective Altruism <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Rm9yZWNhc3Rpbmc=">Forecasting <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Sm9pbnQlMjBNb2RlbHM=">Joint Models <span class="quarto-category-count">(1)</span></div><div class="category" data-category="T25jb2xvZ3k=">Oncology <span class="quarto-category-count">(2)</span></div><div class="category" data-category="UG9saWN5">Policy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U2ltdWxhdGlvbg==">Simulation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="U3Vydml2YWwlMjBBbmFseXNpcw==">Survival Analysis <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="title display-7">Writing</h1></header>
 
@@ -218,6 +218,39 @@ window.Quarto = {
 
 <div class="quarto-listing quarto-listing-container-custom" id="listing-listing">
 <div class="writing-listing">
+<article class="writing-entry">
+<div class="writing-entry-meta">
+<p><time class="writing-entry-date">Jul 30, 2026</time></p>
+<ul class="writing-entry-categories">
+<li>
+<a href="index.html#category=Bayesian">Bayesian</a>
+</li>
+<li>
+<a href="index.html#category=Oncology">Oncology</a>
+</li>
+<li>
+<a href="index.html#category=Survival Analysis">Survival Analysis</a>
+</li>
+<li>
+<a href="index.html#category=Joint Models">Joint Models</a>
+</li>
+<li>
+<a href="index.html#category=Forecasting">Forecasting</a>
+</li>
+</ul>
+</div>
+<div class="writing-entry-body">
+<h2 class="writing-entry-title">
+<a href="../writing/forecasting-trials-before-they-finish.html">Forecasting a Trial Before It Finishes</a>
+</h2>
+<p class="writing-entry-subtitle">
+A Bayesian joint model that reads tumour scans as survival evidence
+</p>
+<p class="writing-entry-description">
+Our new paper couples a mechanistic model of tumour growth to a multistate survival model and fits both at once. In a small-cell lung cancer case study, it forecasts the mature progression-free survival curve from nine patients, and converges on overall survival eight months before it read out.
+</p>
+</div>
+</article>
 <article class="writing-entry">
 <div class="writing-entry-meta">
 <p><time class="writing-entry-date">May 14, 2026</time></p>

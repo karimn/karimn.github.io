@@ -1,0 +1,342 @@
+---
+title: "Forecasting a Trial Before It Finishes"
+subtitle: "A Bayesian joint model that reads tumour scans as survival evidence"
+description: "Our new paper couples a mechanistic model of tumour growth to a multistate survival model and fits both at once. In a small-cell lung cancer case study, it forecasts the mature progression-free survival curve from nine patients, and converges on overall survival eight months before it read out."
+author: "Karim Naguib"
+date: "2026-07-30"
+categories: [Bayesian, Oncology, Survival Analysis, Joint Models, Forecasting]
+image: "../og-image.png"
+engine: julia
+julia:
+  # QuartoNotebookRunner (what `engine: julia` drives) starts its worker in its
+  # OWN environment, not this repo's, so PioneerManuscript's project must be
+  # named here or the include below dies on its first `using DataFrames`. The
+  # path is relative to this qmd's directory — the worker's working directory —
+  # and assumes the `pioneer` repo sits beside this one. That is only a
+  # requirement for REGENERATING the figures; `freeze: auto` below means a
+  # normal site build renders the committed `_freeze/` output instead, with no
+  # pioneer checkout and no artifact store.
+  exeflags: ["--project=../../pioneer/lib/PioneerManuscript"]
+execute:
+  echo: false
+  freeze: auto
+  warning: false
+  message: false
+format:
+  html:
+    # Click-to-enlarge. NOT Quarto's `lightbox` option: that filter walks the
+    # Pandoc AST for Image nodes, and the julia engine injects its figures as
+    # raw HTML, so `lightbox: auto` wired up only the one markdown image (the
+    # SVG diagram) and none of the six generated plots. _figure-zoom.html binds
+    # against the DOM instead, where all of them exist. Same root cause as the
+    # `out-width` problem this engine has.
+    include-after-body: _figure-zoom.html
+    # No TOC. Seven headings over ~1500 words is navigable by scrolling, and the
+    # TOC is rendered into a right margin sidebar that the wide figures overhang
+    # into — they collided. Dropping it removes the collision and returns the
+    # full width to the figures, rather than constraining them to avoid it.
+    toc: false
+    fig-width: 10
+    fig-height: 5
+---
+
+```{julia}
+#| label: setup
+#| include: false
+# Figures come from PioneerManuscript, the same package that builds the paper's
+# — so a number quoted here cannot drift from the number in the manuscript.
+# `freeze: auto` means this only runs on a machine that has both the pioneer
+# checkout and the artifact store; everyone else renders from _freeze/.
+include(joinpath(@__DIR__, "..", "..", "pioneer", "lib", "PioneerManuscript",
+                 "src", "PioneerManuscript.jl"))
+using .PioneerManuscript, CairoMakie
+
+include(joinpath(@__DIR__, "_julia", "site_theme.jl"))
+using .SiteTheme
+set_theme!(site_theme())
+```
+
+We have a new paper out: [*PIONEER: Bayesian Joint Modelling of Mechanistic
+Tumour Growth and Time-to-Event Endpoints for Dynamic Prediction of Ongoing
+Oncology Trials*](https://arxiv.org/abs/2607.17908). This post is the
+plain-language version — what the model is, what we ran it on, and what it did.
+
+## The decision you cannot postpone
+
+Somewhere around the middle of a Phase 2 oncology trial, a team has to decide
+whether to keep going. The difficulty is structural. Progression-free survival
+and overall survival are the endpoints the decision rests on, and both are
+measured by how long patients go without progressing or dying — so at an
+interim look, most patients' outcomes are simply still unfolding. A patient
+with nothing recorded yet is not a patient known to be doing well; they are
+someone we have not been following long enough to say. The median of anything
+is a long way off, and the primary endpoint may not read out for another year
+or more.
+
+Waiting is not free, and neither is guessing. So teams reach for whatever will
+carry the weight — a p-value on immature data, a comparison against a historical
+control, an assumed effect size and a conditional-power calculation. Each of
+these is a way of not-quite-answering the actual question, which is: *what will
+this trial look like when it finishes?*
+
+## The evidence already in hand
+
+Here is the thing that motivated the paper. At every interim cut-off, that trial
+is sitting on a dense, information-rich record that a survival analysis almost
+entirely discards.
+
+Patients get scanned on a schedule. Each scan yields a sum of longest diameters
+— a number for how much tumour is present. Over months, each patient accumulates
+a *trajectory*. A conventional interim analysis compresses all of that into a
+single fact: "progressed at week 14", or "not yet progressed". Six measurements
+tracing a tumour shrinking, bottoming out, and starting to regrow become one
+event indicator and one date.
+
+But the shape of that trajectory is exactly what tells you where a patient is
+heading. A tumour still shrinking at last contact and one that bottomed out
+three months ago and has been climbing since are in very different positions —
+and a survival model that sees only "no event yet" treats them identically.
+
+## The model, in three pieces
+
+The framework couples three components and — this is the load-bearing part —
+fits them **simultaneously, under a single posterior**.
+
+**Tumour dynamics.** A mechanistic state-space submodel infers each patient's
+latent tumour trajectory from their sparse, noisy scan measurements. It is a
+two-component decomposition: tumour burden is split into a *treatment-responsive*
+compartment that shrinks under therapy and a *refractory* compartment that does
+not, with Gompertz-attenuated growth so that regrowth decelerates as burden
+accumulates rather than running away exponentially. The familiar
+shrink-then-regrow curve falls out of the two compartments crossing over — it is
+not imposed.
+
+**Clinical events.** A multistate proportional-hazard submodel handles the
+events that actually happen to patients — progression, death with and without
+prior progression, dropout — as transitions between states rather than as a
+single lumped endpoint. The latent tumour trajectories enter this submodel as
+*time-varying covariates*. The hazard responds to where a patient's tumour is
+going, not merely to their baseline risk factors.
+
+**One joint fit.** The arrow runs both ways. Latent trajectories drive the
+hazards, and the event data simultaneously sharpens the tumour dynamics through
+the shared likelihood. A patient who progresses tells the model something about
+their tumour trajectory, not just the other way round.
+
+That bidirectionality is what distinguishes this from the standard
+two-stage pharmacometric workflow, where you fit tumour kinetics first, extract
+summary statistics — growth rate, time to nadir, week-8 burden — and plug them
+into a survival model as though they were measured without error. Two-stage
+inheritance discards the uncertainty in stage one and attenuates the association
+in stage two. Fitting jointly avoids both, at the cost of a considerably harder
+posterior.
+
+Every endpoint — PFS, OS, objective response rate — is then derived from that
+single joint posterior in one forward simulation pass. Not three models
+reconciled after the fact; one model, simulated forward, with full parameter
+uncertainty carried through.
+
+![The three pieces and how they connect. Patient-level inputs on the left feed
+both submodels; the latent tumour states cross into the hazard as time-varying
+covariates (centre); every endpoint on the right comes off the same posterior.
+The dashed arrow back from the events is the joint likelihood — the part a
+two-stage workflow does not
+have.](figures/model-overview-site.svg){#fig-model-overview
+fig-align="center" width="100%"}
+
+## The data
+
+The case study is first-line extensive-stage small-cell lung cancer, using two
+completed trials obtained through [Project Data
+Sphere](https://www.projectdatasphere.org/) — public, checkable data rather than
+a private case study nobody can audit.
+
+| | Trial | Role | N |
+|---|---|---|---|
+| **Target** | Lilly CXCR4 (I2V-MC-CXAC) | the trial being forecast | 78 |
+| **Historical** | Amgen 20010145 (darbepoetin alfa) | the trial borrowed from | 419 |
+
+The design is a *retrospective replay*. Both trials are finished, so we know the
+answer. The model is re-fit at successive historical cut-offs, given only the
+data that existed at that moment, and its forecast is compared against the
+mature result it had not yet seen. This is leave-future-out cross-validation,
+and adapting it to this setting is fiddly enough that I wrote [a separate post
+about it](lfo-beyond-time-series.qmd).
+
+::: {.wide-figure}
+```{julia}
+#| label: fig-sld
+#| out-width: "100%"
+#| fig-cap: "Observed tumour burden over time, both trials. Each faint line is one patient's sum of longest diameters; oxblood points mark the last observation for patients still under follow-up. Both trials show the same decline-then-regrowth shape — the empirical basis for pooling growth kinetics across them."
+#| fig-height: 4.2
+# The censored marker is a kwarg, not a theme entry: it is a single named
+# series, so theming all `Scatter` would also repaint the observation dots.
+fig_sld_trajectories(censored_color = SiteTheme.ACCENT)
+```
+:::
+
+The 419 historical patients matter because nine patients cannot determine a
+survival curve on their own — but they do not have to. Growth kinetics are
+partially pooled across both trials, with the degree of borrowing learned from
+the data rather than fixed in advance. The target trial's own patients still
+decide the final answer; the historical trial supplies the shape of the process.
+
+## Does it work?
+
+Start one level below the survival curves, at the thing the mechanistic
+submodel actually produces: a trajectory for each individual patient, continued
+past the point where their data stops.
+
+::: {.wide-figure}
+```{julia}
+#| label: fig-sld-censored
+#| out-width: "100%"
+#| fig-cap: "Six patients still progression-free at their last scan, three per arm. Teal is the observed phase, up to each patient's last measurement; terracotta is the model's forecast beyond it. Black points are the actual scans. Bands are 50% and 80% credible intervals."
+#| fig-height: 5.5
+fig_sld_censored(obs_color = SiteTheme.OBS_TEAL,
+                 obs_colormap = SiteTheme.OBS_BAND,
+                 forecast_color = SiteTheme.ACCENT_SOFT,
+                 forecast_colormap = SiteTheme.FORECAST_BAND)
+```
+:::
+
+This is the step that makes the rest possible. Each of these patients is
+censored — no progression recorded — so a conventional analysis has nothing to
+say about them beyond "still enrolled". The model instead carries each one
+forward with an explicit uncertainty band, and those simulated trajectories are
+what drive the hazard, which is what produces the survival curve below.
+
+Now the retrospective replay for progression-free survival. Each column is a
+cut-off, labelled with how many target-trial patients had enrolled by then.
+
+::: {.wide-figure}
+```{julia}
+#| label: fig-lfo-pfs
+#| out-width: "100%"
+#| fig-cap: "Progression-free survival by treatment arm (rows). Columns are successive cut-offs — months 4, 11 and 19 — each labelled with the target-trial patients observed by then. The fourth column is the same estimand fit to complete data, where observed and mature curves necessarily coincide."
+#| fig-height: 5.5
+fig_lfo_pfs()
+```
+:::
+
+At **month 4**, with nine patients enrolled, the 80% credible band already
+covers the mature Kaplan-Meier curve — the dashed line the model had not yet
+seen, and would not see for another fifteen months. The band is also very wide
+— which is the correct width for what nine patients can support.
+
+By **month 11**, at 39 patients, the forecast has tightened onto the mature
+curve. Tracking the median directly makes the convergence easier to read:
+
+:::: {.wide-figure}
+
+::: {layout-ncol=2}
+
+```{julia}
+#| label: fig-median-pfs
+#| out-width: "100%"
+#| fig-cap: "Median PFS by arm at each cut-off. Vertical bar: the observed mature value."
+#| fig-width: 6.6
+#| fig-height: 6.0
+fig_median_pfs(show_legend = false)
+```
+
+```{julia}
+#| label: fig-median-os
+#| out-width: "100%"
+#| fig-cap: "Median OS by arm at each cut-off. Same encoding."
+#| fig-width: 6.6
+#| fig-height: 6.0
+fig_median_os(show_category_labels = false, show_legend = false)
+```
+
+:::
+
+```{julia}
+#| label: cutoff-legend
+#| out-width: "100%"
+#| fig-width: 12
+#| fig-height: 1.08
+# Label deliberately WITHOUT the `fig-` prefix. This is the shared cut-off key
+# for the two panels above, not a figure in its own right — and `fig-` is
+# exactly what makes Quarto assign a number, which had it appearing as its own
+# "Figure 7" consisting of nothing but the legend to Figures 5 and 6.
+fig_cutoff_legend()
+```
+
+::::
+
+Overall survival converges at month 11 — at least **eight months before it
+actually read out**, with uncertainty properly quantified rather than asserted.
+The OS intervals are wider than the PFS ones throughout, and they should be: OS
+routes through progression, direct death, and dropout, and the forecast carries
+all three.
+
+## What this does and does not show
+
+Coverage is not the same thing as a decision.
+
+That the month-4 band contains the truth says the model was *not wrong*. It does
+not say the model was *useful* at month 4 — a band that wide is consistent with
+several conclusions at once. What a decision needs is an interval narrow enough
+to separate "keep going" from "stop", and at month 4 this one is not. Read
+properly, month 4 says **wait**.
+
+This is worth stating as a property rather than an accident: when the model
+cannot forecast well, that shows up *in* the output rather than hiding behind
+it. Uncertainty about the tumour parameters, about the hazards, and about where
+each unfinished trajectory is heading is carried through the same posterior into
+the endpoint, so sparse or uninformative data produces a wide band. The month-4
+panel is the model reporting that nine patients do not determine a survival
+curve. There is no separate diagnostic to consult and no quiet failure mode
+where a confident-looking number comes out of data that cannot support it — the
+width *is* the diagnostic, and it is in the same picture as the
+answer.^[With one important limit. Wide intervals reflect the uncertainty the
+model can *see* — parameter uncertainty and predictive variability given its
+structure — not the possibility that the structure itself is wrong. A
+misspecified mechanism can be confidently mistaken, producing narrow bands
+around the wrong curve, and nothing internal to the posterior will announce it.
+That is why the retrospective replay above carries the weight it does: it is an
+external check that the intervals mean what they claim, on data the model had
+not seen.]
+
+The value is not one heroic early number. It is knowing, at every cut-off, which
+conclusions the data currently support and which it does not — and being told
+that on the endpoint's own scale, in months of survival, rather than as a single
+probability of success.
+
+That distinction is worth being precise about, because the usual interim tools
+differ from each other. *Conditional power* gives the chance of a significant
+result at the final analysis **given an assumed treatment effect** — and that
+assumption then becomes the thing under debate, since the answer moves with it.
+*Bayesian predictive probability of success* is better on exactly this point: it
+integrates over the posterior for the effect instead of fixing it. But both
+collapse the picture to one number relative to a pre-specified success
+threshold. Forecasting the mature curve keeps the estimate and the threshold
+apart: the model says where the endpoint is heading and how uncertain that is,
+and where the go/no-go line sits stays an explicit statement of risk tolerance —
+the stakeholder's to make, not the model's.
+
+I would also flag the obvious limitation: this is one indication, two trials,
+one retrospective replay. It is evidence that the approach works, not evidence
+about how well it works in general. Extensive-stage SCLC is a fast-moving
+disease with a strong tumour-burden signal, which is a comparatively favourable
+setting.
+
+The natural next question is whether it holds up elsewhere, and a second
+application — a different disease, a different set of trials — is in progress.
+Results will follow in a later post.
+
+## Where to go next
+
+The [paper](https://arxiv.org/abs/2607.17908) has the full specification — the
+state-space formulation, the multistate hazard structure, the hierarchical
+priors, and the cross-validation methodology. If you want the cross-validation
+piece on its own, [the LFO post](lfo-beyond-time-series.qmd) works through what
+breaks when you take a method built for univariate time series into a setting
+with staggered enrolment and two different observation clocks.
+
+If you are working on something structurally similar — a latent mechanistic
+process generating both a longitudinal measurement stream and an event stream,
+with actors entering at different times — I would be glad to hear about it. The
+skeleton is not specific to oncology.
+
