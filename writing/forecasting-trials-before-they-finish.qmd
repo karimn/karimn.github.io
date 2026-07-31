@@ -227,14 +227,16 @@ seen, and would not see for another fifteen months. The band is also very wide
 By **month 11**, at 39 patients, the forecast has tightened onto the mature
 curve. Tracking the median directly makes the convergence easier to read:
 
+:::: {.wide-figure}
+
 ::: {layout-ncol=2}
 
 ```{julia}
 #| label: fig-median-pfs
 #| out-width: "100%"
 #| fig-cap: "Median PFS by arm at each cut-off. Vertical bar: the observed mature value."
-#| fig-width: 5.5
-#| fig-height: 5.0
+#| fig-width: 6.6
+#| fig-height: 6.0
 fig_median_pfs(show_legend = false)
 ```
 
@@ -242,20 +244,26 @@ fig_median_pfs(show_legend = false)
 #| label: fig-median-os
 #| out-width: "100%"
 #| fig-cap: "Median OS by arm at each cut-off. Same encoding."
-#| fig-width: 5.5
-#| fig-height: 5.0
+#| fig-width: 6.6
+#| fig-height: 6.0
 fig_median_os(show_category_labels = false, show_legend = false)
 ```
 
 :::
 
 ```{julia}
-#| label: fig-cutoff-legend
+#| label: cutoff-legend
 #| out-width: "100%"
-#| fig-width: 10
-#| fig-height: 0.9
+#| fig-width: 12
+#| fig-height: 1.08
+# Label deliberately WITHOUT the `fig-` prefix. This is the shared cut-off key
+# for the two panels above, not a figure in its own right — and `fig-` is
+# exactly what makes Quarto assign a number, which had it appearing as its own
+# "Figure 7" consisting of nothing but the legend to Figures 5 and 6.
 fig_cutoff_legend()
 ```
+
+::::
 
 Overall survival converges at month 11 — at least **eight months before it
 actually read out**, with uncertainty properly quantified rather than asserted.
