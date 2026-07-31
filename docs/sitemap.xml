@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://karimn.github.io/writing/lfo-beyond-time-series.html</loc>
-    <lastmod>2026-07-30T20:16:37.590Z</lastmod>
-  </url>
-  <url>
-    <loc>https://karimn.github.io/writing/index.html</loc>
-    <lastmod>2026-07-30T19:59:26.659Z</lastmod>
-  </url>
-  <url>
-    <loc>https://karimn.github.io/projects.html</loc>
-    <lastmod>2026-07-30T20:16:37.585Z</lastmod>
-  </url>
-  <url>
-    <loc>https://karimn.github.io/index.html</loc>
-    <lastmod>2026-07-30T20:16:55.074Z</lastmod>
-  </url>
-  <url>
-    <loc>https://karimn.github.io/about.html</loc>
-    <lastmod>2026-07-30T20:17:00.235Z</lastmod>
-  </url>
-  <url>
-    <loc>https://karimn.github.io/research.html</loc>
-    <lastmod>2026-07-30T20:16:37.588Z</lastmod>
+    <loc>https://karimn.github.io/writing/forecasting-trials-before-they-finish.html</loc>
+    <lastmod>2026-07-31T01:40:30.455Z</lastmod>
   </url>
   <url>
     <loc>https://karimn.github.io/writing/funder-meta-problem.html</loc>
-    <lastmod>2026-07-30T20:16:37.590Z</lastmod>
+    <lastmod>2026-07-31T01:39:55.025Z</lastmod>
   </url>
   <url>
-    <loc>https://karimn.github.io/writing/forecasting-trials-before-they-finish.html</loc>
-    <lastmod>2026-07-31T00:48:31.791Z</lastmod>
+    <loc>https://karimn.github.io/research.html</loc>
+    <lastmod>2026-07-31T01:41:20.874Z</lastmod>
+  </url>
+  <url>
+    <loc>https://karimn.github.io/about.html</loc>
+    <lastmod>2026-07-31T01:40:30.436Z</lastmod>
+  </url>
+  <url>
+    <loc>https://karimn.github.io/index.html</loc>
+    <lastmod>2026-07-31T01:40:30.452Z</lastmod>
+  </url>
+  <url>
+    <loc>https://karimn.github.io/projects.html</loc>
+    <lastmod>2026-07-31T01:39:55.018Z</lastmod>
+  </url>
+  <url>
+    <loc>https://karimn.github.io/writing/index.html</loc>
+    <lastmod>2026-07-31T01:39:55.025Z</lastmod>
+  </url>
+  <url>
+    <loc>https://karimn.github.io/writing/lfo-beyond-time-series.html</loc>
+    <lastmod>2026-07-31T01:39:55.025Z</lastmod>
   </url>
 </urlset>
