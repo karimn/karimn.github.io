@@ -25,13 +25,25 @@ lualatex -interaction=nonstopmode -output-directory=docs resume.tex
 
 The rendered output goes to `docs/` (configured in `_quarto.yml`). Both `resume.pdf` and `cv.pdf` are built automatically by `quarto render` via `post-render` hooks in `_quarto.yml`. The sources are plain LaTeX (`cv.tex`, `resume.tex`) compiled with lualatex.
 
+### Build prerequisites
+
+- **R comes from `rig`** (`/opt/R/current`, currently 4.5.3). Quarto selects its R via the `QUARTO_R` env var set in `~/.profile`; it must point at `/opt/R/current/bin/R`. If `quarto render` reports R 4.3.3 (`/usr/lib/R`, the unmanaged distro install), that variable is stale and the renv library won't resolve.
+- **The PDFs need the Times New Roman system font.** `cv.tex` and `resume.tex` set it via `fontspec`. If it is missing, lualatex substitutes `nullfont`, **exits 0**, and writes a correctly-paginated PDF with no text — the build looks successful. Install with `sudo apt install ttf-mscorefonts-installer` (multiverse); on Pop!_OS the deferred download never fires, so fetch the `.exe` archives and run `/usr/lib/msttcorefonts/update-ms-fonts <files>` directly.
+
+Always verify a PDF rebuild by extracting text, never by exit code:
+
+```bash
+pdftotext docs/cv.pdf - | wc -w      # expect ~1800; ~0 means the font is missing
+pdftotext docs/resume.pdf - | wc -w  # expect ~620
+```
+
 ## Architecture
 
 - **`_quarto.yml`** — site-wide config: navbar, theme (cosmo), output dir (`docs/`), Google Analytics
 - **`*.qmd`** — Quarto Markdown source files, one per page
 - **`styles.css`** — custom CSS overrides (currently minimal)
 - **`docs/`** — rendered HTML output committed to the repo for GitHub Pages
-- **`renv/`** — R package environment (only `renv` itself is tracked; the site uses no R packages beyond Quarto's built-in rendering)
+- **`renv/`** — R package environment (renv 1.2.3 on R 4.5.3, 104 packages snapshotted). Only `writing/lfo-beyond-time-series.qmd` executes R, but it needs `knitr`, `rmarkdown`, `tidyverse`, and `showtext`
 
 ## Pages
 

@@ -1,6 +1,6 @@
 ---
 pagetitle: "Karim Naguib"
-description: "Economist and applied Bayesian statistician. Digital-twin oncology tumor dynamics at AstraZeneca; prior work in development economics, real-estate market design, and reinforcement learning."
+description: "Economist and applied Bayesian statistician. Digital-twin oncology tumor dynamics, most recently at AstraZeneca; prior work in development economics, real-estate market design, and reinforcement learning."
 author: "Karim Naguib"
 ---
 
@@ -11,9 +11,9 @@ author: "Karim Naguib"
   "@type": "Person",
   "name": "Karim Naguib",
   "url": "https://karimn.github.io",
-  "email": "mailto:karim.a.naguib@gmail.com",
-  "jobTitle": "Senior Data Scientist",
-  "description": "Economist and applied Bayesian statistician specializing in hierarchical models for longitudinal and survival data. Current focus: patient-level digital-twin models of oncology tumor dynamics at AstraZeneca. Open to senior/staff roles applying Bayesian methods and causal inference in health, pharma, or high-stakes decision contexts.",
+  "email": "mailto:karimn2.0@pm.me",
+  "jobTitle": "Independent Researcher / Consultant",
+  "description": "Economist and applied Bayesian statistician specializing in hierarchical models for longitudinal and survival data. Most recently built patient-level digital-twin models of oncology tumor dynamics at AstraZeneca. Open to senior/staff roles applying Bayesian methods and causal inference in health, pharma, or high-stakes decision contexts.",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Silver Spring",
@@ -29,11 +29,12 @@ author: "Karim Naguib"
     "title": "Senior / Staff Data Scientist or Biostatistician",
     "description": "Applying Bayesian methods and causal inference in health, pharma, biotech, or high-stakes decision contexts."
   },
-  "worksFor": {
-    "@type": "Organization",
-    "name": "AstraZeneca"
-  },
   "alumniOf": [
+    {
+      "@type": "Organization",
+      "name": "AstraZeneca",
+      "description": "Senior Data Scientist, 2023–2026"
+    },
     {
       "@type": "CollegeOrUniversity",
       "name": "Boston University",
@@ -86,7 +87,7 @@ Economist · Applied Bayesian Statistician
 # Karim Naguib
 
 ::: {.masthead-lede}
-I sit at the intersection of **causal inference**, **Bayesian hierarchical modeling**, and **agentic tooling** — a combination that's rare in pharma. Right now that means patient-level *digital twins* of oncology tumor dynamics at AstraZeneca: joint longitudinal-survival models that borrow across trials to support Phase 3 initiation decisions. Before that: field experiments in Kenya and South Asia, real-estate market design, and RL for intervention policy.
+I sit at the intersection of **causal inference**, **Bayesian hierarchical modeling**, and **agentic tooling** — a combination that's rare in pharma. Most recently that meant patient-level *digital twins* of oncology tumor dynamics at AstraZeneca: joint longitudinal-survival models that borrow across trials to support Phase 3 initiation decisions. Before that: field experiments in Kenya and South Asia, real-estate market design, and RL for intervention policy.
 :::
 
 ::: {.availability}
@@ -97,7 +98,7 @@ Currently
 Open to **senior/staff roles** applying Bayesian methods and causal inference in health, pharma, or high-stakes decision contexts. Based in Silver Spring, MD — remote-first, flexible on hybrid.
 :::
 ::: {.availability-cta}
-[Get in touch](mailto:karim.a.naguib@gmail.com){.btn}
+[Get in touch](mailto:karimn2.0@pm.me){.btn}
 [Download CV](cv.pdf){.btn .btn-ghost}
 :::
 :::

@@ -1,13 +1,13 @@
 ---
 title: "About"
-description: "Bio, skills, and professional experience. Economist and applied Bayesian statistician building hierarchical models for longitudinal and survival data at AstraZeneca."
+description: "Bio, skills, and professional experience. Economist and applied Bayesian statistician building hierarchical models for longitudinal and survival data, most recently at AstraZeneca."
 author: "Karim Naguib"
 ---
 
-Economist and applied Bayesian statistician with 10+ years building **hierarchical models** for **longitudinal and survival data**. Current focus: **patient-level digital-twin models** of oncology tumor dynamics and real-world evidence integration at AstraZeneca. Prior work spans field experiments in East Africa and South Asia, real-estate market design, and health-behavior interventions.
+Economist and applied Bayesian statistician with 10+ years building **hierarchical models** for **longitudinal and survival data**. Most recently at AstraZeneca, building **patient-level digital-twin models** of oncology tumor dynamics with real-world evidence integration. Earlier work spans field experiments in East Africa and South Asia, real-estate market design, and health-behavior interventions.
 
 ::: {.text-center style="margin: 2.5rem 0;"}
-[Get in touch](mailto:karim.a.naguib@gmail.com){.btn}
+[Get in touch](mailto:karimn2.0@pm.me){.btn}
 [Download Resume](resume.pdf){.btn .btn-ghost}
 [Download CV](cv.pdf){.btn .btn-ghost}
 :::
@@ -34,7 +34,7 @@ Economist and applied Bayesian statistician with 10+ years building **hierarchic
 
 #### Agentic Workflows for Statistical Modeling
 
-Built and maintain an agentic-workflow layer on Claude Code, shared across the AstraZeneca modeling team via an internal plugin marketplace. Components include: **collaborative mathematical derivation** — working through statistical mathematics with Claude as a derivation partner before code is written; persistent memory for model-specific context; domain-specific sub-agents for Stan diagnostic triage, prior sensitivity review, and `targets` pipeline exploration; MCP-integrated skills for pipeline operations and Domino job management; reusable skill and plugin templates codifying team conventions for Bayesian workflow.
+Built and maintain an agentic-workflow layer on Claude Code; at AstraZeneca it was shared across the modeling team via an internal plugin marketplace. Components include: **collaborative mathematical derivation** — working through statistical mathematics with Claude as a derivation partner before code is written; persistent memory for model-specific context; domain-specific sub-agents for Stan diagnostic triage, prior sensitivity review, and `targets` pipeline exploration; MCP-integrated skills for pipeline operations and Domino job management; reusable skill and plugin templates codifying team conventions for Bayesian workflow.
 
 #### Tools
 
@@ -70,10 +70,21 @@ Cairo, Egypt · 1999
 
 ::: {.d-flex .justify-content-between}
 ::: {}
+Independent Researcher / Consultant
+:::
+::: {.text-end}
+Jul 2026 — present
+:::
+:::
+
+Independent Bayesian modeling and causal-inference work; continued development of agentic tooling for statistical modeling.
+
+::: {.d-flex .justify-content-between}
+::: {}
 Senior Data Scientist — *AstraZeneca*
 :::
 ::: {.text-end}
-Aug 2023 — present
+Aug 2023 — Jul 2026
 :::
 :::
 
