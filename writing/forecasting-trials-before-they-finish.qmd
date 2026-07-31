@@ -314,12 +314,9 @@ about how well it works in general. Extensive-stage SCLC is a fast-moving
 disease with a strong tumour-burden signal, which is a comparatively favourable
 setting.
 
-The natural next question is whether it holds somewhere less favourable, and
-that is what we are running now: the same framework applied to colorectal
-cancer. Slower progression and a weaker link between tumour burden and survival
-make it a harder test, which is the point of doing it — a method that only works
-where the signal is strong is not much of a method. Results will follow in a
-later post.
+The natural next question is whether it holds up elsewhere, and a second
+application — a different disease, a different set of trials — is in progress.
+Results will follow in a later post.
 
 ## Where to go next
 
