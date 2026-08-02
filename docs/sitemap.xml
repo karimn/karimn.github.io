@@ -1,31 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://karimn.co/writing/lfo-beyond-time-series.html</loc>
-    <lastmod>2026-05-24T01:32:43.736Z</lastmod>
+    <loc>https://karimn.co/writing/forecasting-trials-before-they-finish.html</loc>
+    <lastmod>2026-08-02T03:42:34.610Z</lastmod>
   </url>
   <url>
-    <loc>https://karimn.co/writing/index.html</loc>
-    <lastmod>2026-05-24T01:32:43.736Z</lastmod>
+    <loc>https://karimn.co/writing/funder-meta-problem.html</loc>
+    <lastmod>2026-08-02T03:40:43.544Z</lastmod>
+  </url>
+  <url>
+    <loc>https://karimn.co/research.html</loc>
+    <lastmod>2026-08-02T03:43:04.790Z</lastmod>
+  </url>
+  <url>
+    <loc>https://karimn.co/about.html</loc>
+    <lastmod>2026-08-02T03:42:34.596Z</lastmod>
+  </url>
+  <url>
+    <loc>https://karimn.co/index.html</loc>
+    <lastmod>2026-08-02T03:43:01.456Z</lastmod>
   </url>
   <url>
     <loc>https://karimn.co/projects.html</loc>
     <lastmod>2026-05-24T01:32:43.735Z</lastmod>
   </url>
   <url>
-    <loc>https://karimn.co/index.html</loc>
-    <lastmod>2026-08-02T03:40:32.266Z</lastmod>
+    <loc>https://karimn.co/writing/index.html</loc>
+    <lastmod>2026-05-24T01:32:43.736Z</lastmod>
   </url>
   <url>
-    <loc>https://karimn.co/about.html</loc>
-    <lastmod>2026-08-02T03:40:41.722Z</lastmod>
-  </url>
-  <url>
-    <loc>https://karimn.co/research.html</loc>
-    <lastmod>2026-08-02T03:40:40.246Z</lastmod>
-  </url>
-  <url>
-    <loc>https://karimn.co/writing/funder-meta-problem.html</loc>
-    <lastmod>2026-08-02T03:40:43.544Z</lastmod>
+    <loc>https://karimn.co/writing/lfo-beyond-time-series.html</loc>
+    <lastmod>2026-05-24T01:32:43.736Z</lastmod>
   </url>
 </urlset>

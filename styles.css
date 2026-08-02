@@ -1,1 +1,53 @@
 /* css styles */
+
+/* Figures produced by Quarto's `julia` engine are emitted as bare <img> tags
+   carrying only `.figure-img` — unlike the knitr engine's, they do not get
+   Bootstrap's `.img-fluid`, and a chunk's `out-width` option produces no width
+   style on them. A figure rendered at fig-width 10in therefore lands at its
+   natural pixel size and pushes the page wider than the measure, so the whole
+   article scrolls sideways.
+
+   Constrained here rather than per-post: any future Julia-engine figure would
+   hit the same thing. `height: auto` keeps the aspect ratio once width is
+   capped. */
+figure img,
+.figure-img,
+.quarto-figure img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Wide figures (multi-panel grids) that need more room than the reading
+   measure, without using Quarto's `column: page` chunk option.
+
+   `column: page` was tried first and rejected: a single use of it switches the
+   WHOLE page into Quarto's `page-columns` CSS grid, which reserves a margin
+   track on each side. With `toc: true` the right track takes the TOC and the
+   left one is simply left empty, and the body-content track ends up NARROWER
+   than the ordinary centred article — so the prose got tighter and a dead
+   left margin appeared, to widen three figures.
+
+   This stays out of that grid entirely. The block is centred on the text
+   column and allowed to overhang it symmetrically, capped so it never causes
+   a horizontal scrollbar (100vw would, once a vertical scrollbar is present —
+   hence 96vw). */
+.wide-figure {
+  width: min(1180px, 94vw);
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+.wide-figure figure {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Below the breakpoint there is no spare room to overhang into, so collapse
+   the break-out rather than letting it fight the viewport. */
+@media (max-width: 768px) {
+  .wide-figure {
+    width: 100%;
+    margin-left: 0;
+    transform: none;
+  }
+}

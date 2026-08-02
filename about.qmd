@@ -7,7 +7,7 @@ author: "Karim Naguib"
 Economist and applied Bayesian statistician with 10+ years building **hierarchical models** for **longitudinal and survival data**. Most recently at AstraZeneca, building **patient-level digital-twin models** of oncology tumor dynamics with real-world evidence integration. Earlier work spans field experiments in East Africa and South Asia, real-estate market design, and health-behavior interventions.
 
 ::: {.text-center style="margin: 2.5rem 0;"}
-[Get in touch](mailto:karim.a.naguib@gmail.com){.btn}
+[Get in touch](mailto:karimn2.0@pm.me){.btn}
 [Download Resume](resume.pdf){.btn .btn-ghost}
 [Download CV](cv.pdf){.btn .btn-ghost}
 :::

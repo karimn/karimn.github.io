@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - "CNAME"
   render:
     - "index.qmd"
     - "about.qmd"
@@ -9,6 +11,7 @@ project:
     - "writing/index.qmd"
     - "writing/funder-meta-problem.qmd"
     - "writing/lfo-beyond-time-series.qmd"
+    - "writing/forecasting-trials-before-they-finish.qmd"
   post-render:
     - lualatex -interaction=nonstopmode -output-directory=docs cv.tex
     - lualatex -interaction=nonstopmode -output-directory=docs resume.tex
@@ -41,10 +44,10 @@ website:
       - icon: github
         href: https://www.github.com/karimn
       - icon: envelope
-        href: mailto:karim.a.naguib@gmail.com
+        href: mailto:karimn2.0@pm.me
   page-footer:
     left: "© Karim Naguib — Built with Quarto & Claude Code"
-    right: "[karim.a.naguib@gmail.com](mailto:karim.a.naguib@gmail.com)"
+    right: "[karimn2.0@pm.me](mailto:karimn2.0@pm.me)"
 
 format:
   html:
