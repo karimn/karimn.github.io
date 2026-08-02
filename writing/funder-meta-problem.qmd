@@ -6,11 +6,11 @@ author: "Karim Naguib"
 date: "2023-01-01"
 categories: [Effective Altruism, Decision Theory, Simulation, Policy]
 image: "../og-image.png"
-external-link: "https://karimn.github.io/effective-funding/funder-meta-problem-1.html"
+external-link: "https://karimn.co/effective-funding/funder-meta-problem-1.html"
 ---
 
 ::: {.callout-note appearance="minimal"}
-This post is hosted externally. [Read it here →](https://karimn.github.io/effective-funding/funder-meta-problem-1.html)
+This post is hosted externally. [Read it here →](https://karimn.co/effective-funding/funder-meta-problem-1.html)
 :::
 
 A simulation study of planning policies for an Effective Altruism funder maximizing welfare through intervention selection. Accumulated welfare differs substantially between naive policies — e.g., relying on a single study to form beliefs about effectiveness — and more advanced probabilistic policies that optimize re-evaluation timing. The gap is more pronounced in sequential decision-making and persists even against a hypothetical optimal policy, indicating considerable room for methodological improvement in how funders update beliefs.

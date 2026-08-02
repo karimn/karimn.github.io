@@ -10,7 +10,7 @@ author: "Karim Naguib"
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Karim Naguib",
-  "url": "https://karimn.github.io",
+  "url": "https://karimn.co",
   "email": "mailto:karim.a.naguib@gmail.com",
   "jobTitle": "Independent Researcher / Consultant",
   "description": "Economist and applied Bayesian statistician specializing in hierarchical models for longitudinal and survival data. Most recently built patient-level digital-twin models of oncology tumor dynamics at AstraZeneca. Open to senior/staff roles applying Bayesian methods and causal inference in health, pharma, or high-stakes decision contexts.",

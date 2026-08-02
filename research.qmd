@@ -19,14 +19,14 @@ toc-depth: 2
       {"@type": "Person", "name": "Paula López-Peña"},
       {"@type": "Person", "name": "Harrison Mitchell"},
       {"@type": "Person", "name": "Ahmed Mushfiq Mobarak"},
-      {"@type": "Person", "name": "Karim Naguib", "url": "https://karimn.github.io"},
+      {"@type": "Person", "name": "Karim Naguib", "url": "https://karimn.co"},
       {"@type": "Person", "name": "Maira Reimão"},
       {"@type": "Person", "name": "Ashish Shenoy"},
       {"@type": "Person", "name": "Corey Vernot"}
     ],
     "publication": "European Economic Review",
     "publicationStatus": "Accepted",
-    "url": "https://karimn.github.io/Paper_Migration_Disruption.pdf",
+    "url": "https://karimn.co/Paper_Migration_Disruption.pdf",
     "about": ["migration", "household resilience", "COVID-19", "Bangladesh", "Nepal", "remittances", "development economics"]
   },
   {
@@ -37,9 +37,9 @@ toc-depth: 2
     "author": [
       {"@type": "Person", "name": "Edward Jee"},
       {"@type": "Person", "name": "Anne Karing"},
-      {"@type": "Person", "name": "Karim Naguib", "url": "https://karimn.github.io"}
+      {"@type": "Person", "name": "Karim Naguib", "url": "https://karimn.co"}
     ],
-    "url": "https://karimn.github.io/Kenya_Social_Multiplier-6.pdf",
+    "url": "https://karimn.co/Kenya_Social_Multiplier-6.pdf",
     "about": ["reputational incentives", "deworming", "social norms", "experimental economics", "Kenya", "structural model"]
   },
   {
@@ -50,7 +50,7 @@ toc-depth: 2
     "author": [
       {"@type": "Person", "name": "Harrison Mitchell"},
       {"@type": "Person", "name": "A. Mushfiq Mobarak"},
-      {"@type": "Person", "name": "Karim Naguib", "url": "https://karimn.github.io"},
+      {"@type": "Person", "name": "Karim Naguib", "url": "https://karimn.co"},
       {"@type": "Person", "name": "Maira Reimão"},
       {"@type": "Person", "name": "Ashish Shenoy"}
     ],
@@ -62,7 +62,7 @@ toc-depth: 2
     "headline": "Bayesian joint modelling of mechanistic tumour growth and time-to-event endpoints for dynamic prediction of ongoing oncology trials",
     "creativeWorkStatus": "In Preparation",
     "author": [
-      {"@type": "Person", "name": "Karim Naguib", "url": "https://karimn.github.io"},
+      {"@type": "Person", "name": "Karim Naguib", "url": "https://karimn.co"},
       {"@type": "Person", "name": "R. Berché"},
       {"@type": "Person", "name": "L. Li"},
       {"@type": "Person", "name": "A. Bevan"},

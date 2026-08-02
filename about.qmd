@@ -109,7 +109,7 @@ Reinforcement learning for intervention optimization.
 
 * Built a [Julia package](https://www.github.com/karimn/FundingPOMDPs.jl) for a partially observable MDP solution using Monte Carlo tree search to optimize intervention implementation and evaluation decisions.
 * Bayesian hierarchical models for future-state prediction inside the POMDP; particle filters for faster online planning.
-* Project writeup: [*The Funder's Meta-Problem*](https://karimn.github.io/effective-funding/funder-meta-problem-1.html).
+* Project writeup: [*The Funder's Meta-Problem*](https://karimn.co/effective-funding/funder-meta-problem-1.html).
 * [Implemented](https://github.com/karimn/grokking-drl) various deep RL agents and models using Julia and Flux.jl.
 
 ::: {.d-flex .justify-content-between}
