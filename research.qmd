@@ -1,6 +1,6 @@
 ---
 title: "Research"
-description: "Peer-reviewed and working papers by Karim Naguib on migration, incentives, and social norms — with essays on Effective Altruism funder decision-making."
+description: "Peer-reviewed and working papers by Karim Naguib on migration, incentives, social norms, and forecasting oncology trials."
 author: "Karim Naguib"
 toc: true
 toc-depth: 2

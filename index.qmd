@@ -1,6 +1,6 @@
 ---
 pagetitle: "Karim Naguib"
-description: "Founder of zahrcast — Bayesian forecasting for oncology trials in flight. Economist and applied Bayesian statistician; previously built digital-twin models of oncology tumor dynamics at AstraZeneca; earlier work in development economics, real-estate market design, and reinforcement learning."
+description: "Founder of zahrcast, which provides Bayesian forecasting for oncology trials in flight. Economist and applied Bayesian statistician; previously built digital-twin models of oncology tumor dynamics at AstraZeneca; earlier work in development economics, real-estate market design, and reinforcement learning."
 author: "Karim Naguib"
 ---
 
@@ -20,12 +20,6 @@ author: "Karim Naguib"
     "description": "Bayesian forecasting for oncology trials in flight."
   },
   "description": "Founder of zahrcast, which forecasts the final results of oncology trials from immature interim data using Bayesian joint models of tumour dynamics and survival. Economist and applied Bayesian statistician; previously built patient-level digital-twin models of oncology tumor dynamics at AstraZeneca.",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Silver Spring",
-    "addressRegion": "MD",
-    "addressCountry": "US"
-  },
   "alumniOf": [
     {
       "@type": "Organization",
@@ -84,9 +78,9 @@ Founder, zahrcast · Economist · Applied Bayesian Statistician
 # Karim Naguib
 
 ::: {.masthead-lede}
-I run [**zahrcast**](https://zahrcast.com), which forecasts what an oncology trial will report at maturity while it is still in flight — from the tumour measurements already collected, with honest uncertainty, months before the survival data can say it alone.
+I run [zahrcast](https://zahrcast.com). It forecasts the results an oncology trial will report at maturity while the trial is still running. The forecasts use the tumour measurements collected so far and come with credible intervals, often months before the survival data alone would be conclusive.
 
-The work sits at the intersection of **causal inference**, **Bayesian hierarchical modeling**, and **agentic tooling** — a combination that's rare in pharma. Before zahrcast, that meant patient-level *digital twins* of oncology tumor dynamics at AstraZeneca: joint longitudinal-survival models that borrow across trials to support Phase 3 initiation decisions. Before that: field experiments in Kenya and South Asia, real-estate market design, and RL for intervention policy.
+My work combines causal inference, Bayesian hierarchical modeling, and agentic tooling. At AstraZeneca I built patient-level models of oncology tumor dynamics: joint longitudinal-survival models that borrow across trials to support Phase 3 initiation decisions. Before that I ran field experiments in Kenya and South Asia and worked on real-estate market design and reinforcement learning for intervention policy.
 :::
 
 ::: {.availability}
@@ -94,7 +88,7 @@ The work sits at the intersection of **causal inference**, **Bayesian hierarchic
 Currently
 :::
 ::: {.availability-text}
-Building **zahrcast LLC** — Bayesian forecasting for oncology trials in flight. If you have an interim decision coming up on immature survival data, I'd like to hear about the trial. Based in Silver Spring, MD.
+Running zahrcast LLC, which provides Bayesian forecasting for oncology trials in flight. If you have an interim decision coming up on immature survival data, get in touch about the trial.
 :::
 ::: {.availability-cta}
 [Visit zahrcast](https://zahrcast.com){.btn}
@@ -110,28 +104,28 @@ Building **zahrcast LLC** — Bayesian forecasting for oncology trials in flight
 ::: {.signpost-label}
 [01 — About](about.qmd)
 :::
-How an economist ends up building digital twins: field experiments, causal inference, and the path to pharma.
+Background, skills, and experience: field experiments and causal inference in economics, then Bayesian modeling in pharma.
 :::
 
 ::: {.signpost}
 ::: {.signpost-label}
 [02 — Projects](projects.qmd)
 :::
-Six technical projects: predicting Phase 3 outcomes from Phase 2 tumor dynamics, decomposing competing risks in survival data, and building agentic tooling for Bayesian modeling teams.
+Six technical projects, including forecasting Phase 3 outcomes from Phase 2 tumor dynamics, modeling competing risks in survival data, and agentic tooling for Bayesian modeling teams.
 :::
 
 ::: {.signpost}
 ::: {.signpost-label}
 [03 — Research](research.qmd)
 :::
-Peer-reviewed work on migration, social norms, and incentive design — where the causal-inference instincts were trained.
+Peer-reviewed papers on migration, social norms, and incentive design, and the PIONEER preprint.
 :::
 
 ::: {.signpost}
 ::: {.signpost-label}
 [04 — Writing](writing/index.qmd)
 :::
-Methodological notes on Bayesian modeling, survival analysis, and the tools I work in.
+Notes on Bayesian modeling, survival analysis, and modeling tools.
 :::
 
 :::

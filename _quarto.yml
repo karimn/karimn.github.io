@@ -18,7 +18,7 @@ project:
 
 website:
   title: "Karim Naguib"
-  description: "Founder of zahrcast — Bayesian forecasting for oncology trials in flight. Economist and applied Bayesian statistician; hierarchical models for longitudinal and survival data, previously digital-twin oncology tumor dynamics at AstraZeneca; earlier work in development economics, real-estate market design, and reinforcement learning."
+  description: "Founder of zahrcast, which provides Bayesian forecasting for oncology trials in flight. Economist and applied Bayesian statistician; hierarchical models for longitudinal and survival data, previously digital-twin oncology tumor dynamics at AstraZeneca; earlier work in development economics, real-estate market design, and reinforcement learning."
   site-url: "https://karimn.co"
   open-graph:
     image: "/og-image.png"
