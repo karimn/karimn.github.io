@@ -29,13 +29,13 @@ from PIL import Image, ImageDraw, ImageFont
 # Content — edit these to change the card.
 # ---------------------------------------------------------------------------
 
-EYEBROW = "ECONOMIST  ·  APPLIED BAYESIAN STATISTICIAN"
+EYEBROW = "FOUNDER, ZAHRCAST  ·  ECONOMIST  ·  BAYESIAN STATISTICIAN"
 TITLE = "Karim Naguib"
 LEDE_LINES = [
-    "Hierarchical Bayesian models for",
-    "longitudinal & survival data.",
+    "Bayesian forecasting for",
+    "oncology trials in flight.",
 ]
-FOOTER_LEFT = "KARIMN.GITHUB.IO"
+FOOTER_LEFT = "KARIMN.CO"
 FOOTER_RIGHT_TAGS = [
     "DIGITAL-TWIN ONCOLOGY",
     "CAUSAL INFERENCE",

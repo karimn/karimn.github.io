@@ -45,7 +45,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-18541f3eff00accb5677092917291dfc.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-15110b5557cc9cbaf354ed0943f62b8c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-c601aa3359de7b6fbf7f2604d4eafb6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -124,6 +124,10 @@ ul.task-list li input[type="checkbox"] {
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://zahrcast.com"> 
+<span class="menu-text">zahrcast</span></a>
+  </li>  
   <li class="nav-item">
     <a class="nav-link" href="./cv.pdf"> 
 <span class="menu-text">CV</span></a>
@@ -251,7 +255,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="preprints" class="level2">
 <h2 data-anchor-id="preprints">Preprints</h2>
-<p>Karim Naguib, Roger Berché, Lu Li, Antonia Bevan, Sajan Khosla, Jessica Davies, and Paul Metcalfe. <a href="https://arxiv.org/abs/2607.17908"><strong>PIONEER: Bayesian Joint Modelling of Mechanistic Tumour Growth and Time-to-Event Endpoints for Dynamic Prediction of Ongoing Oncology Trials.</strong></a> <em>arXiv:2607.17908.</em></p>
+<p>Karim Naguib, Roger Berché, Lu Li, Antonia Bevan, Sajan Khosla, Jessica Davies, and Paul Metcalfe. <a href="https://arxiv.org/abs/2607.17908"><strong>PIONEER: Bayesian Joint Modelling of Mechanistic Tumour Growth and Time-to-Event Endpoints for Dynamic Prediction of Ongoing Oncology Trials.</strong></a> <em>arXiv:2607.17908.</em> The approach is now offered to trial sponsors through <a href="https://zahrcast.com">zahrcast</a>.</p>
 <blockquote class="blockquote">
 <p>High-stakes decisions in oncology clinical trials must often be made while survival data remains immature: progression-free survival (PFS) and overall survival (OS) are heavily censored, few events have accumulated, and the primary endpoint may be months or years from reading out. What is available at interim data cut-offs is information-rich longitudinal tumour measurements and baseline covariates. We present PIONEER, a Bayesian joint modelling framework that couples a mechanistic two-component state-space submodel of longitudinal tumour size dynamics to a multistate proportional-hazard submodel for competing clinical events, fitted simultaneously under a single posterior. The mechanistic submodel infers latent per-patient tumour trajectories — decomposed into treatment-responsive and refractory compartments with Gompertz-attenuated growth — from sparse, noisy sum-of-longest-diameter (SLD) observations. These latent trajectories feed the multistate hazard as time-varying covariates, while the event data simultaneously refines the tumour dynamics through the joint likelihood. All clinical endpoints (PFS, OS, objective response rate) are derived from the joint posterior in a single forward simulation pass, propagating full parameter uncertainty without any two-stage plug-in. Applied to a case study in extensive-stage small-cell lung cancer (two trials, N = 497), leave-future-out cross-validation demonstrates that at month 4 of enrolment (9 patients) the model produces calibrated PFS forecasts covering the mature month-19 Kaplan-Meier curve, and at month 11 (39 patients) the OS forecast converges — representing at least 8 months of advance forecasting with properly quantified uncertainty. We hope this work paves the way for broader adoption of Bayesian mechanistic state-space frameworks in clinical development, enabling earlier and more informed decision-making from immature trial data.</p>
 </blockquote>

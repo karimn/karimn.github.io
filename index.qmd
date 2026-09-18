@@ -1,6 +1,6 @@
 ---
 pagetitle: "Karim Naguib"
-description: "Economist and applied Bayesian statistician. Digital-twin oncology tumor dynamics, most recently at AstraZeneca; prior work in development economics, real-estate market design, and reinforcement learning."
+description: "Founder of zahrcast — Bayesian forecasting for oncology trials in flight. Economist and applied Bayesian statistician; previously built digital-twin models of oncology tumor dynamics at AstraZeneca; earlier work in development economics, real-estate market design, and reinforcement learning."
 author: "Karim Naguib"
 ---
 
@@ -12,22 +12,19 @@ author: "Karim Naguib"
   "name": "Karim Naguib",
   "url": "https://karimn.co",
   "email": "mailto:karimn2.0@pm.me",
-  "jobTitle": "Independent Researcher / Consultant",
-  "description": "Economist and applied Bayesian statistician specializing in hierarchical models for longitudinal and survival data. Most recently built patient-level digital-twin models of oncology tumor dynamics at AstraZeneca. Open to senior/staff roles applying Bayesian methods and causal inference in health, pharma, or high-stakes decision contexts.",
+  "jobTitle": "Founder",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Zahrcast LLC",
+    "url": "https://zahrcast.com",
+    "description": "Bayesian forecasting for oncology trials in flight."
+  },
+  "description": "Founder of zahrcast, which forecasts the final results of oncology trials from immature interim data using Bayesian joint models of tumour dynamics and survival. Economist and applied Bayesian statistician; previously built patient-level digital-twin models of oncology tumor dynamics at AstraZeneca.",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Silver Spring",
     "addressRegion": "MD",
     "addressCountry": "US"
-  },
-  "workLocation": {
-    "@type": "Place",
-    "name": "Remote-first; open to hybrid"
-  },
-  "seeks": {
-    "@type": "JobPosting",
-    "title": "Senior / Staff Data Scientist or Biostatistician",
-    "description": "Applying Bayesian methods and causal inference in health, pharma, biotech, or high-stakes decision contexts."
   },
   "alumniOf": [
     {
@@ -81,13 +78,15 @@ author: "Karim Naguib"
 ::: {.masthead}
 
 ::: {.masthead-eyebrow}
-Economist · Applied Bayesian Statistician
+Founder, zahrcast · Economist · Applied Bayesian Statistician
 :::
 
 # Karim Naguib
 
 ::: {.masthead-lede}
-I sit at the intersection of **causal inference**, **Bayesian hierarchical modeling**, and **agentic tooling** — a combination that's rare in pharma. Most recently that meant patient-level *digital twins* of oncology tumor dynamics at AstraZeneca: joint longitudinal-survival models that borrow across trials to support Phase 3 initiation decisions. Before that: field experiments in Kenya and South Asia, real-estate market design, and RL for intervention policy.
+I run [**zahrcast**](https://zahrcast.com), which forecasts what an oncology trial will report at maturity while it is still in flight — from the tumour measurements already collected, with honest uncertainty, months before the survival data can say it alone.
+
+The work sits at the intersection of **causal inference**, **Bayesian hierarchical modeling**, and **agentic tooling** — a combination that's rare in pharma. Before zahrcast, that meant patient-level *digital twins* of oncology tumor dynamics at AstraZeneca: joint longitudinal-survival models that borrow across trials to support Phase 3 initiation decisions. Before that: field experiments in Kenya and South Asia, real-estate market design, and RL for intervention policy.
 :::
 
 ::: {.availability}
@@ -95,11 +94,11 @@ I sit at the intersection of **causal inference**, **Bayesian hierarchical model
 Currently
 :::
 ::: {.availability-text}
-Open to **senior/staff roles** applying Bayesian methods and causal inference in health, pharma, or high-stakes decision contexts. Based in Silver Spring, MD — remote-first, flexible on hybrid.
+Building **zahrcast LLC** — Bayesian forecasting for oncology trials in flight. If you have an interim decision coming up on immature survival data, I'd like to hear about the trial. Based in Silver Spring, MD.
 :::
 ::: {.availability-cta}
-[Get in touch](mailto:karimn2.0@pm.me){.btn}
-[Download CV](cv.pdf){.btn .btn-ghost}
+[Visit zahrcast](https://zahrcast.com){.btn}
+[Get in touch](mailto:karim.naguib@zahrcast.com){.btn .btn-ghost}
 :::
 :::
 
