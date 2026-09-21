@@ -29,7 +29,7 @@ from PIL import Image, ImageDraw, ImageFont
 # Content — edit these to change the card.
 # ---------------------------------------------------------------------------
 
-EYEBROW = "FOUNDER, ZAHRCAST  ·  ECONOMIST  ·  BAYESIAN STATISTICIAN"
+EYEBROW = "ZAHRCAST  ·  ECONOMIST  ·  BAYESIAN STATISTICIAN"
 TITLE = "Karim Naguib"
 LEDE_LINES = [
     "Bayesian forecasting for",

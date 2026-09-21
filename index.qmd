@@ -1,6 +1,6 @@
 ---
 pagetitle: "Karim Naguib"
-description: "Founder of zahrcast, which provides Bayesian forecasting for oncology trials in flight. Economist and applied Bayesian statistician; previously built digital-twin models of oncology tumor dynamics at AstraZeneca; earlier work in development economics, real-estate market design, and reinforcement learning."
+description: "Runs zahrcast, which provides Bayesian forecasting for oncology trials in flight. Economist and applied Bayesian statistician; previously built digital-twin models of oncology tumor dynamics at AstraZeneca; earlier work in development economics, real-estate market design, and reinforcement learning."
 author: "Karim Naguib"
 ---
 
@@ -12,14 +12,14 @@ author: "Karim Naguib"
   "name": "Karim Naguib",
   "url": "https://karimn.co",
   "email": "mailto:karimn2.0@pm.me",
-  "jobTitle": "Founder",
+  "jobTitle": "Principal",
   "worksFor": {
     "@type": "Organization",
     "name": "Zahrcast LLC",
     "url": "https://zahrcast.com",
     "description": "Bayesian forecasting for oncology trials in flight."
   },
-  "description": "Founder of zahrcast, which forecasts the final results of oncology trials from immature interim data using Bayesian joint models of tumour dynamics and survival. Economist and applied Bayesian statistician; previously built patient-level digital-twin models of oncology tumor dynamics at AstraZeneca.",
+  "description": "Runs zahrcast, which forecasts the final results of oncology trials from immature interim data using Bayesian joint models of tumor dynamics and survival. Economist and applied Bayesian statistician; previously built patient-level digital-twin models of oncology tumor dynamics at AstraZeneca.",
   "alumniOf": [
     {
       "@type": "Organization",
@@ -72,13 +72,13 @@ author: "Karim Naguib"
 ::: {.masthead}
 
 ::: {.masthead-eyebrow}
-Founder, zahrcast · Economist · Applied Bayesian Statistician
+zahrcast · Economist · Applied Bayesian Statistician
 :::
 
 # Karim Naguib
 
 ::: {.masthead-lede}
-I run [zahrcast](https://zahrcast.com). It forecasts the results an oncology trial will report at maturity while the trial is still running. The forecasts use the tumour measurements collected so far and come with credible intervals, often months before the survival data alone would be conclusive.
+I run [zahrcast](https://zahrcast.com). It forecasts the results an oncology trial will report at maturity while the trial is still running. The forecasts use the tumor measurements collected so far and come with credible intervals, often months before the survival data alone would be conclusive.
 
 My work combines causal inference, Bayesian hierarchical modeling, and agentic tooling. At AstraZeneca I built patient-level models of oncology tumor dynamics: joint longitudinal-survival models that borrow across trials to support Phase 3 initiation decisions. Before that I ran field experiments in Kenya and South Asia and worked on real-estate market design and reinforcement learning for intervention policy.
 :::
@@ -88,7 +88,7 @@ My work combines causal inference, Bayesian hierarchical modeling, and agentic t
 Currently
 :::
 ::: {.availability-text}
-Running zahrcast LLC, which provides Bayesian forecasting for oncology trials in flight. If you have an interim decision coming up on immature survival data, get in touch about the trial.
+Running Zahrcast LLC, which provides Bayesian forecasting for oncology trials in flight. If you have an interim decision coming up on immature survival data, get in touch about the trial.
 :::
 ::: {.availability-cta}
 [Visit zahrcast](https://zahrcast.com){.btn}

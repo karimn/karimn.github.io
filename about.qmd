@@ -1,10 +1,10 @@
 ---
 title: "About"
-description: "Bio, skills, and professional experience. Founder of zahrcast; economist and applied Bayesian statistician building hierarchical models for longitudinal and survival data."
+description: "Bio, skills, and professional experience. Runs zahrcast; economist and applied Bayesian statistician building hierarchical models for longitudinal and survival data."
 author: "Karim Naguib"
 ---
 
-I founded [zahrcast](https://zahrcast.com), which provides Bayesian forecasting for oncology trials in flight. I am an economist and applied Bayesian statistician, and I have spent over 10 years building hierarchical models for longitudinal and survival data. At AstraZeneca I built patient-level models of oncology tumor dynamics that integrated real-world evidence. Before that I worked on field experiments in East Africa and South Asia, real-estate market design, and health-behavior interventions.
+I run [zahrcast](https://zahrcast.com), which provides Bayesian forecasting for oncology trials in flight. I am an economist and applied Bayesian statistician, and I have spent over 10 years building hierarchical models for longitudinal and survival data. At AstraZeneca I built patient-level models of oncology tumor dynamics that integrated real-world evidence. Before that I worked on field experiments in East Africa and South Asia, real-estate market design, and health-behavior interventions.
 
 ::: {.text-center style="margin: 2.5rem 0;"}
 [Get in touch](mailto:karimn2.0@pm.me){.btn}
@@ -69,14 +69,14 @@ Cairo, Egypt · 1999
 
 ::: {.d-flex .justify-content-between}
 ::: {}
-Founder — *[Zahrcast LLC](https://zahrcast.com)*
+Principal — *[Zahrcast LLC](https://zahrcast.com)*
 :::
 ::: {.text-end}
 Jul 2026 — present
 :::
 :::
 
-Bayesian forecasting for oncology trials in flight. Joint models of tumour dynamics and multistate survival forecast what a trial will report at maturity from immature interim data, partially pooling historical trials. The forecasts support go/no-go and other interim decisions.
+Bayesian forecasting for oncology trials in flight. Joint models of tumor dynamics and multistate survival forecast what a trial will report at maturity from immature interim data, partially pooling historical trials. The forecasts support go/no-go and other interim decisions.
 
 ::: {.d-flex .justify-content-between}
 ::: {}
