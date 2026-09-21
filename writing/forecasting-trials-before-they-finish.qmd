@@ -54,6 +54,11 @@ using .PioneerManuscript, CairoMakie
 include(joinpath(@__DIR__, "_julia", "site_theme.jl"))
 using .SiteTheme
 set_theme!(site_theme())
+
+# Data-use-compliant variants of the two tumour-burden figures; see the module
+# docstring for the Project Data Sphere terms they are built around.
+include(joinpath(@__DIR__, "_julia", "site_figures.jl"))
+using .SiteFigures
 ```
 
 We have a new paper out: [*PIONEER: Bayesian Joint Modelling of Mechanistic
@@ -148,8 +153,9 @@ fig-align="center" width="100%"}
 
 The case study is first-line extensive-stage small-cell lung cancer. It uses
 two completed trials obtained through [Project Data
-Sphere](https://www.projectdatasphere.org/). The data are public, so anyone can
-check the analysis.
+Sphere](https://www.projectdatasphere.org/), which makes de-identified trial
+data available to registered researchers, so the analysis can be checked
+independently.
 
 | | Trial | Role | N |
 |---|---|---|---|
@@ -167,11 +173,12 @@ it](lfo-beyond-time-series.qmd).
 ```{julia}
 #| label: fig-sld
 #| out-width: "100%"
-#| fig-cap: "Observed tumour burden over time, both trials. Each faint line is one patient's sum of longest diameters; oxblood points mark the last observation for patients still under follow-up. Both trials show the same decline-then-regrowth shape. This is the empirical basis for pooling growth kinetics across them."
+#| fig-cap: "Observed tumour burden over time, both trials. The line is the median sum of longest diameters across patients in each six-week window; the band spans the middle half of patients. Windows with fewer than ten patients are not shown. Both trials show the same steep early decline and flattening. Later regrowth is less visible here than in individual patients, because patients who progress stop contributing scans. The shared shape is the empirical basis for pooling growth kinetics across the trials."
 #| fig-height: 4.2
-# The censored marker is a kwarg, not a theme entry: it is a single named
-# series, so theming all `Scatter` would also repaint the observation dots.
-fig_sld_trajectories(censored_color = SiteTheme.ACCENT)
+# A cross-patient summary rather than one line per patient: the Project Data
+# Sphere terms allow publishing only the data reasonably necessary to report
+# the results (see _julia/site_figures.jl).
+fig_sld_summary(color = SiteTheme.INK, band_color = (SiteTheme.OBS_TEAL, 0.3))
 ```
 :::
 
@@ -191,12 +198,12 @@ patient's last measurement.
 ```{julia}
 #| label: fig-sld-censored
 #| out-width: "100%"
-#| fig-cap: "Six patients still progression-free at their last scan, three per arm. Teal is the observed phase, up to each patient's last measurement; terracotta is the model's forecast beyond it. Black points are the actual scans. Bands are 50% and 80% credible intervals."
+#| fig-cap: "Model-inferred tumour burden for twelve patients still progression-free at their last scan, three from each arm of the two trials (rows). Teal is the model's fit over the observed phase, up to each patient's last measurement; terracotta is its forecast beyond it, fading out where the model expects progression. Bands are 50% and 80% credible intervals. The raw scan values and axis scales are omitted under the data-use terms; each panel runs from zero at the start of treatment."
 #| fig-height: 5.5
-fig_sld_censored(obs_color = SiteTheme.OBS_TEAL,
-                 obs_colormap = SiteTheme.OBS_BAND,
-                 forecast_color = SiteTheme.ACCENT_SOFT,
-                 forecast_colormap = SiteTheme.FORECAST_BAND)
+fig_sld_censored_site(obs_color = SiteTheme.OBS_TEAL,
+                      obs_colormap = SiteTheme.OBS_BAND,
+                      forecast_color = SiteTheme.ACCENT_SOFT,
+                      forecast_colormap = SiteTheme.FORECAST_BAND)
 ```
 :::
 
@@ -336,4 +343,12 @@ I would be glad to hear from anyone working on something structurally similar:
 a latent mechanistic process generating both a longitudinal measurement stream
 and an event stream, with actors entering at different times. The same
 skeleton applies outside oncology.
+
+## Acknowledgment
+
+This publication is based on research using information obtained from
+[www.projectdatasphere.org](https://www.projectdatasphere.org), which is
+maintained by Project Data Sphere. Neither Project Data Sphere nor the owner(s)
+of any information from the web site have contributed to, approved or are in
+any way responsible for the contents of this publication.
 
