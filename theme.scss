@@ -57,7 +57,7 @@ $headings-line-height: 1.2;
 // Typography
 // ------------------------------------------------------------
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..700,0..100,0..1&family=Newsreader:ital,opsz,wght@0,6..72,200..700;1,6..72,200..700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..700,0..100,0..1&family=Newsreader:ital,opsz,wght@0,6..72,200..700;1,6..72,200..700&family=IBM+Plex+Mono:wght@400;500&family=Khand:wght@500&display=swap');
 
 html {
   background: $paper;
@@ -285,6 +285,14 @@ main.content,
       }
     }
   }
+}
+
+// zahrcast wordmark in running text: Khand, matching the zahrcast.com
+// design system (--font-display, --weight-medium, --tracking-wordmark).
+.zahrcast {
+  font-family: "Khand", system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.094em;
 }
 
 // Hide the right-side tools in navbar (github icon) — give a cleaner header
