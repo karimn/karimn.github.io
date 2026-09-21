@@ -60,4 +60,8 @@ format:
     page-layout: article
     anchor-sections: false
     title-block-style: none
+    # Pandoc's plain title block plus a "(last updated ...)" note when a page
+    # sets date-modified, which the stock partial ignores.
+    template-partials:
+      - _partials/title-block.html
     include-in-header: _goatcounter.html

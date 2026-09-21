@@ -4,7 +4,7 @@
     "href": "writing/forecasting-trials-before-they-finish.html",
     "title": "Forecasting a Trial Before It Finishes",
     "section": "",
-    "text": "A Bayesian joint model that uses tumour scans as survival evidence\nKarim Naguib\n\n2026-07-30\nWe have a new paper out: PIONEER: Bayesian Joint Modelling of Mechanistic Tumour Growth and Time-to-Event Endpoints for Dynamic Prediction of Ongoing Oncology Trials. This post is the plain-language version. It covers what the model is, what we ran it on, and what it did."
+    "text": "A Bayesian joint model that uses tumour scans as survival evidence\nKarim Naguib\n\n2026-07-30 (last updated 2026-09-21)\nWe have a new paper out: PIONEER: Bayesian Joint Modelling of Mechanistic Tumour Growth and Time-to-Event Endpoints for Dynamic Prediction of Ongoing Oncology Trials. This post is the plain-language version. It covers what the model is, what we ran it on, and what it did."
   },
   {
     "objectID": "writing/forecasting-trials-before-they-finish.html#the-interim-decision",
