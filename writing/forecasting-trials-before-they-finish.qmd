@@ -4,9 +4,9 @@ subtitle: "A Bayesian joint model that uses tumour scans as survival evidence"
 description: "Our new paper couples a mechanistic model of tumour growth to a multistate survival model and fits both at once. In a small-cell lung cancer case study, its forecasts from nine patients contain the mature median survival in both arms, and it narrows overall survival to a window of about five months eight months before it read out."
 author: "Karim Naguib"
 date: "2026-07-30"
-# Bump whenever the figures are regenerated, along with the "Last regenerated"
-# date in the callout at the top of the post (the site's title block does not
-# display date-modified, so the callout carries it for readers).
+# Bump whenever the figures are regenerated. The site's title-block partial
+# (_partials/title-block.html) shows it as "(last updated ...)", and the callout at the
+# top of the post points readers there.
 date-modified: "2026-09-21"
 categories: [Bayesian, Oncology, Survival Analysis, Joint Models, Forecasting]
 image: "../og-image.png"
@@ -71,7 +71,7 @@ using .SiteFigures
 The model is under active development, and the figures and numbers in this
 post are regenerated from its current version. They may shift slightly between
 updates and will not always match the preprint, which is updated less often.
-Last regenerated on 21 September 2026.
+The "last updated" date above shows when this post was last regenerated.
 :::
 
 We have a new paper out: [*PIONEER: Bayesian Joint Modelling of Mechanistic
