@@ -1,6 +1,6 @@
 ---
 title: "Writing"
-description: "Essays and methodological notes by Karim Naguib — Bayesian modelling, survival analysis, decision theory."
+description: "Essays and methodological notes by Karim Naguib on Bayesian modelling, survival analysis, decision theory."
 listing:
   contents: "*.qmd"
   sort: "date desc"

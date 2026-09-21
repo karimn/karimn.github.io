@@ -273,6 +273,18 @@ main.content,
   .navbar-toggler {
     border: 1px solid $rule;
   }
+
+  // Tighten links on mid-width screens so the nav + tools stay on one line.
+  @media (max-width: 1100px) {
+    .navbar-nav .nav-link {
+      padding: 0.5rem 0.6rem;
+      letter-spacing: 0.12em;
+      &.active::after {
+        left: 0.6rem;
+        right: 0.6rem;
+      }
+    }
+  }
 }
 
 // Hide the right-side tools in navbar (github icon) — give a cleaner header

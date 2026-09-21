@@ -46,7 +46,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-18541f3eff00accb5677092917291dfc.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-15110b5557cc9cbaf354ed0943f62b8c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-c601aa3359de7b6fbf7f2604d4eafb6c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -126,6 +126,10 @@ ul.task-list li input[type="checkbox"] {
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
+    <a class="nav-link" href="https://zahrcast.com"> 
+<span class="menu-text">zahrcast</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./cv.pdf"> 
 <span class="menu-text">CV</span></a>
   </li>  
@@ -165,7 +169,7 @@ ul.task-list li input[type="checkbox"] {
     <li><a href="#agentic-game-master-for-solo-ironsworn">Agentic Game Master</a></li>
   </ol>
 </aside>
-<p>Six projects that describe the shape of the modeling and engineering work I’ve been doing — problem, method, and what it moves.</p>
+<p>Six modeling and engineering projects. Each entry gives the problem, the method, and the result.</p>
 <div class="project">
 <div class="project-number">
 <p>01</p>
@@ -188,7 +192,7 @@ ul.task-list li input[type="checkbox"] {
 <div class="project-section-label">
 <p>Impact</p>
 </div>
-<p>Extracts tumor-dynamics signal from Phase 2 and historical trial data to forecast Phase 3 outcomes at both population and patient levels, supporting Phase 3 initiation decisions on programs combining emerging trial evidence with real-world data.</p>
+<p>Extracts tumor-dynamics signal from Phase 2 and historical trial data to forecast Phase 3 outcomes at both population and patient levels, supporting Phase 3 initiation decisions on programs combining emerging trial evidence with real-world data. In a small-cell lung cancer case study, this model, coupled to the multistate survival layer below, forecasts the mature PFS curve from 9 patients and converges on the OS result 8 months before it read out; see <a href="https://arxiv.org/abs/2607.17908">PIONEER</a> and the <a href="./writing/forecasting-trials-before-they-finish.html">plain-language writeup</a>. This line of work now continues at <a href="https://zahrcast.com">zahrcast</a>, which offers these forecasts to trial sponsors.</p>
 </div>
 </section>
 </div>
@@ -202,19 +206,19 @@ ul.task-list li input[type="checkbox"] {
 <div class="project-section-label">
 <p>Problem</p>
 </div>
-<p>Progression-free survival bundles multiple distinct events — disease progression and death — under mechanisms that typically differ in hazard shape and covariate dependence. Conventional PFS analyses collapse this structure and can mislead trial-vs-historical comparisons when the event mix shifts between cohorts. And although much of progression is driven by underlying tumor-burden dynamics (SLD, PSA), important events are <em>not</em> automatically explained by burden — non-target lesion progression and clinical progression are clinician-adjudicated and not mechanically tied to the modelled burden trajectory.</p>
+<p>Progression-free survival combines distinct events (disease progression and death) whose mechanisms that typically differ in hazard shape and covariate dependence. Conventional PFS analyses collapse this structure and can mislead trial-vs-historical comparisons when the event mix shifts between cohorts. Much of progression is driven by tumor-burden dynamics (SLD, PSA), but some important events are not explained by burden. Non-target lesion progression and clinical progression are adjudicated by clinicians and are not mechanically tied to the modelled burden trajectory.</p>
 </div>
 <div class="project-section">
 <div class="project-section-label">
 <p>Method</p>
 </div>
-<p>A Bayesian illness-death multistate model with three transitions (progression, death-without-progression, death-after-progression) <strong>jointly fitted with the mechanistic tumor-dynamics model</strong> above. The patient-level latent tumor state enters the progression hazard directly, so burden-driven progression is captured mechanistically; the multistate layer adds the structure needed for progression events <em>not</em> driven by modelled burden and for competing death hazards. The same framework supports treating informative dropout — non-administrative censoring and line-of-therapy switches — as explicit transitions rather than ignorable censoring. Trial-level hierarchy; interval censoring for assessment-gap uncertainty; weighted likelihood for downstream real-world-data borrowing.</p>
+<p>A Bayesian illness-death multistate model with three transitions (progression, death-without-progression, death-after-progression) jointly fitted with the mechanistic tumor-dynamics model above. The patient-level latent tumor state enters the progression hazard directly, so burden-driven progression is captured mechanistically; the multistate layer adds the structure needed for progression events not driven by modelled burden and for competing death hazards. The same framework can treat informative dropout (non-administrative censoring and line-of-therapy switches) as explicit transitions instead of ignorable censoring. Trial-level hierarchy; interval censoring for assessment-gap uncertainty; weighted likelihood for downstream real-world-data borrowing.</p>
 </div>
 <div class="project-section">
 <div class="project-section-label">
 <p>Impact</p>
 </div>
-<p>Makes competing-risk and informative-censoring structure explicit in survival comparisons, enabling defensible hazard-level comparisons between trial arms and historical or real-world cohorts where event mix and follow-up structure differ.</p>
+<p>Makes competing-risk and informative-censoring structure explicit in survival comparisons, so hazard-level comparisons can be made between trial arms and historical or real-world cohorts where event mix and follow-up structure differ.</p>
 </div>
 </section>
 </div>
@@ -234,13 +238,13 @@ ul.task-list li input[type="checkbox"] {
 <div class="project-section-label">
 <p>Method</p>
 </div>
-<p>A modular Stan architecture in which each sub-model (tumor regression, growth fraction, initial state, multistate hazards, measurement error, RWD borrowing) exposes a uniform 7-file interface — flags, data, hyperparameters, transformed data, parameters, transformed parameters, priors. Wired into a <code>targets</code>-based R pipeline with standardized diagnostics reports, prior-sensitivity checks, and reproducible artifact storage.</p>
+<p>A modular Stan architecture in which each sub-model (tumor regression, growth fraction, initial state, multistate hazards, measurement error, RWD borrowing) exposes a uniform 7-file interface: flags, data, hyperparameters, transformed data, parameters, transformed parameters, and priors. Wired into a <code>targets</code>-based R pipeline with standardized diagnostics reports, prior-sensitivity checks, and reproducible artifact storage.</p>
 </div>
 <div class="project-section">
 <div class="project-section-label">
 <p>Impact</p>
 </div>
-<p>Same components now feed multiple concurrent trial analyses with consistent diagnostics and priors; new model variants are composed rather than rewritten.</p>
+<p>The same components feed multiple concurrent trial analyses with consistent diagnostics and priors. New model variants are assembled from existing components instead of written from scratch.</p>
 </div>
 </section>
 </div>
@@ -254,19 +258,19 @@ ul.task-list li input[type="checkbox"] {
 <div class="project-section-label">
 <p>Problem</p>
 </div>
-<p>Assessing the predictive accuracy of a patient-level tumor-dynamics and survival model requires scoring forecasts against data the model has not seen, but standard cross-validation (leave-one-out over visits or patients) conflates two kinds of held-out information — <em>future</em> observations from seen patients and <em>unseen patients at seen times</em> — and can make a model look better than it actually is at the forward-in-time forecasting task that matters for Phase 3 decision support. Leave-future-out cross-validation is well-established for time-series models (Bürkner, Gabry, Vehtari 2020) but is not routine for hierarchical longitudinal-plus-survival models, where validation typically leans on leave-one-subject-out or survival-specific summaries (time-dependent ROC, Brier scores).</p>
+<p>Assessing the predictive accuracy of a patient-level tumor-dynamics and survival model requires scoring forecasts against data the model has not seen, but standard cross-validation (leave-one-out over visits or patients) conflates two kinds of held-out information: future observations from seen patients, and unseen patients at seen times. It can make a model look better than it is at forecasting forward in time, which is the task Phase 3 decision support needs. Leave-future-out cross-validation is well-established for time-series models (Bürkner, Gabry, Vehtari 2020) but is not routine for hierarchical longitudinal-plus-survival models, where validation typically leans on leave-one-subject-out or survival-specific summaries (time-dependent ROC, Brier scores).</p>
 </div>
 <div class="project-section">
 <div class="project-section-label">
 <p>Method</p>
 </div>
-<p>Adapted LFO-CV to a hierarchical state-space digital-twin model of tumor dynamics and survival: refit at successive truncation times and score out-of-sample predictive density on every held-out quantity with a log-likelihood contribution — longitudinal tumor-size visits <em>and</em> survival/multistate events — then summarize forecast performance as a function of prediction horizon. Primary workflow uses full-refit LFO-CV; PSIS-based approximate LFO is also supported for faster iteration. Built as a separate Stan variant sharing the base model’s modular structure so validation tracks the production model exactly.</p>
+<p>Adapted LFO-CV to a hierarchical state-space digital-twin model of tumor dynamics and survival: refit at successive truncation times and score out-of-sample predictive density on every held-out quantity with a log-likelihood contribution (longitudinal tumor-size visits and survival/multistate events), then summarize forecast performance as a function of prediction horizon. Primary workflow uses full-refit LFO-CV; PSIS-based approximate LFO is also supported for faster iteration. Built as a separate Stan variant sharing the base model’s modular structure so validation tracks the production model exactly.</p>
 </div>
 <div class="project-section">
 <div class="project-section-label">
 <p>Impact</p>
 </div>
-<p>Horizon-stratified predictive-accuracy curves across both biomarker and survival outcomes — a more honest answer to <em>“how well does the digital twin forecast?”</em> than aggregate LOO — making forecast calibration directly auditable for Phase 3 decision reviews.</p>
+<p>Predictive-accuracy curves by forecast horizon for both biomarker and survival outcomes. These show how well the model forecasts more directly than aggregate LOO does, and let Phase 3 decision reviews check forecast calibration.</p>
 </div>
 </section>
 </div>
@@ -280,19 +284,19 @@ ul.task-list li input[type="checkbox"] {
 <div class="project-section-label">
 <p>Problem</p>
 </div>
-<p>Bayesian trial-modeling work has two hard parts that off-the-shelf AI assistants don’t address. First, the <em>mathematical</em> layer: multistate survival with joint longitudinal submodels, non-centered hierarchical parameterizations, competing risks, and interval censoring produce dense derivations where a single person working by hand is both slow and error-prone — small algebra mistakes propagate into Stan code and surface weeks later as pathological sampling. Second, the <em>development-loop</em> layer: MCMC runs take hours to days, diagnostics and reparameterization require domain judgment, and state across the feedback loop is hard to carry. Generic coding assistants miss the statistical context for both.</p>
+<p>Bayesian trial-modeling work has two hard parts that off-the-shelf AI assistants don’t address. The first is the mathematics: multistate survival with joint longitudinal submodels, non-centered hierarchical parameterizations, competing risks, and interval censoring produce dense derivations that are slow and error-prone for one person working by hand. Small algebra mistakes propagate into Stan code and show up weeks later as pathological sampling. The second is the development loop: MCMC runs take hours to days, diagnostics and reparameterization require domain judgment, and state across the feedback loop is hard to carry. Generic coding assistants miss the statistical context for both.</p>
 </div>
 <div class="project-section">
 <div class="project-section-label">
 <p>Method</p>
 </div>
-<p>An agentic-workflow layer on Claude Code, shared across the modeling team via an internal plugin marketplace. Core components: <strong>collaborative mathematical derivation</strong> — working through the underlying statistical mathematics with Claude as a derivation partner to produce accurate, well-documented, and computationally tractable formulations before they become Stan code; a persistent memory system for carrying model-specific context across sessions; domain-specific sub-agents (Stan diagnostic triage, prior sensitivity review, <code>targets</code> pipeline explorer); MCP-integrated skills for pipeline operations and job management on Domino; and reusable skill and plugin templates that codify team conventions for Bayesian workflow. Version-controlled and iterated like any other team codebase.</p>
+<p>An agentic-workflow layer on Claude Code, shared across the modeling team through an internal plugin marketplace. Core components: collaborative mathematical derivation, where Claude works through the statistical mathematics with the modeler to produce accurate, documented, and computationally tractable formulations before they become Stan code; a persistent memory system for carrying model-specific context across sessions; domain-specific sub-agents (Stan diagnostic triage, prior sensitivity review, <code>targets</code> pipeline explorer); MCP-integrated skills for pipeline operations and job management on Domino; and reusable skill and plugin templates that codify team conventions for Bayesian workflow. Version-controlled and iterated like any other team codebase.</p>
 </div>
 <div class="project-section">
 <div class="project-section-label">
 <p>Impact</p>
 </div>
-<p>Shifts the mathematical-modeling step from error-prone solo derivation to collaboratively-verified, fully-documented specifications; compresses the hand-off between <em>“MCMC finished”</em> and <em>“I know what to do next,”</em> which is where most of the latency in Bayesian model development actually lives. Adopted across the modeling team for reproducible Stan development, MCMC diagnostics triage, and pipeline operations.</p>
+<p>Derivations are checked collaboratively and documented, instead of done by one person by hand. The time between an MCMC run finishing and deciding what to do next is shorter; that step accounts for most of the delay in Bayesian model development. Adopted across the modeling team for reproducible Stan development, MCMC diagnostics triage, and pipeline operations.</p>
 </div>
 </section>
 </div>
@@ -306,19 +310,19 @@ ul.task-list li input[type="checkbox"] {
 <div class="project-section-label">
 <p>Problem</p>
 </div>
-<p>Running a coherent long-form RPG campaign as an LLM agent is a hard systems problem: move resolution must be deterministic and rules-accurate, a growing graph of NPCs, threads, and lore must stay consistent across sessions without hallucination, and narrative context must be reconstructable without relying on raw conversation history, which is ephemeral and token-limited.</p>
+<p>Running a long-form RPG campaign as an LLM agent requires three things. Move resolution must be deterministic and rules-accurate, a growing graph of NPCs, threads, and lore must stay consistent across sessions, and narrative context must be rebuilt without relying on raw conversation history, which is ephemeral and token-limited.</p>
 </div>
 <div class="project-section">
 <div class="project-section-label">
 <p>Method</p>
 </div>
-<p>A Claude Code plugin (<code>agentic-rpg</code>) with a TypeScript MCP server — the <em>Scribe</em> — that backs the GM agent with tool-call interfaces for every stateful operation. The rules engine handles all Ironsworn mechanics (dice, moves, progress tracks, oracles, assets) as pure logic, keeping outputs deterministic and auditable. Campaign state persists across sessions in DuckDB: scenes and lore are embedded via Ollama (<code>nomic-embed-text</code>) for semantic retrieval; a GraphRAG layer with community detection organizes the lore graph; NPCs, threads, and a full state journal are structured records, not conversation memory. A separate Julia pipeline (<code>TomeRAG.jl</code>) ingested the rulebook into the RAG index. The agent itself handles only narrative generation — language — while all reads, writes, and mechanical resolution go through tools.</p>
+<p>A Claude Code plugin (<code>agentic-rpg</code>) with a TypeScript MCP server (the Scribe) that backs the GM agent with tool-call interfaces for every stateful operation. The rules engine handles all Ironsworn mechanics (dice, moves, progress tracks, oracles, assets) as pure logic, keeping outputs deterministic and auditable. Campaign state persists across sessions in DuckDB: scenes and lore are embedded via Ollama (<code>nomic-embed-text</code>) for semantic retrieval; a GraphRAG layer with community detection organizes the lore graph; NPCs, threads, and a full state journal are structured records, not conversation memory. A separate Julia pipeline (<code>TomeRAG.jl</code>) ingested the rulebook into the RAG index. The agent itself only generates narrative text. All reads, writes, and mechanical resolution go through tools.</p>
 </div>
 <div class="project-section">
 <div class="project-section-label">
 <p>Impact</p>
 </div>
-<p>A working demonstration of the core LLM engineering problems that matter for production agentic systems: separating generation from deterministic state, managing long-horizon context at scale, and designing tool-use architectures where the model handles <em>language</em> and the tools handle <em>truth</em>.</p>
+<p>A working system that addresses problems common to production agentic systems: separating generation from deterministic state, managing long-horizon context, and designing tool use so the model produces text while tools hold state and apply rules.</p>
 </div>
 </section>
 </div>
