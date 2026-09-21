@@ -1,9 +1,13 @@
 ---
 title: "Forecasting a Trial Before It Finishes"
 subtitle: "A Bayesian joint model that uses tumour scans as survival evidence"
-description: "Our new paper couples a mechanistic model of tumour growth to a multistate survival model and fits both at once. In a small-cell lung cancer case study, it forecasts the mature progression-free survival curve from nine patients, and converges on overall survival eight months before it read out."
+description: "Our new paper couples a mechanistic model of tumour growth to a multistate survival model and fits both at once. In a small-cell lung cancer case study, its forecasts from nine patients contain the mature median survival in both arms, and it narrows overall survival to a window of about five months eight months before it read out."
 author: "Karim Naguib"
 date: "2026-07-30"
+# Bump whenever the figures are regenerated, along with the "Last regenerated"
+# date in the callout at the top of the post (the site's title block does not
+# display date-modified, so the callout carries it for readers).
+date-modified: "2026-09-21"
 categories: [Bayesian, Oncology, Survival Analysis, Joint Models, Forecasting]
 image: "../og-image.png"
 engine: julia
@@ -60,6 +64,15 @@ set_theme!(site_theme())
 include(joinpath(@__DIR__, "_julia", "site_figures.jl"))
 using .SiteFigures
 ```
+
+::: {.callout-note}
+## These results are updated as the model improves
+
+The model is under active development, and the figures and numbers in this
+post are regenerated from its current version. They may shift slightly between
+updates and will not always match the preprint, which is updated less often.
+Last regenerated on 21 September 2026.
+:::
 
 We have a new paper out: [*PIONEER: Bayesian Joint Modelling of Mechanistic
 Tumour Growth and Time-to-Event Endpoints for Dynamic Prediction of Ongoing
@@ -221,19 +234,20 @@ enrolled by then.
 ```{julia}
 #| label: fig-lfo-pfs
 #| out-width: "100%"
-#| fig-cap: "Progression-free survival by treatment arm (rows). Columns are successive cut-offs (months 4, 11 and 19), each labelled with the target-trial patients observed by then. The fourth column is the same estimand fit to complete data, where observed and mature curves necessarily coincide."
+#| fig-cap: "Progression-free survival by treatment arm (rows). The first column is the forecast from the historical trial alone, before any target-trial patient is seen. The next three are successive cut-offs (months 4, 11 and 19), each labelled with the target-trial patients observed by then. The last column is the same estimand fit to complete data. The dashed line is the mature Kaplan-Meier curve."
 #| fig-height: 5.5
 fig_lfo_pfs()
 ```
 :::
 
-At month 4, with nine patients enrolled, the 80% credible band already covers
-the mature Kaplan-Meier curve. That curve is the dashed line. The model had not
-seen it and would not see it for another fifteen months. The band is also very
-wide. That width is correct for what nine patients can support.
+The first column shows how much the historical trial contributes. With no
+target-trial patients at all, the forecast already runs close to the mature
+curve in both arms. The borrowed shape does much of the work.
 
-By month 11, at 39 patients, the forecast has tightened onto the mature
-curve. Tracking the median directly makes the convergence easier to read:
+At month 4, with nine patients enrolled, the forecast already follows the
+mature Kaplan-Meier curve, the dashed line. The model had not seen that curve
+and would not see it for another fifteen months. By month 11, at 39 patients,
+both arms track it closely. The medians make this easier to read:
 
 :::: {.wide-figure}
 
@@ -273,28 +287,28 @@ fig_cutoff_legend()
 
 ::::
 
-Overall survival converges at month 11, at least eight months before it read
-out. The forecast includes quantified uncertainty. The OS intervals are wider
-than the PFS intervals throughout. This is expected. OS routes through
+For median PFS, both month-4 intervals contain the mature value, and from
+month 11 the intervals are within about half a month of it. For median OS,
+both intervals contain the mature value at month 4 and at month 11, about
+eight months before OS read out. The OS intervals are wider than the PFS
+intervals throughout. This is expected. OS routes through
 progression, direct death, and dropout, and the forecast carries all three.
 
 ## What this does and does not show
 
-Coverage is not the same thing as a decision. The month-4 band contains the
-truth, which says the model was not wrong. It does not say the model was useful
-at month 4. A band that wide is consistent with several conclusions at once. A
-decision needs an interval narrow enough to separate "keep going" from "stop",
-and at month 4 this one is not. Read properly, the month-4 result says to wait.
+Coverage is not the same thing as a decision. The month-4 median intervals
+contain the truth, which says the model was not wrong. It does not say the
+model was useful at month 4. An OS interval running from about six months to
+two years is consistent with several conclusions at once. A decision needs an
+interval narrow enough to separate "keep going" from "stop", and at month 4
+the OS interval is not. Read properly, the month-4 result says to wait.
 
-This behaviour is a property of the model, not an accident. When the model
-cannot forecast well, the output shows it. Uncertainty about the tumour
-parameters, the hazards, and where each unfinished trajectory is heading is
-carried through the same posterior into the endpoint. Sparse or uninformative
-data therefore produce a wide band. The month-4 panel is the model reporting
-that nine patients do not determine a survival curve. There is no separate
-diagnostic to consult. There is also no failure mode in which a
-confident-looking number comes out of data that cannot support it. The width of
-the band is the diagnostic, and it appears in the same picture as the
+This behaviour is a property of the model, not an accident. Uncertainty about
+the tumour parameters, the hazards, and where each unfinished trajectory is
+heading is carried through the same posterior into the endpoint. Sparse or
+uninformative data therefore produce a wide band. The month-4 OS interval is
+the model reporting that nine patients do not determine a survival curve. The
+width of the band is the diagnostic, and it appears in the same picture as the
 answer.^[This has one important limit. Wide intervals reflect the uncertainty
 the model can see: parameter uncertainty and predictive variability given its
 structure. They do not reflect the possibility that the structure itself is
