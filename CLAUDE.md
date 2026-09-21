@@ -70,6 +70,7 @@ Fonts and the venv live in `scripts/.fonts/` and `scripts/.venv/` (gitignored).
 
 ## Content Conventions
 
+- **Brand name is lowercase `zahrcast`** in normal-case text (prose, titles, the CV/resume), even at the start of a sentence. All-caps labels (navbar, eyebrows, buttons, the OG card) may show it as `ZAHRCAST`. Never add "LLC" except where the legal entity name is required (e.g. the JSON-LD `legalName`, which is "Zahrcast LLC").
 - **`cv.tex` is the source of truth** for all professional content. When updating experience, skills, or publications, edit `cv.tex` first, then propagate to `resume.tex` (trimmed) and `about.qmd` (web-formatted). `projects.qmd` mirrors the Projects section of `cv.tex`.
 - Research paper PDFs (`Kenya_Social_Multiplier-6.pdf`, `Paper_Migration_Disruption.pdf`) are stored at the repo root and copied to `docs/` on render.
 - Bootstrap utility classes (`.d-flex`, `.justify-content-between`, `.text-end`, `.text-center`) are used directly in `.qmd` files for layout since the theme is Cosmo (Bootstrap-based).

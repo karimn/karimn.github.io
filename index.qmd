@@ -15,7 +15,8 @@ author: "Karim Naguib"
   "jobTitle": "Principal",
   "worksFor": {
     "@type": "Organization",
-    "name": "Zahrcast LLC",
+    "name": "zahrcast",
+    "legalName": "Zahrcast LLC",
     "url": "https://zahrcast.com",
     "description": "Bayesian forecasting for oncology trials in flight."
   },
@@ -88,7 +89,7 @@ My work combines causal inference, Bayesian hierarchical modeling, and agentic t
 Currently
 :::
 ::: {.availability-text}
-Running Zahrcast LLC, which provides Bayesian forecasting for oncology trials in flight. If you have an interim decision coming up on immature survival data, get in touch about the trial.
+Running zahrcast, which provides Bayesian forecasting for oncology trials in flight. If you have an interim decision coming up on immature survival data, get in touch about the trial.
 :::
 ::: {.availability-cta}
 [Visit zahrcast](https://zahrcast.com){.btn}

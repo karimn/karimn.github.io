@@ -69,7 +69,7 @@ Cairo, Egypt · 1999
 
 ::: {.d-flex .justify-content-between}
 ::: {}
-Principal — *[Zahrcast LLC](https://zahrcast.com)*
+Principal — *[zahrcast](https://zahrcast.com)*
 :::
 ::: {.text-end}
 Jul 2026 — present
