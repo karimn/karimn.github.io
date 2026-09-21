@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "site",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4986", "--directory", "docs"],
+      "port": 4986
+    },
+    {
+      "name": "quarto-preview",
+      "runtimeExecutable": "quarto",
+      "runtimeArgs": ["preview", "--port", "4985", "--no-browser"],
+      "port": 4985
+    }
+  ]
+}

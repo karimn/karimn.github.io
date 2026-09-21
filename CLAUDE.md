@@ -23,6 +23,11 @@ lualatex -interaction=nonstopmode -output-directory=docs cv.tex
 lualatex -interaction=nonstopmode -output-directory=docs resume.tex
 ```
 
+For the Claude desktop app's browser pane, `.claude/launch.json` defines two
+servers: `site` serves the already-rendered `docs/` statically on port 4986
+(instant, never re-renders or executes code), and `quarto-preview` runs
+`quarto preview` on port 4985 for live reload while editing.
+
 The rendered output goes to `docs/` (configured in `_quarto.yml`). Both `resume.pdf` and `cv.pdf` are built automatically by `quarto render` via `post-render` hooks in `_quarto.yml`. The sources are plain LaTeX (`cv.tex`, `resume.tex`) compiled with lualatex.
 
 ### Build prerequisites
